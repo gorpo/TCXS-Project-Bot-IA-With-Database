@@ -11,6 +11,7 @@ print(r'''
      |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
      |        Github Gorpo Dev: https://github.com/gorpo         |
      [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+
 ''')
 
 import asyncio
@@ -89,3 +90,4 @@ if __name__ == '__main__':
         #na_bot.sendMessage(logs, '''Manicômio bot iniciado com sucesso, 28 plugins foram carregados, digite /comandos para saber os comandos do bot.'''.format(version, len(ep), len(n_ep),': ' + (', '.join(n_ep)) if n_ep else ''))
         pass
     loop.run_forever()
+

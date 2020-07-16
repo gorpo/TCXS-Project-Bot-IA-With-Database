@@ -46,7 +46,7 @@ keys = dict(
 backups_chat = 522510051  # Put a 0, False or None to disable ou seu id privado ou id privado de um canal ou grupo
 backup_hours = ['16:23']
 
-git_repo = ('https://github.com/gorpo', 'master') #repositorio para upgrade do bot
+git_repo = ('https://github.com/gorpoorko/Manicomio-Bot-IA', 'master') #repositorio para upgrade do bot
 max_time = 60
 version = '7.0'
 

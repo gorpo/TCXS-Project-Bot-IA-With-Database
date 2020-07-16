@@ -15,7 +15,7 @@
 6. pegue sua id ela servirá para você ser adm master.<br>
 <br>
 <h2>Via linha de comando - CLI</h2><br>
-<code>cd manicomio_bot_heroku</code><br>
+<code>cd Manicomio-Bot-IA</code><br>
 <code>heroku login</code><br>
 <code>heroku create --region us manicomio</code> seta us como regiao e nome_do_app defina o nome do  app no heroku<br>
 <code>git init</code><br>
