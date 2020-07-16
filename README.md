@@ -13,6 +13,7 @@
 4. Crie um bot no Botfather e pegue o token do bot.<br>
 5. insira este bot em um canal e pegue o id do canal, ele servirá para os logs.<br>
 6. pegue sua id ela servirá para você ser adm master.<br>
+7. caso va rodar localmente em windows usar o <a hrefe="https://ffmpeg.zeranoe.com/builds/win64/static/ffmpeg-20200715-a54b367-win64-static.zip">ffmpeg</a>
 <br>
 <h2>Via linha de comando - CLI</h2><br>
 <code>cd Manicomio-Bot-IA</code><br>
