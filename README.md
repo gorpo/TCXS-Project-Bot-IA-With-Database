@@ -9,11 +9,30 @@
 <h2>Instruções:</h2><br>
 1. Edite no arquivo config se quer rodar o bot local ou no heroku, comente e descomente as linhas.<br>
 2. Edite requeriments.txt caso tenha adicionado novas libs.<br>
-3. Especifique a versão do python no arquivo runtime, confira as versões de python disponiveis no heroku https://devcenter.heroku.com/articles/python-runtimes<br>
+3. Especifique a versão do python no arquivo runtime, também é necessário criar um arquivo "Procfile" na raiz do seu projeto
+ -  confira as versões de python disponiveis no heroku https://devcenter.heroku.com/articles/python-runtimes<br>
 4. Crie um bot no Botfather e pegue o token do bot.<br>
 5. insira este bot em um canal e pegue o id do canal, ele servirá para os logs.<br>
 6. pegue sua id ela servirá para você ser adm master.<br>
 <br>
+<p>Para rodar arquivos no Heroku é necessário criar um arquivo chamado "Procfile" e nele inserir o tipo de comando que será enviado para o dino do heroku</p><br>
+<code>bot: python3 bot.py</code><br>
+<p>Crie também um arquivo chamado runtime.txt e nele especifique sua versão do python a ser usada, tenha este arquivo na raiz do seu projeto.</p><br>
+<code>python-3.7.7</code><br>
+
+
+<h2>Caso queira automatizar seu upload para o heroku basta criar um arquivo .bat com o código abaixo:</h2><br>
+<code>call heroku login</code><br>
+<code>call heroku create --region us manicomio </code><br>
+<code>call git init</code><br>
+<code>call git add *</code><br>
+<code>call git commit -m "Primeiro commit!"</code><br>
+<code>call heroku git:remote -a manicomio</code><br>
+<code>call git push heroku master</code><br> 
+<code>call heroku ps:scale bot=1 </code><br>
+<code>call heroku logs --tail</code><br>
+<br>
+
 <h2>Via linha de comando - CLI</h2><br>
 <code>cd manicomio_bot_heroku</code><br>
 <code>heroku login</code><br>
@@ -22,8 +41,6 @@
 <code>git add *</code><br>
 <code>git commit -m "Primeiro commit!"</code><br>
 <code>heroku git:remote -a manicomio</code><br>
-
-
 <code>git push heroku master</code>              deploy do programa no heroku<br>
 <code>heroku config:set TELEGRAM_TOKEN=1186597860:AAHZTQT--xYhNHhkO8SbxlSxrdwVnkvi38s</code> seta as config vars, insira seu token<br>
 <code>heroku config:set LOGS=-1001215401730</code> seta a id do canal de logs que o bot ja deve estar e ter admin<br>
