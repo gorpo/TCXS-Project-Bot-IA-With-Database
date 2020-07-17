@@ -29,27 +29,23 @@ import dropbox
 import re
 import wikipedia
 import sqlite3
-from config import bot, sudoers, logs, bot_username,token_dropbox
+from config import bot, sudoers, logs, bot_username
 from datetime import datetime
 from plugins.admins import is_admin
-from plugins.admins import is_admin
-from plugins.ia_global import ia_global
-from plugins.ia_local import ia_local
-
-#IA depende da IA_global e IA_local
-#IA_global = manda mensagem de todo lugar pra todo lugar
-#IA_local = manda mensagem do grupo somente no grupo
-#Para desativar uma IA basta deletar ou comentar ela
-#Novas IA's devem ser adicionadas aqui
 
 
-async def inteligencia(msg):
-    try:#verifica se o usuario é um admin de grupo ou canal
+
+async def comandos_db(msg):
+    try:
         id_usuario = msg['from']['id']
+        #adm retorna:        se for adm = True   | se for user = False      code: adm['user'] == False
+        #Outro exemplo:      if texto.lower().startswith('permitir') and adm['user'] == True
         adm = await is_admin(msg['chat']['id'], msg['from']['id'], id_usuario)
     except Exception as e:
         pass
-    try:
+
+    try:# FUNÇÕES DO BOT------------------------------------>
+        d = dropbox.Dropbox('qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwig')
         conexao_sqlite = sqlite3.connect('bot.db')
         conexao_sqlite.row_factory = sqlite3.Row
         cursor_sqlite = conexao_sqlite.cursor()
@@ -90,102 +86,22 @@ async def inteligencia(msg):
                 texto = msg['text']
             except:
                 pass
-            try:
-                linguagem = msg['from']['language_code']
-            except:
-                linguagem = 'none'
-                pass
         data = datetime.now().strftime('%d/%m/%Y %H:%M')
         chat_type = msg['chat']['type']
-        id_grupo = msg['chat']['id']
-        #inicio da inteligencia artificial---------------------------------------->
         if chat_type == 'supergroup':  # se o chat for supergrupo ele manda mensagem
-            if msg.get('text'):
-                cursor_sqlite.execute("""SELECT * FROM inteligencia; """)
-                inteligencias = cursor_sqlite.fetchall()
-                for inteligencia in inteligencias:  # loop em todos resultados da Database
-                    idgp = str(msg['chat']['id'])
-                    if inteligencia['inteligencia'] == 'global':
-                        pass
-                        if inteligencia['id_grupo'] == idgp:
-                            #print(f'Inteligencia Global setada no grupo {grupo}')
-                            inteligencia_global = await ia_global(msg)
-                    if inteligencia['inteligencia'] == 'local':
-                        pass
-                        if inteligencia['id_grupo'] == idgp:
-                            #print(f'Inteligencia Local setada no grupo {grupo}')
-                            inteligencia_local = await ia_local(msg)
-
-                #sistema de mudança da ia entre global ou local | comando inteligencia ou ia
-                if msg.get('text').split()[0] == 'inteligencia':
-                    if adm['user'] == True:
-                        if len(msg['text'].split()) > 1 and msg['text'].split()[1] == 'global' or len(msg['text'].split()) > 1 and msg['text'].split()[1] == 'local':
-                            inteligencia = msg['text'].split()[1]
-                            try:
-                                tipo = msg['text'].split()[2]
-                            except:
-                                tipo = 'IA'
-                                pass
-                            try:
-                                linguagem = msg['from']['language_code']
-                            except:
-                                linguagem = 'none'
-                                pass
-                            try:
-                                cursor_sqlite.execute(f"""DELETE FROM inteligencia WHERE id_grupo='{msg['chat']['id']}' """)
-                                conexao_sqlite.commit()#,grupo , tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,inteligencia
-                                cursor_sqlite.execute(f"""INSERT INTO inteligencia (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,inteligencia)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','{tipo}','{data}','{inteligencia}')""")
-                                conexao_sqlite.commit()
-                                await bot.sendMessage(chat_id,f"@{msg['from']['username']} `Inteligencia Artificial:`***{inteligencia}***\nAgora vocês irão receber coisas que aprendi nesta categoria.",'markdown')
-                            except Exception as e:
-                                print(f'banco de dados inteligencia erro: {e}')
-                                #cursor_sqlite.execute(f"""INSERT INTO inteligencia (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,inteligencia)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','{tipo}','{data}','{inteligencia}')""")
-                                #conexao_sqlite.commit()
-                                #await bot.sendMessage(chat_id,f"@{msg['from']['username']} `Inteligencia Artificial:`***{inteligencia}***\nAgora vocês irão receber coisas que aprendi nesta categoria.",'markdown')
-                if msg.get('text') == 'inteligencia':
-                    await bot.sendMessage(chat_id,f"`Inteligencia Artificial:`***Tenho um sistema de IA que aprendo tudo em todos os lugares que estou, para selecionar oque devo falar use os comandos como exemplo:***\n`comando:`inteligencia global\n```---- Com o comando inteligencia global irei falar oque aprendi em todos os lugares que estive.```\n`comando:`inteligencia local\n```Com o comando inteligencia local irei falar oque aprendi aqui.```\n***Para selecionar a frequência de minha interação no grupo use o comando frêquencia***", 'markdown')
-
-                if msg.get('text').split()[0] == 'inteligencia' and adm['user'] == False:
-                    await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
-
-
-        # sistema de cadastro automatico dos posts dos grupos na Database------------------------------------------------------------
-        if chat_type == 'supergroup' or chat_type == 'private' or chat_type == 'channel':
+## SISTEMA DE FALA AUTOMATICA DO BOT COM BASE NOS POSTS DOS USUARIOS SQLITE3------------------------------------------->
             try:
-                try:
-                    linguagem = msg['from']['language_code']
-                except:
-                    linguagem = 'none'
-                    pass
                 if msg.get('sticker'):
                     id_sticker = msg['sticker']['file_id']
-                    id_mensagem = msg['sticker']['thumb']['file_unique_id']
                     await bot.sendSticker(msg['from']['id'], sticker=id_sticker)
-                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                    mensagens = cursor_sqlite.fetchall()
-                    existe_cadastro = 0  # contador para verificar se o comando ja existe
-                    for mensagem in mensagens:  # loop em todos resultados da Database
-                        if mensagem['id_mensagem'] == id_mensagem:
-                            existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                    if existe_cadastro == 1:
-                        pass
-                    else:
-                        cursor_sqlite.execute(f"""INSERT INTO mensagens (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,id_mensagem, mensagem)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','sticker','{data}','{id_mensagem}','{id_sticker}')""")
-                        conexao_sqlite.commit()
+                    cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'sticker','{id_sticker}','{usuario}','{grupo}','{data}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO logs_usuarios (int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'sticker','{id_sticker}','{usuario}','{grupo}','{data}')""")
+                    conexao_sqlite.commit()
                 if msg.get('photo'):
                     id_foto = msg['photo'][0]['file_id']
-                    id_mensagem = msg['photo'][0]['file_unique_id']
-                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                    mensagens = cursor_sqlite.fetchall()
-                    existe_cadastro = 0  # contador para verificar se o comando ja existe
-                    for mensagem in mensagens:  # loop em todos resultados da Database
-                        if mensagem['id_mensagem'] == id_mensagem:
-                            existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                    if existe_cadastro == 1:
-                        pass
-                    else:
-                        cursor_sqlite.execute(f"""INSERT INTO mensagens (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,id_mensagem, mensagem)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','imagem','{data}','{id_mensagem}','{id_foto}')""")
-                        conexao_sqlite.commit()
+                    cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'imagem','{id_foto}','{usuario}','{grupo}','{data}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO logs_usuarios(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'imagem','{id_foto}','{usuario}','{grupo}','{data}')""")
+                    conexao_sqlite.commit()
                     try:
                         await bot.sendPhoto(-1001363303197, id_foto)  #canal para marcinho = -1001402280935
                     except:
@@ -194,26 +110,12 @@ async def inteligencia(msg):
                         await bot.sendPhoto(msg['from']['id'], photo=id_foto, caption='Você mandou esta foto no grupo.')
                     except:
                         pass
-
-                if msg.get('document'):#grava os dados pelo nome pois a unique id nao fica mesma se mesmo arquivo
+                if msg.get('document'):
                     id_documento = msg['document']['file_id']
-                    try:
-                        id_mensagem = msg['document']['file_name']
-                    except:
-                        id_mensagem = msg['document']['file_unique_id']
-                        pass
-                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                    mensagens = cursor_sqlite.fetchall()
-                    existe_cadastro = 0  # contador para verificar se o comando ja existe
-                    for mensagem in mensagens:  # loop em todos resultados da Database
-                        if mensagem['id_mensagem'] == id_mensagem:
-                            existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                    if existe_cadastro == 1:
-                        pass
-                    else:
-                        #await  bot.sendDocument(msg['from']['id'], id_documento)
-                        cursor_sqlite.execute(f"""INSERT INTO mensagens (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,id_mensagem, mensagem)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','documento','{data}','{id_mensagem}','{id_documento}')""")
-                        conexao_sqlite.commit()
+                    #await  bot.sendDocument(msg['from']['id'], id_documento)
+                    cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'documento','{id_documento}','{usuario}','{grupo}','{data}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO logs_usuarios (int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'documento','{id_documento}','{usuario}','{grupo}','{data}')""")
+                    conexao_sqlite.commit()
                     try:
                         captado = msg['caption']
                     except:
@@ -221,32 +123,14 @@ async def inteligencia(msg):
                     #await bot.sendDocument(-1001363303197, id_documento, captado)  #para marcinho -1001166426209
                 if msg.get('audio'):
                     id_audio = msg['audio']['file_id']
-                    id_mensagem = msg['audio']['file_unique_id']
-                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                    mensagens = cursor_sqlite.fetchall()
-                    existe_cadastro = 0  # contador para verificar se o comando ja existe
-                    for mensagem in mensagens:  # loop em todos resultados da Database
-                        if mensagem['id_mensagem'] == id_mensagem:
-                            existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                    if existe_cadastro == 1:
-                        pass
-                    else:
-                        cursor_sqlite.execute(f"""INSERT INTO mensagens (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,id_mensagem, mensagem)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','audio','{data}','{id_mensagem}','{id_audio}')""")
-                        conexao_sqlite.commit()
+                    cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'audio','{id_audio}','{usuario}','{grupo}','{data}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO logs_usuarios (int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'audio','{id_audio}','{usuario}','{grupo}','{data}')""")
+                    conexao_sqlite.commit()
                 if msg.get('video'):
                     id_video = msg['video']['file_id']
-                    id_mensagem = msg['video']['file_unique_id']
-                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                    mensagens = cursor_sqlite.fetchall()
-                    existe_cadastro = 0  # contador para verificar se o comando ja existe
-                    for mensagem in mensagens:  # loop em todos resultados da Database
-                        if mensagem['id_mensagem'] == id_mensagem:
-                            existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                    if existe_cadastro == 1:
-                        pass
-                    else:
-                        cursor_sqlite.execute(f"""INSERT INTO mensagens (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,id_mensagem, mensagem)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','video','{data}','{id_mensagem}','{id_video}')""")
-                        conexao_sqlite.commit()
+                    cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'video','{id_video}','{usuario}','{grupo}','{data}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO logs_usuarios (int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'video','{id_video}','{usuario}','{grupo}','{data}')""")
+                    conexao_sqlite.commit()
                     try:
                         await bot.sendVideo(-1001363303197, id_video)  #marcinho -1001402280935
                     except:
@@ -255,9 +139,8 @@ async def inteligencia(msg):
                         await bot.sendVideo(msg['from']['id'], id_video, caption=f'@{usuario} Você mandou este video no {grupo}.')
                     except:
                         pass
-                if msg.get('voice'):#MELHOR NAO APLICAR AQUI A REGRA SE JA EXISTE SENAO NAO VAI CADASTRAR
+                if msg.get('voice'):
                     id_voz = msg['voice']['file_id']
-                    #id_mensagem = msg['voice']['file_unique_id']
                     await bot.download_file(msg['voice']['file_id'], 'images/audio_usuario_db.ogg')
                     sound = AudioSegment.from_file("images/audio_usuario_db.ogg")
                     sound.export("images/audio_usuario_db.wav", format="wav", bitrate="128k")
@@ -266,88 +149,88 @@ async def inteligencia(msg):
                         audio = r.record(source)
                     texto = r.recognize_google(audio, language='pt-BR')
                     await bot.sendMessage(chat_id, f"`{msg['from']['first_name']} disse:`\n```{texto}```", 'markdown', reply_to_message_id=msg['message_id'])
-                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                    mensagens = cursor_sqlite.fetchall()
-                    existe_cadastro = 0  # contador para verificar se o comando ja existe
-                    id_mensagem = texto
-                    for mensagem in mensagens:  # loop em todos resultados da Database
-                        if mensagem['id_mensagem'] == id_mensagem:
-                            existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                    if existe_cadastro == 1:
-                        pass
-                    else:
-                        cursor_sqlite.execute(f"""INSERT INTO mensagens (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,id_mensagem, mensagem)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','voz decodificada','{data}','{id_mensagem}','{texto}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO logs_usuarios (int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'texto','{texto}','{usuario}','{grupo}','{data}')""")
+                    conexao_sqlite.commit()
+                if msg.get('text'):  # ALTERAR A FREQUENCIA DO BOT------------------------------------------------------------------------------>
+                    texto = msg['text']
+                    cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'texto','{texto}','{usuario}','{grupo}','{data}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO logs_usuarios (int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'texto','{texto}','{usuario}','{grupo}','{data}')""")
+                    conexao_sqlite.commit()
+                    if texto.lower().startswith('frequencia'):
+                        valor = texto[11:]
+                        cursor_sqlite.execute(f"""  INSERT INTO frequencia(valor)VALUES('{valor}')""")
                         conexao_sqlite.commit()
-
-                if msg.get('text'):
-                    texto = msg['text']#aqui tenho que comparar o texto com texto para nao gravar textos iguais
-                    id_mensagem = texto
-                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                    mensagens = cursor_sqlite.fetchall()
-                    existe_cadastro = 0  # contador para verificar se o comando ja existe
-                    for mensagem in mensagens:  # loop em todos resultados da Database
-                        if mensagem['id_mensagem'] == id_mensagem:
-                            existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                    if existe_cadastro == 1:
-                        pass
-                    else:
-                        cursor_sqlite.execute(f"""INSERT INTO mensagens (int_id, grupo, tipo_grupo, id_grupo, usuario, id_usuario, linguagem, tipo, data,id_mensagem, mensagem)VALUES(null,'{grupo}','{chat_type}','{id_grupo}','{usuario}','{id_usuario}','{linguagem}','texto','{data}','{id_mensagem}','{texto}')""")
-                        conexao_sqlite.commit()
-            except Exception as e:
-                print(f'Sistema de cadastro automatico IA, erro: {e}')
-                pass
-
-            #seta a frequencia da IA | comando frequencia + 0  a 10 onde 0 muta o bot e 10 fala muito
-            texto = msg['text']
-            if texto.lower().startswith('frequencia') and  texto.split()[1].isdigit():
-                try:
-                    valor = texto[11:]
+                        if int(valor) == 0:
+                            await bot.sendMessage(chat_id, f'🤖 `Frequencia alterada para {valor}, estou mutado so irei reponder comandos cadastrados`','markdown')
+                        if int(valor) == 1:
+                            await bot.sendMessage(chat_id, f'🤖 `Frequencia alterada para {valor}, vou tentar falar pouco`','markdown')
+                        if int(valor) >= 2:
+                            await bot.sendMessage(chat_id, f'🤖 `Frequencia alterada para {valor}, vou falar bastante`\nCaso queira que eu pare de falar defina a frequencia: 0\n Para eu falar menos defina frequencia: 1','markdown')
                     cursor_sqlite.execute("""SELECT * FROM frequencia; """)
-                    frequencias = cursor_sqlite.fetchall()
-                    comparar_vazio = []
-                    freq = list(frequencias)
-                    if freq == comparar_vazio:
-                        cursor_sqlite.execute(f"""INSERT INTO frequencia(id_grupo, grupo, valor)VALUES('{id_grupo}','{grupo}','{valor}')""")
-                        conexao_sqlite.commit()
-                    else:
-                        for frequencia in frequencias:  # loop em todos resultados da Database
-                            if frequencia['id_grupo'] == msg['chat']['id']:
-                                cursor_sqlite.execute(f"""DELETE FROM frequencia WHERE id_grupo='{msg['chat']['id']}'""")
-                                conexao_sqlite.commit()
-                                cursor_sqlite.execute(f"""INSERT INTO frequencia(id_grupo, grupo, valor)VALUES('{id_grupo}','{grupo}','{valor}')""")
-                                conexao_sqlite.commit()
-                            if frequencia['id_grupo'] != msg['chat']['id']:
-                                cursor_sqlite.execute(f"""INSERT INTO frequencia(id_grupo, grupo, valor)VALUES('{id_grupo}','{grupo}','{valor}')""")
-                                conexao_sqlite.commit()
-                    if int(valor) == 0:
-                        await bot.sendMessage(chat_id, f'🤖 `Frequencia alterada para {valor}, estou mutado so irei reponder comandos cadastrados`','markdown')
-                    if int(valor) == 1:
-                        await bot.sendMessage(chat_id, f'🤖 `Frequencia alterada para {valor}, vou tentar falar pouco`','markdown')
-                    if int(valor) >= 2:
-                        await bot.sendMessage(chat_id, f'🤖 `Frequencia alterada para {valor}, vou falar bastante`\nCaso queira que eu pare de falar defina a frequencia: 0\n Para eu falar menos defina frequencia: 1','markdown')
-                except Exception as e:
-                    print(f'Erro no sistema de cadastro da frequencia: {e}')
-                    pass
-
-
-            # SISTEMA QUE DELETA MENSAGENS PROIBIDAS --------------------------------------------------------------------->
-            if chat_type == 'supergroup' and msg.get('text'):# verifica se a palavra é proibida, se for deleta a mensagem do usuario e envia um aviso------>
-                    cursor_sqlite.execute("""SELECT * FROM proibido; """)
-                    mensagens_proibidas = cursor_sqlite.fetchall()
-                    for mensagem in mensagens_proibidas:
-                        if mensagem['termo'] in texto:
-                            try:#em caso de erro inverter este try except pelo de baixo pois da erro entre message_id e reply_to_message
+                    frequencia_sqlite = cursor_sqlite.fetchall()
+                    try:
+                        contador = int(random.randint(0, frequencia_sqlite[-1][0] * 2)) - 1
+                        frequencia = int(frequencia_sqlite[-1][0])
+                    except:
+                        contador = random.randint(0, 1)
+                        frequencia = 1
+                        pass
+                    if contador < frequencia:  # se o contador for menor que a frequencia o bot entrara na conversa enviando alguma mensagem salva no banco de dados
+                        pass  # print(f'🚫 Não enviou: contador:{int(contador)}     - menor que a frequencia setada: {frequencia }')
+                    else:  # print(f'🤖 Bot enviou: contador:{int(contador)} maior/igual que a frequencia setada: {frequencia}')
+                        cursor_sqlite.execute("""SELECT * FROM mensagens; """)
+                        mensagens_sqlite = cursor_sqlite.fetchall()
+                        quantidade_mensagens = len(mensagens_sqlite)
+                        randomico = random.randint(0,  quantidade_mensagens - 1)  # fornece um numero randomico para pegarmos as mensagens na db
+                        m = mensagens_sqlite[randomico][2]
+                        tipo_mensagem = mensagens_sqlite[randomico][1]
+                        if m.startswith('fale') or m.lower().startswith('luppy') or 'att' in m or m.startswith('frequencia') or m.startswith('#') or m.startswith('comandos') or m.startswith('%') or m.startswith('$') or m.startswith('/') or m.startswith('permitir') or m.startswith('proibir') or m.startswith('proibidas'):
+                            pass
+###--->>> SISTEMA DE RESPOSTA AUTOMATICA COM BASE NA VARIAVEL "tipo" DA DATABASE  |  COMENTE E DESCOMENTE LINHAS PARA QUE O BOT ENVIE OU NAO AS MENSAGENS-------------------------------->
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                        else:
+                            if tipo_mensagem == 'imagem':
+                                await bot.sendPhoto(chat_id, photo=m)
+                                print(f'🤖 Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {m}')
+                            if tipo_mensagem == 'documento':
+                                #await bot.sendDocument(chat_id, document=m)
+                                print(f'🤖 Bot tentou enviar um documento no grupo {msg["chat"]["title"]} com a id {m}')
+                            if tipo_mensagem == 'audio':
+                                #await bot.sendAudio(chat_id, audio=m)
+                                print(f'🤖 Bot tentou enviar um audio no grupo {msg["chat"]["title"]} com a id {m}')
+                            if tipo_mensagem == 'video':
+                                await bot.sendVideo(chat_id, video=m)
+                                print(f'🤖 Bot enviou um video no grupo {msg["chat"]["title"]} com a id {m}')
+                            if tipo_mensagem == 'texto':
+                                await bot.sendMessage(chat_id, m)
+                                print(f'🤖 Bot enviou no grupo {msg["chat"]["title"]}: {m}')
+                            if tipo_mensagem == 'sticker':
+                                await bot.sendSticker(chat_id, sticker=m)
+                                print(f'🤖 Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {m}')
+            except Exception as e:
+                print(f'Erro no sistema de fala automatica: {e}\nTente remover as linhas dos "canais" que ele envia fotos/videos e que ele envia documentos')
+                pass
+# SISTEMA QUE DELETA MENSAGENS PROIBIDAS --------------------------------------------------------------------->
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            try:  # verifica se a palavra é proibida, se for deleta a mensagem do usuario e envia um aviso------>
+                cursor_sqlite.execute("""SELECT * FROM proibido; """)
+                mensagens_proibidas = cursor_sqlite.fetchall()
+                for mensagem in mensagens_proibidas:
+                    if mensagem['termo'] in texto:
+                        if texto.lower().startswith('permitir'):
+                            pass
+                        else:
+                            try:
+                                await bot.deleteMessage((msg['chat']['id'], msg['reply_to_message']['message_id']))
+                                await bot.sendMessage(chat_id,f"@{msg['from']['username']} `você usou uma palavra proibida, não fale bosta aqui!`",'markdown')
+                            except TelegramError:
+                                pass
+                            try:
                                 await bot.deleteMessage((msg['chat']['id'], msg['message_id']))
                                 await bot.sendMessage(chat_id,f"@{msg['from']['username']} `você usou uma palavra proibida, não fale bosta aqui!`",'markdown')
                             except TelegramError:
+                                pass
 
-                                try:
-                                    await bot.deleteMessage((msg['chat']['id'], msg['reply_to_message']['message_id']))
-                                    await bot.sendMessage(chat_id,f"@{msg['from']['username']} `você usou uma palavra proibida, não fale bosta aqui!`",'markdown')
-                                except TelegramError:
-                                    pass
-
-            try:
                 if msg.get('text'):
                     texto = msg['text']
                     if texto.lower().startswith('proibir') and adm['user'] == True:  # proibe as palavras e as cadastra na Database------------------------------->
@@ -365,7 +248,7 @@ async def inteligencia(msg):
                         palavra_permitida = texto[9:]
                         cursor_sqlite.execute(f"""DELETE FROM proibido WHERE termo='{palavra_permitida}'""")
                         conexao_sqlite.commit()
-                        await bot.sendMessage(chat_id, f'🤖✔️ `Permitido:`***{palavra_permitida}***\nPara voltar proibir esta palavra use o comando `proibir`, para ver palavras proibidas use `proibidas`','markdown', reply_to_message_id=msg['message_id'])
+                        await bot.sendMessage(chat_id, f'🤖✔️ `Permitido:`***{palavra_permitida}***\nPara voltar proibir esta palavra use o comando `proibir`, para ver palavras proibidas use `proibidas`',reply_to_message_id=msg['message_id'])
                     if texto.lower().startswith('permitir') and adm['user'] == False:
                         await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
 
@@ -379,8 +262,9 @@ async def inteligencia(msg):
                         await bot.sendMessage(chat_id,f'🤖 `Palavras Proibidas:`\n ***{separador.join(map(str, todas_proibidas))}***','markdown', reply_to_message_id=msg['message_id'])
                         await bot.sendMessage(chat_id, 'Para proibir use `proibir` e para permitir use `permitir`', 'markdown')
             except Exception as e:
-                pass
-            #comandos inseridos manualmente na programaçao com uso de #
+                pass  # print(f'Erro no sistema de palavras proibidas: {e}')
+# COMANDOS INSERIDOS MANUALMENTE NA PROGRAMAÇAO--------------------------------------------------------------->
+#-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             if msg.get('text'):
                 texto = msg['text']
                 try:
@@ -656,7 +540,7 @@ async def inteligencia(msg):
                             await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
                 except:
                     pass
-                #sistea de upload para o dropbox | necessario mudar o caminho para sua pasta que quer baixar os arquivos----------------------------------------------------------->
+                # SISTEMA DE UPLOAD PARA DROPBOX | necessario mudar o caminho para sua pasta que quer baixar os arquivos----------------------------------------------------------->
                 try:  # UPLOAD DE DOCUMENTOS PARA O DROPBOX
                     if 'document' in msg.get('reply_to_message') and texto.lower().startswith('dropbox'):
                         if adm['user'] == True:
@@ -670,7 +554,6 @@ async def inteligencia(msg):
                                 await bot.download_file(id_arquivo, f'images/{nome_arquivo}')
                                 await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei de baixar seu arquivo, vou upar ele para o Dropbox`",'markdown', reply_to_message_id=msg['message_id'])
                                 targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}"
-                                d = dropbox.Dropbox(token_dropbox)
                                 with open(f'images/{nome_arquivo}', "rb") as f:
                                     meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
                                 link = d.sharing_create_shared_link(targetfile)
@@ -691,7 +574,6 @@ async def inteligencia(msg):
                             await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei de baixar seu arquivo, vou upar ele para o Dropbox`",'markdown', reply_to_message_id=msg['message_id'])
                             targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}.jpg"
                             time.sleep(1)
-                            d = dropbox.Dropbox(token_dropbox)
                             with open(f'images/{nome_arquivo}.jpg', "rb") as f:
                                 meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
                             link = d.sharing_create_shared_link(targetfile)
@@ -703,129 +585,97 @@ async def inteligencia(msg):
                             await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
                 except:
                     pass
-                #sistema de respostas com base na wikipedia
-                try:
+                try:  # SISTEMA DE RESPOSTAS COM BASE NA WIKIPEDIA---------------------------------------------------------------->
                     if 'fale sobre' in texto.lower():
                         termo = texto[10:]
                         wikipedia.set_lang("pt")
                         pesquisa = wikipedia.summary(termo)
-                        await bot.sendMessage(chat_id, f"```{pesquisa}```",'markdown', reply_to_message_id=msg['message_id'])
+                        await bot.sendMessage(chat_id, pesquisa, reply_to_message_id=msg['message_id'])
                 except Exception as e:
-                    await bot.sendMessage(chat_id, '`Desconheço este assunto...`\n```---- Caso queira que eu aprenda fale sobre o assunto converse comigo sobre ele até que eu aprenda ou use o comando # informando o tema e após ele a explicação que devo aprender conforme exemplo:``` #tema ***informações que devo aprender***','markdown', reply_to_message_id=msg['message_id'])
-                    #await bot.sendMessage(chat_id, f'Tente uma destas opções: {e}', reply_to_message_id=msg['message_id'])
+                    print(e)
+                    await bot.sendMessage(chat_id, 'Desconheço este assunto...', reply_to_message_id=msg['message_id'])
                     pass
-            # excessão final caso de pau em tudo--->
-    except Exception as e:
-        print(f'Ocorreu um erro em alguma parte do codigo da inteligencia estou na linha final:{e}')
-        pass
-    # COMANDOS PARA CANAL-------------------------------------->
-    #if chat_type == 'channel':
-    #    print(f'{usuario} mandou mensagem no canal: {msg}')  # id_zoeiras = -1001402280935    id_hacker = -1001166426209
-    #    pass
 
-    # COMANDOS DO CHAT PRIVADO-------------------------------------------------------------------------------------------------------------------------->
-    if chat_type == 'private':
-        ## SISTEMA DE FALA AUTOMATICA DO BOT COM BASE NOS POSTS DOS USUARIOS SQLITE3------------------------------------------->
-        try:
-            if msg.get('voice'):
-                id_voz = msg['voice']['file_id']
-                await bot.download_file(msg['voice']['file_id'], 'images/audio_usuario_db.ogg')
-                sound = AudioSegment.from_file("images/audio_usuario_db.ogg")
-                sound.export("images/audio_usuario_db.wav", format="wav", bitrate="128k")
-                r = sr.Recognizer()
-                with sr.WavFile('images/audio_usuario_db.wav') as source:
-                    audio = r.record(source)
-                texto = r.recognize_google(audio, language='pt-BR')
-                await bot.sendMessage(chat_id, f"`{msg['from']['first_name']} disse:`\n```{texto}```", 'markdown',reply_to_message_id=msg['message_id'])
-            if msg.get('text'):
-                if msg.get('text') == 'att':
-                    await bot.sendMessage(chat_id, f"@{msg['from']['first_name']} você esta tentando roubar a TCXS Store, cara vou pegar seu ip e te hackear agora mesmo!!! ", 'markdown',reply_to_message_id=msg['message_id'])
-
-                cursor_sqlite.execute("""SELECT * FROM mensagens; """)
-                mensagens_sqlite = cursor_sqlite.fetchall()
-                quantidade_mensagens = len(mensagens_sqlite)
-                randomico = random.randint(0,  quantidade_mensagens - 1)  # fornece um numero randomico para pegarmos as mensagens na db
-                mensagem_bot = mensagens_sqlite[randomico][10]
-                tipo_mensagem = mensagens_sqlite[randomico][7]
-                proibir_bot = ['fale','luppy','att','frequencia','#','$','%','att','comando','proibidas',]
-                #if mensagem_bot in proibir_bot:
-                #    pass
-                #else:
-                if tipo_mensagem == 'imagem':
-                    await bot.sendPhoto(chat_id, photo=mensagem_bot)
-                    print(f'🤖 Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
-                if tipo_mensagem == 'documento':
-                    #await bot.sendDocument(chat_id, document=mensagem_bot)
-                    print(f'🤖 Bot tentou enviar um documento no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
-                if tipo_mensagem == 'audio':
-                    #await bot.sendAudio(chat_id, audio=mensagem_bot)
-                    print(f'🤖 Bot tentou enviar um audio no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
-                if tipo_mensagem == 'video':
-                    await bot.sendVideo(chat_id, video=mensagem_bot)
-                    print(f'🤖 Bot enviou um video no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
-                if tipo_mensagem == 'texto':
-                    await bot.sendMessage(chat_id, mensagem_bot)
-                    print(f'🤖 Bot enviou no grupo {msg["chat"]["title"]}: {mensagem_bot}')
-                if tipo_mensagem == 'sticker':
-                    await bot.sendSticker(chat_id, sticker=mensagem_bot)
-                    print(f'🤖 Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
-        except Exception as e:
-            # print(f'Erro no sistema de fala automatica do Privado do Bot: {e}')
+        # COMANDOS PARA CANAL-------------------------------------->
+        if chat_type == 'channel':
+            print(f'{usuario} mandou mensagem no canal: {msg}')  # id_zoeiras = -1001402280935    id_hacker = -1001166426209
             pass
 
-
-## [+] WARNING [+] | FECHA CONEXAO PARA ESCREVER NO BANCO DE DADOS--------
-    conexao_sqlite.close()
-    # CONFIGURAÇÕES PARA GRUPOS----------------------------------------------------------------------------------------------------------------------------->
-    if msg.get('text') == '/helppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp':
-        texto = """
-***SOBRE A FREQUENCIA DE MENSAGENS*** 
-```Este bot envia mensagens baseado em uma frequencia que deve ser setada entre 2 e 10, onde:```
-`frequencia 1 = mudo`
-`frequencia 2 = fala pouco`
-`frequencia 10 = fala muito`
-`apagar mensagens = apaga tudo IA e faz backup da Database (somente adm master)`
-***SOBRE FALA LOCAL | GLOBAL***
-```Este bot se espressa de duas formas, local e global, quando setado local ele irá falar apenas coisas que aprendeu no grupo, ja se setada global ele vai falar tudo que ele aprendeu durante sua webvida:```
-`falar apenas coisas do grupo:` inteligencia local 
-`falar tudo que ele aprendeu:` inteligencia global 
-`AVISO:` setando a IA como global ela pode falar palavrões e coisas ofensivas caso tenha aprendido
-***CADASTRO DE COMANDOS E REPOSTAS NA DATABASE***        
-🤖`Para cadastrar um comando no banco de dados:`
-#comando resposta que o usuário vai receber
-🤖`Para recadastrar um comando no banco de dados:`
-$comando resposta que o usuário vai receber
-🤖`Para deletar um comando`
-%comando 
-***CADASTRO DE PERGUNTA DOS USUARIOS*** 
-```Sempre que um usuário enviar alguma pergunta com o ponto de interrogação ela será cadastrada na Database```
-🤖`Para ver as perguntas feitas pelo usuario digite:`
-perguntas 
-🤖`Para limpar as perguntas da Database digite:`
-limpar perguntas
-***SOBRE PROIBIR E PERMITIR PALAVRAS***
-```Este bot pode restringir e permitir palavras com os comandos:```
-`proibir uma palavra:` proibir 
-`permitir uma palavra:` permtir 
-`ver palavras proibidas:` proibidas
-***SOBRE O SISTEMA DE BANIMENTO AUTOMATICO***
-```Este bot pode cadastrar usuários de forma automática e os banir após um perido de tempo, por padrão quando um usuário entrar no grupo ele terá 30 dias de permanencia no grupo, com 7 dias ele irá avisar que o usuario será banido marcando ele, caso queira cadastrar usuarios manualmente ou deletar cadastros, para isto responda o texto ou qualquer coisa de um usuario com o comando /id e você terá a id_usuario, após isto siga os comandos:```
-`restringir usuario [restringir @usuario id_usuario dias]:`  restringir @xbadcoffee 1367451130 30 
-`permitir uma palavra:` permtir 
-`ver palavras proibidas:` proibidas
-***EXTRAS***
-🤖`Se usar a palavra dropbox como reposta em documentos e imagens eu farei o upload para seu dropbox`
-🤖`Pergunte ao bot com o comando:`
-fale sobre robôs
-"""
-        await  bot.sendMessage(chat_id, texto, 'markdown')
-
-
-
-
-
-
-
-
-
-
+        # COMANDOS DO CHAT PRIVADO-------------------------------------------------------------------------------------------------------------------------->
+        if chat_type == 'private':
+            ## SISTEMA DE FALA AUTOMATICA DO BOT COM BASE NOS POSTS DOS USUARIOS SQLITE3------------------------------------------->
+            try:
+                if msg.get('voice'):
+                    id_voz = msg['voice']['file_id']
+                    await bot.download_file(msg['voice']['file_id'], 'images/audio_usuario_db.ogg')
+                    sound = AudioSegment.from_file("images/audio_usuario_db.ogg")
+                    sound.export("images/audio_usuario_db.wav", format="wav", bitrate="128k")
+                    r = sr.Recognizer()
+                    with sr.WavFile('images/audio_usuario_db.wav') as source:
+                        audio = r.record(source)
+                    texto = r.recognize_google(audio, language='pt-BR')
+                    await bot.sendMessage(chat_id, f"`{msg['from']['first_name']} disse:`\n```{texto}```", 'markdown',reply_to_message_id=msg['message_id'])
+                if msg.get('text'):
+                    if msg.get('text') == 'luppy solta a att':
+                        await bot.sendMessage(chat_id, f"@{msg['from']['first_name']} você esta tentando roubar a TCXS Store, cara vou pegar seu ip e te hackear agora mesmo!!! ", 'markdown',reply_to_message_id=msg['message_id'])
+                    cursor_sqlite.execute("""SELECT * FROM mensagens; """)
+                    mensagens_sqlite = cursor_sqlite.fetchall()
+                    quantidade_mensagens = len(mensagens_sqlite)
+                    randomico = random.randint(0,quantidade_mensagens - 1)  # fornece um numero randomico para pegarmos as mensagens na db
+                    m = mensagens_sqlite[randomico][2]
+                    tipo_mensagem = mensagens_sqlite[randomico][1]
+                    if m.startswith('frequencia') or m.startswith('#') or m.startswith('comandos') or m.startswith('%') or m.startswith('$') or m.startswith('/help') or m.startswith('permitir') or m.startswith('proibir') or m.startswith('proibidas'):
+                        pass
+                    else:  # SISTEMA DE RESPOSTA AUTOMATICA COM BASE NA VARIAVEL "tipo" DA DATABASE-------------------------------->
+                        if tipo_mensagem == 'imagem':
+                            await bot.sendPhoto(chat_id, photo=m)
+                        if tipo_mensagem == 'video':
+                            await bot.sendVideo(chat_id, video=m)
+                            print(f'🤖 Bot enviou um video no grupo {msg["chat"]["title"]} com a id {m}')
+                        if tipo_mensagem == 'texto':
+                            await bot.sendMessage(chat_id, m)
+                            print(f'🤖 Bot enviou no grupo {msg["chat"]["title"]}: {m}')
+                        if tipo_mensagem == 'sticker':
+                            await bot.sendSticker(chat_id, sticker=m)
+                            print(f'🤖 Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {m}')
+            except Exception as e:
+                # print(f'Erro no sistema de fala automatica do Privado do Bot: {e}')
+                pass
+    ## [+] WARNING [+] | FECHA CONEXAO PARA ESCREVER NO BANCO DE DADOS--------
+        conexao_sqlite.close()
+        # CONFIGURAÇÕES PARA GRUPOS----------------------------------------------------------------------------------------------------------------------------->
+        if msg.get('text') == '/helppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp':
+            texto = """
+    ***CADASTRO DE COMANDOS E REPOSTAS NA DATABASE***        
+    🤖`Para cadastrar um comando no banco de dados:`
+    #comando resposta que o usuário vai receber
+    🤖`Para recadastrar um comando no banco de dados:`
+    $comando resposta que o usuário vai receber
+    🤖`Para deletar um comando`
+    %comando 
+    ***CADASTRO DE PERGUNTA DOS USUARIOS*** 
+    ```Sempre que um usuário enviar alguma pergunta com o ponto de interrogação ela será cadastrada na Database```
+    🤖`Para ver as perguntas feitas pelo usuario digite:`
+    perguntas 
+    🤖`Para limpar as perguntas da Database digite:`
+    limpar perguntas
+    ***EXTRAS***
+    🤖`Se usar a palavra dropbox como reposta em documentos e imagens eu farei o upload para seu dropbox`
+    🤖`Pergunte ao bot com o comando:`
+    fale sobre robôs
+    ***SOBRE A FREQUENCIA DE MENSAGENS*** 
+    ```Este bot envia mensagens baseado em uma frequencia que deve ser setada entre 2 e 10, onde:```
+    `frequencia 1 = mudo`
+    `frequencia 2 = fala pouco`
+    `frequencia 10 = fala muito`
+    `apagar mensagens = apaga tudo IA e faz backup da Database (somente adm master)`
+    ***SOBRE PROIBIR E PERMITIR PALAVRAS***
+    ```Este bot pode restringir e permitir palavras com os comandos:```
+    `proibir uma palavra:` proibir 
+    `permitir uma palavra:` permtir 
+    `ver palavras proibidas:` proibidas
+    """
+            await  bot.sendMessage(chat_id, texto, 'markdown')
+    except:
+        pass
+        return True

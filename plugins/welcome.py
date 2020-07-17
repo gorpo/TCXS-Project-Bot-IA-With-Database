@@ -136,7 +136,7 @@ Se esse erro persistir entre em contato com @GorpoOrko.'''.format(e.description)
                 if existe_cadastro == 1:
                     await bot.sendMessage(chat_id, "🤖 `Usuário ja cadastrado, apague ele manualmente e insira os dados novamente`", 'markdown')
                 else:
-                    cursor_sqlite.execute(f"""INSERT INTO permanencia(int_id,grupo,id_grupo, admin, doador, id_doador, dias, data_inicial, data_final,data_aviso)VALUES(null,'{msg['chat']['title']}','{msg['chat']['id']}','{admin}','{doador}','{id_doador}','{dias}','{data_inicial}','{data_final}','{data_aviso}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO permanencia(int_id,admin, doador, id_doador, dias, data_inicial, data_final,data_aviso)VALUES(null,'{admin}','@{doador}','{id_doador}','{dias}','{data_inicial}','{data_final}','{data_aviso}')""")
                     conexao_sqlite.commit()
                     await bot.sendMessage(chat_id,f"🤖 ***Dados inseridos com exito no cadastro de permanência do grupo de doadores.***\n`Admin:` {admin}\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_final}\n`Aviso Vencimento:` {data_aviso}\n`Permanência:` {dias}",'markdown')
                     #print(admin, doador, id_doador, dias, data_inicial, data_final)

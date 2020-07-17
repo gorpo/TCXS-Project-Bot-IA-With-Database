@@ -18,69 +18,20 @@ import schedule
 from datetime import datetime
 from utils import backup_sources
 from multiprocessing import Process
-from config import backups_chat, backup_hours, na_bot,token_dropbox
-import dropbox
-import time
-from config import bot, version, bot_username, git_repo,logs,sudoers
-import os
-from datetime import datetime
-import sqlite3
-
+from config import backups_chat, backup_hours, na_bot
 
 #função que faz os backups com base em hora
 def backup_func():
     cstrftime = datetime.now().strftime('%d/%m/%Y - %H:%M:%S')
-    file = backup_sources('Backup_automatico_bot')
-    targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{file}"
-    d = dropbox.Dropbox(token_dropbox)
-    with open(file, "rb") as f:
-        meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
-        link = d.sharing_create_shared_link(targetfile)
-        url = link.url
-        print(f"Backup automatico concluido: {cstrftime}\nDownload: {url}")
-        na_bot.sendMessage(logs,f"Backup automatico concluido: {cstrftime}\nDownload: {url}")
+    file = backup_sources()
+    na_bot.sendDocument(backups_chat, open(file, 'rb'), caption="📅 " + cstrftime + "\n_Gerado automaticamente pelo horario agendado por você._", parse_mode='Markdown')
     os.remove(file)
-    file1 = backup_sources('Backup_bot')
-    na_bot.sendDocument(logs, open(file1, 'rb'), caption="📅 " + cstrftime)
-    os.remove(file1)
-
-
-    #sistema de verificaçao automatica para banimento no grupo
-    try:
-        conexao_sqlite = sqlite3.connect('bot.db')
-        conexao_sqlite.row_factory = sqlite3.Row
-        cursor_sqlite = conexao_sqlite.cursor()
-        hoje = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-        cursor_sqlite.execute("""SELECT * FROM permanencia; """)
-        resultados = cursor_sqlite.fetchall()
-        for resutado in resultados:
-            data_inicial = resutado['data_inicial']
-            data_ban = resutado['data_final']
-            id_doador = resutado['id_doador']
-            doador = resutado['doador']
-            dias = resutado['dias']
-            aviso = resutado['data_aviso']
-            id_grupo = resutado['id_grupo']
-            #ALERTA DE AVISO PARA O DOADOR----:
-            if hoje[0:6] == aviso[0:6]:
-                na_bot.sendMessage(id_grupo,f"🤖 {doador} ***Falta uma semana para você grupo de doadores, caso ainda tenha interesse em continuar usando a loja faça uma doação, envie o comprovante aqui no grupo que um de nossos administradores irá colocar mas dias em sua permanencia.***\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Permanência:` {dias}",'markdown')
-            #BANE O USUARIO CASO A DATA TENHA SIDO IGUAL A DO DIA HOJE
-            if hoje[0:6] <= data_ban[0:6]:
-                na_bot.kickChatMember(str(id_grupo), id_doador)
-                cursor_sqlite.execute(f"""DELETE FROM permanencia WHERE doador='{doador}'""")
-                conexao_sqlite.commit()
-                na_bot.sendMessage(str(id_grupo),f"🤖 ***Removido do grupo pois deu a sua permanência do grupo de doadores.***\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Permanência:` {dias}",'markdown')
-                na_bot.unbanChatMember(str(id_grupo), id_doador)
-    except Exception as e:
-        print(e)
-
-
-
 
 
 def backup_scheduler(target):
     for hour in backup_hours:
         schedule.every().day.at(hour).do(target)
+
     while True:
         schedule.run_pending()
         time.sleep(5)

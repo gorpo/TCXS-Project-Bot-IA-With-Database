@@ -16,10 +16,8 @@ import asyncio
 import os
 
 
-
 #LOCAL CONFIG rodar em local host use as linhas abaixo--->
 token = "1186597860:AAGVtPY-1nHFdufqXDe06lI66UG9ttlwbVM"
-token_dropbox = 'qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwig'
 logs = 522510051 #-1001215401730
 sudoers = [522510051]
 
@@ -42,13 +40,12 @@ keys = dict(
     giphy = '7f6ws7EvslO9BuaAKie9BieyYnD3OkkT',# https://developers.giphy.com
 )
 
+git_repo = ('https://github.com/', 'master')
+max_time = 60
+version = '1.0'
 
 backups_chat = 522510051  # Put a 0, False or None to disable ou seu id privado ou id privado de um canal ou grupo
-backup_hours = ['16:23']
-
-git_repo = ('https://github.com/gorpoorko/Manicomio-Bot-IA', 'master') #repositorio para upgrade do bot
-max_time = 60
-version = '7.0'
+backup_hours = ['15:00']
 
 enabled_plugins = [
     'processmsg',
@@ -84,7 +81,7 @@ enabled_plugins = [
     'randomicas',
     'calculadora',
     'users',
-    'inteligencia',
+    'comandos_db',
     'permanencia',
 
 ]
