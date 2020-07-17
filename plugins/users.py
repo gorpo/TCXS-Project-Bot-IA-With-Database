@@ -16,6 +16,20 @@ import re
 import random
 import amanobot
 import aiohttp
+import json
+import time
+from amanobot.exception import TelegramError, NotEnoughRightsError
+from amanobot.namedtuple import InlineKeyboardMarkup
+from db_handler import conn, cursor
+from config import bot, sudoers, bot_username, bot_id
+from get_strings import strings, Strings
+
+
+import html
+import re
+import random
+import amanobot
+import aiohttp
 from amanobot.exception import TelegramError
 import time
 from utils import send_to_dogbin, send_to_hastebin
@@ -26,80 +40,27 @@ from db_handler import cursor
 from get_strings import strings, Strings
 from config import bot, version, bot_username, git_repo,logs,sudoers
 import sqlite3
-import os
-from plugins.admins import is_admin
 
-
-
+#variaveis que iniciam a Database para enviar a att paga pelos BOTOES
+conexao_sqlite = sqlite3.connect('bot.db')
+conexao_sqlite.row_factory = sqlite3.Row
+cursor_sqlite = conexao_sqlite.cursor()
 
 async def users(msg):
-    # variaveis que iniciam a Database para enviar a att paga pelos BOTOES
-    conexao_sqlite = sqlite3.connect('bot.db')
-    conexao_sqlite.row_factory = sqlite3.Row
-    cursor_sqlite = conexao_sqlite.cursor()
-    try:
-        id_usuario = msg['from']['id']
-        adm = await is_admin(msg['chat']['id'], msg['from']['id'], id_usuario)
-    except Exception as e:
-        pass
     if msg.get('text') and msg['chat']['type'] == 'supergroup':
         if msg['from']['first_name']:
-            pass#print('->Usuario:{} ->Envio:{} ->Grupo:{} ->Data/Hora:{} '.format(msg['from']['first_name'],msg['text'],msg['chat']['title'],time.ctime()))
-## SISTEMA DE GRAVAÇÃO E ENVIO DE LOGS ---------------------------------------------------------------------------------------------------------------->
-        if msg['text'].lower() == 'logs':
-            if adm['user'] == True:
-                cursor_sqlite.execute("""SELECT * FROM logs_usuarios; """)
-                mensagens_sqlite = cursor_sqlite.fetchall()
-                arquivo_logs = open('images/logs.txt', 'a',encoding='utf-8')
-                arquivo_logs.write('-------[+] REGISTO DE MENSAGENS CAPTADAS PELO BOT NOS GRUPOS E PRIVADO [+]-------\n\n')
-                for mensagem in mensagens_sqlite:
-                    tipo = mensagem['tipo']
-                    usuario = mensagem['usuario']
-                    grupo = mensagem['grupo']
-                    data = mensagem['data']
-                    mensagem = mensagem['mensagem']
-                    try:
-                        texto = f"Usuario: {usuario} | Grupo: {grupo} | Tipo: {tipo} | Data: {data} ----->\nMensagem: {mensagem}\n"
-                    except:
-                        texto = ''
-                    arquivo_logs.write(texto)
-                arquivo_logs.close()
-                await bot.sendDocument(msg['chat']['id'], open('images/logs.txt','rb'), reply_to_message_id=msg['message_id'])
-                await bot.sendMessage(msg['chat']['id'], '`{} Esta aqui o log de conversas que tenho armazenado, espero que não tenha nada neste log que te incrimine!`'.format(msg['from']['first_name']),'markdown', reply_to_message_id=msg['message_id'])
-                os.remove('images/logs.txt')
-            else:
-                await bot.sendMessage(msg['chat']['id'], f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
-        #LIMPAR OS LOGS
-        if msg['text'].lower() == 'limpar logs' or msg['text'].lower() == 'apagar logs' or msg['text'].lower() == 'backup logs':
-            if adm['user'] == True:
-                cursor_sqlite.execute("""SELECT * FROM logs_usuarios; """)
-                mensagens_sqlite = cursor_sqlite.fetchall()
-                arquivo_logs = open('images/logs.txt', 'a',encoding='utf-8')
-                arquivo_logs.write('-------[+] REGISTO DE MENSAGENS CAPTADAS PELO BOT NOS GRUPOS E PRIVADO [+]-------\n\n')
-                for mensagem in mensagens_sqlite:
-                    tipo = mensagem['tipo']
-                    usuario = mensagem['usuario']
-                    grupo = mensagem['grupo']
-                    data = mensagem['data']
-                    mensagem = mensagem['mensagem']
-                    try:
-                        texto = f"Usuario: {usuario} | Grupo: {grupo} | Tipo: {tipo} | Data: {data} ----->\nMensagem: {mensagem}\n"
-                    except:
-                        texto = ''
-                    arquivo_logs.write(texto)
-                arquivo_logs.close()
-                await bot.sendDocument(msg['chat']['id'], open('images/logs.txt', 'rb'),reply_to_message_id=msg['message_id'])
-                await bot.sendMessage(msg['chat']['id'],'`{} Esta aqui o Backup de logs de conversas que tenho armazenado, caso preciso guarde este arquivo pois irei limpar a Database`'.format(msg['from']['first_name']), 'markdown', reply_to_message_id=msg['message_id'])
-                os.remove('images/logs.txt')
-                cursor_sqlite.execute("""DELETE FROM logs_usuarios""")
-                conexao_sqlite.commit()
-                await bot.sendMessage(msg['chat']['id'], f"🤖 {msg['from']['first_name']} Todas os logs de usuários e grupos foram apagados!")
-            else:
-                await bot.sendMessage(msg['chat']['id'], f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
+            print('->Usuario:{} ->Envio:{} ->Grupo:{} ->Data/Hora:{} '.format(msg['from']['first_name'],msg['text'],msg['chat']['title'],time.ctime()))
+            log = '\n->Usuario:{} ->Envio:{} ->Grupo:{} ->Data/Hora:{} '.format(msg['from']['first_name'],msg['text'],msg['chat']['title'],time.ctime())
+            #arquivo = open('logs/users.txt','a')
+            #arquivo.write(log)
+            #arquivo.close()
+        if msg['text'].split()[0] == 'logs':
+            await bot.sendDocument(msg['chat']['id'], open('logs/users.txt','rb'), reply_to_message_id=msg['message_id'])    
+            await bot.sendMessage(msg['chat']['id'], '`{} Esta aqui o log de conversas que tenho armazenado, espero que não tenha nada neste log que te incrimine!`'.format(msg['from']['first_name']),'markdown', reply_to_message_id=msg['message_id'])
 
 #SISTEMA DE BOTOES INICIO ---------------------------------------------------------------->
         strs = Strings(msg['chat']['id'])
-        if  msg['text'].lower() == 'comando' or msg['text'] == '/comando'  or msg['text'] == '/comandos' or msg['text'] == 'comandos' or 'help' in msg['text'].lower() or 'ajuda' in msg['text'].lower():
+        if 'comando' in msg['text'].lower()  or 'help' in msg['text'].lower() or 'ajuda' in msg['text'].lower():
             kb = InlineKeyboardMarkup(inline_keyboard=[
                 [dict(text=strs.get('📦 Store Free'), callback_data='store_free')] +
                 [dict(text=strs.get("📦 Store Doadores"), callback_data='store_doadores')],
@@ -433,54 +394,34 @@ async def users(msg):
             #return True
         elif msg['data'] == 'cadastrar_comandos':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
-💾***CADASTRAR ARQUIVOS LOJAS DOADORES/FREE*** 
-```Este bot cadastra as lojas para doadores e free, cadastra também os fix pkg e os fix xml, para atualizar as lojas ou fix pkg e xml basta enviar elas no privado do bot, e ele cadastrará seus arquivos desde que estejam de acordo com as instruções abaixo. Pode ocorrer falhas na hora de cadastrar️, caso não tenha cadastrado envie novamente o arquivo, jamais envie mais de um arquivo por vez.```
-
-🤖***Cadastrar Loja Free:*** `Cadastre a LOJA GRATUITA FREE PKG enviando ela no meu privado com nome terminando com free.pkg, antes disto você pode por qualquer coisa no nome no arquivo como exemplo:` ***TCXS_3.6_free.pkg***
-
-🤖***Cadastrar Loja Doadores:*** `Cadastre a LOJA PARA DOADORES PKG enviando ela no meu privado com nome inicinando com TCXS, após este nome você pode escrever oque quiser no arquivo como  exemplo:` ***TCXS_Store3.9.pkg***
-
-🤖***Cadastrar Fix HAN PKG:*** `Cadastre o FIX HAN PKG enviando ela no meu privado exatamente conforme exemplo:` ***FIX_HAN.pkg***
-
-🤖***Cadastrar Fix HEN PKG:*** `Cadastre o FIX HEN PKG enviando ela no meu privado exatamente conforme exemplo:` ***FIX_HEN.pkg***
-
-🤖***Cadastrar Fix CFW XML:*** `Cadastre o FIX CFW XML enviando ela no meu privado exatamente conforme exemplo:` ***category_network_tool2.xml***
-
-🤖***Cadastrar Fix HEN XML:*** `Cadastre o FIX HEN XML enviando ela no meu privado exatamente conforme exemplo:` ***category_network.xml***
-
-
-💾***CADASTRO DE COMANDOS E REPOSTAS NA DATABASE***        
-🤖`Para cadastrar um comando no banco de dados:`
-#comando resposta que o usuário vai receber
-🤖`Para recadastrar um comando no banco de dados:`
-$comando resposta que o usuário vai receber
-🤖`Para deletar um comando`
-%comando 
-
-💾***CADASTRO DE PERGUNTA DOS USUARIOS*** 
-```Sempre que um usuário enviar alguma pergunta com o ponto de interrogação ela será cadastrada na Database```
-🤖`Para ver as perguntas feitas pelo usuario digite:`
-perguntas 
-🤖`Para limpar as perguntas da Database digite:`
-limpar perguntas
-`Apaga tudo IA e faz backup da Database (somente adm master)`
-
-💾***EXTRAS***
-```Se usar a palavra dropbox como reposta em documentos e imagens eu farei o upload para seu dropbox```
-🤖`Pergunte ao bot com o comando:`
-fale sobre robôs
-
-💾***SOBRE A FREQUENCIA DE MENSAGENS*** 
-```Este bot envia mensagens baseado em uma frequencia que deve ser setada entre 2 e 10, onde:```
-🤖`frequencia 0 = mudo`
-🤖`frequencia 2 = fala pouco`
-🤖`frequencia 10 = fala muito`
-
-💾***SOBRE PROIBIR E PERMITIR PALAVRAS***
-```Este bot pode restringir/permitir palavras com os comandos:```
-🤖`proibir uma palavra:` proibir 
-🤖`permitir uma palavra:` permtir 
-🤖`ver palavras proibidas:` proibidas
+    ***CADASTRO DE COMANDOS E REPOSTAS NA DATABASE***        
+    🤖`Para cadastrar um comando no banco de dados:`
+    #comando resposta que o usuário vai receber
+    🤖`Para recadastrar um comando no banco de dados:`
+    $comando resposta que o usuário vai receber
+    🤖`Para deletar um comando`
+    %comando 
+    ***CADASTRO DE PERGUNTA DOS USUARIOS*** 
+    ```Sempre que um usuário enviar alguma pergunta com o ponto de interrogação ela será cadastrada na Database```
+    🤖`Para ver as perguntas feitas pelo usuario digite:`
+    perguntas 
+    🤖`Para limpar as perguntas da Database digite:`
+    limpar perguntas
+    `Apaga tudo IA e faz backup da Database (somente adm master)`
+    ***EXTRAS***
+    🤖`Se usar a palavra dropbox como reposta em documentos e imagens eu farei o upload para seu dropbox`
+    🤖`Pergunte ao bot com o comando:`
+    fale sobre robôs
+    ***SOBRE A FREQUENCIA DE MENSAGENS*** 
+    ```Este bot envia mensagens baseado em uma frequencia que deve ser setada entre 2 e 10, onde:```
+    `frequencia 0 = mudo`
+    `frequencia 2 = fala pouco`
+    `frequencia 10 = fala muito`
+    ***SOBRE PROIBIR E PERMITIR PALAVRAS***
+    ```Este bot pode restringir e permitir palavras com os comandos:```
+    `proibir uma palavra:` proibir 
+    `permitir uma palavra:` permtir 
+    `ver palavras proibidas:` proibidas
     """,'markdown', reply_markup=keyboard.comandos_admins)
             #return True
         elif msg['data'] == 'area_dev':

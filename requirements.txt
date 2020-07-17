@@ -15,11 +15,3 @@ Pillow~=6.2.2
 beautifulsoup4~=4.8.2
 Pyrogram~=0.17.1-async
 bitlyshortener
-SpeechRecognition
-pydub
-pymysql
-google-api-python-client
-ffprobe-python
-dropbox
-wikipedia
-

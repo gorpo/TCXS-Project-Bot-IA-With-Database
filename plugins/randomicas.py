@@ -29,7 +29,20 @@ async def randomicas(msg):
             await bot.sendAnimation(msg['chat']['id'], animation='CgADBAADsgEAAmPDvFLYWdDUh36QARYE',   reply_to_message_id=msg['message_id'])
 
         # Exemplo de uma mensagem randomica do bot.....
+        if 'marcinho' in msg['text']:
+            print('Usuario {} solicitou seu marcinho random'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou seu u random --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],
+                                                                                              msg['chat']['title'],
+                                                                                              time.ctime())
 
+            marcinho1 = str('https://www.youtube.com/watch?v=UBDuYndtzuE')
+            marcinho2 = str('https://www.youtube.com/watch?v=7e17Eko5EF8')
+            marcinho3 = str('https://www.youtube.com/watch?v=zE7jWzjl3yo')
+            marcinho4 = str('https://www.youtube.com/watch?v=ZJkRS-usY_I')
+            lista = [marcinho1, marcinho2, marcinho3, marcinho4]
+            escolhido = random.choice(lista)
+            await bot.sendMessage(msg['chat']['id'], escolhido, reply_to_message_id=msg['message_id'])
+            
     
         if 'seu cu' in msg['text']:
             print('Usuario {} solicitou seu cu random'.format(msg['from']['first_name']))
@@ -39,7 +52,7 @@ async def randomicas(msg):
 
             cu1 = str('`Pau no seu cu filho da puta!`')
             cu2 = str('`Seu cu o caralho para de fala merda mano!`')
-            cu3 = str('`É mais arregaçado que o da minha mãe quela vaca vadia galinha piranha!`')
+            cu3 = str('`É mais arregaçado que o da minha mão quela vaca vadia galinah piranha!`')
             cu4 = str('`O da sua namorada quela puta rampeira!`')
             cu5 = str('`Ah legal, chegou o mano que só fala bosta no grupo!`')
             cu6 = str('`Seu cu, meu cu, teu cu o cu de todo mundo, foda-se!`')

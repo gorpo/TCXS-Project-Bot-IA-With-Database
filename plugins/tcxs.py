@@ -34,29 +34,15 @@ async def tcxs(msg):
     conexao_sqlite.row_factory = sqlite3.Row
     cursor_sqlite = conexao_sqlite.cursor()
     data = datetime.now().strftime('%d/%m/%Y %H:%M')
-    try:#SISTEMA DE CADASTRO LOJA PARA DOADORES PAGA   | $$$$$ | $$$$$$-------------------------------------->
+    try:#SISTEMA DE CADASTRO LOJA PARA DOADORES-------------------------------------->
         if msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == logs or msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == 758600965 or msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == 628238139: #id_mit = 758600965   id_ted = 628238139
             if msg['document']['file_name'].split('.')[-1] == 'pkg' and 'tcxs' in msg['document']['file_name'].lower():
-                if 'free' in msg['document']['file_name'].lower():
-                    pass
-                else:
-                    id_pkg = msg['document']['file_id']
-                    nome_pkg = msg['document']['file_name']
-                    uploader = msg['from']['username']
-                    cursor_sqlite.execute(f"INSERT INTO loja_doadores(int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
-                    conexao_sqlite.commit()
-                    await bot.sendMessage(msg['chat']['id'],f'`Loja para Doadores atualizada na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}*** no grupo de doadores.','markdown',reply_to_message_id=msg['message_id'])
-    except:
-        pass
-    try:#SISTEMA DE CADASTRO LOJA GRATUITA-------------------------------------->
-        if msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == logs or msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == 758600965 or msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == 628238139: #id_mit = 758600965   id_ted = 628238139
-            if msg['document']['file_name'].split('.')[-1] == 'pkg' and 'free' in msg['document']['file_name'].lower():
                 id_pkg = msg['document']['file_id']
                 nome_pkg = msg['document']['file_name']
                 uploader = msg['from']['username']
-                cursor_sqlite.execute(f"INSERT INTO loja_free(int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
+                cursor_sqlite.execute(f"INSERT INTO loja_doadores(int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
                 conexao_sqlite.commit()
-                await bot.sendMessage(msg['chat']['id'],f'`Loja Gratuita atualizada na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}*** no grupo geral','markdown',reply_to_message_id=msg['message_id'])
+                await bot.sendMessage(msg['chat']['id'],f'`Loja para Doadores atualizada na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
     except:
         pass
     try:#SISTEMA DE CADASTRO FIX HAN-------------------------------------->
@@ -118,7 +104,7 @@ async def tcxs(msg):
                 cursor_sqlite.execute("""SELECT * FROM loja_doadores""")
                 resultados = cursor_sqlite.fetchall()
                 if resultados == []:
-                    await bot.sendMessage(msg['chat']['id'], f"🤖 {msg['from']['first_name']} `não tenho lojas cadastradas, insira o banco de dados com dados ou cadastre um PKG enviando ela no meu privado com nome inicinando com TCXS, exemplo:` ***TCXS_Store_3.9.pkg***", 'markdown')
+                    await bot.sendMessage(msg['chat']['id'], f"🤖 {msg['from']['first_name']} `não tenho lojas cadastradas, insira o banco de dados com dados ou cadastre um PKG enviando ela no meu privado com nome inicinando com TCXS, exexmplo:` ***TCXS_Store_3.9.pkg***", 'markdown')
                 else:
                     for resultado in resultados:
                         id_pkg = resultado['pkg']
@@ -168,6 +154,7 @@ async def tcxs(msg):
 
         #LOJA PARA USUARIOS GRATUITOS ------------------------------------------------------------------->
         if msg.get('text').lower() == 'att' and not msg['chat']['title'] == 'Doadores TCXS 2020':#cagueta q tao roubando a loja kkkk
+            print(msg)
             await bot.sendMessage(msg['chat']['id'],f"***{msg['from']['first_name']} você esta tentando roubar a TCXS Store, cara vou pegar seu ip e te hackear agora mesmo!!!*** ",'markdown', reply_to_message_id=msg['message_id'])
 
         if msg['text'] == 'loja gratis' or msg['text'] == '/freepkg' or msg['text'] == 'free pkg' or msg['text'] == f"/freepkg@{bot_username}" or msg['text'] == 'gratis' or msg['text'] == 'Gratis' or msg['text'] == 'Free pkg':
@@ -262,7 +249,7 @@ async def tcxs(msg):
         ```
     <Query class="type:x-xmb/folder-pixmap" key="ps1_{nome_xml}" attr="ps1_{nome_xml}" src="xmb://localhost/dev_hdd0/game/TCXSPROJECT/USRDIR/XMLS/PS1/{nome_xml}.xml#ps1_items_link" />```''')
 
-                jon = open("images/{}.xml".format(nome_xml), "w")
+                jon = open("xml/PS1/{}.xml".format(nome_xml), "w")
                 for i in arq:
                     j = i.replace('', '')
                     jon.writelines(j)
@@ -272,9 +259,9 @@ async def tcxs(msg):
                                       reply_to_message_id=msg['message_id'])
 
                 await bot.sendDocument(msg['chat']['id'],
-                                       document=open("images/{}.xml".format(nome_xml), 'rb'),
+                                       document=open("xml/PS1/{}.xml".format(nome_xml), 'rb'),
                                        reply_to_message_id=msg['message_id'])
-                os.remove("images/{}.xml".format(nome_xml))
+                os.remove("xml/PS1/{}.xml".format(nome_xml))
 
             except:
                 instrucao = '''Instruções: 
@@ -343,7 +330,7 @@ async def tcxs(msg):
                 ```
     <Query class="type:x-xmb/folder-pixmap" key="ps2_{nome_xml}" attr="ps2_{nome_xml}" src="xmb://localhost/dev_hdd0/game/TCXSPROJECT/USRDIR/XMLS/PS2/{nome_xml}.xml#ps2_items_link" />```''')
 
-                jon = open("images/{}.xml".format(nome_xml), "w")
+                jon = open("xml/PS2/{}.xml".format(nome_xml), "w")
                 for i in arq:
                     j = i.replace('', '')
                     jon.writelines(j)
@@ -353,9 +340,9 @@ async def tcxs(msg):
                                       reply_to_message_id=msg['message_id'])
 
                 await bot.sendDocument(msg['chat']['id'],
-                                       document=open("images/{}.xml".format(nome_xml), 'rb'),
+                                       document=open("xml/PS2/{}.xml".format(nome_xml), 'rb'),
                                        reply_to_message_id=msg['message_id'])
-                os.remove("images/{}.xml".format(nome_xml))
+                os.remove("xml/PS2/{}.xml".format(nome_xml))
             except:
                 instrucao = '''Instruções: 
             ```
@@ -422,7 +409,7 @@ async def tcxs(msg):
                 ```
     <Query class="type:x-xmb/folder-pixmap" key="psp_{nome_xml}" attr="psp_{nome_xml}" src="xmb://localhost/dev_hdd0/game/TCXSPROJECT/USRDIR/XMLS/PSP/{nome_xml}.xml#psp_items_link" />```''')
 
-                jon = open("images/{}.xml".format(nome_xml), "w")
+                jon = open("xml/PSP/{}.xml".format(nome_xml), "w")
                 for i in arq:
                     j = i.replace('', '')
                     jon.writelines(j)
@@ -433,9 +420,9 @@ async def tcxs(msg):
                                       reply_to_message_id=msg['message_id'])
 
                 await bot.sendDocument(msg['chat']['id'],
-                                       document=open("images/{}.xml".format(nome_xml), 'rb'),
+                                       document=open("xml/PSP/{}.xml".format(nome_xml), 'rb'),
                                        reply_to_message_id=msg['message_id'])
-                os.remove("images/{}.xml".format(nome_xml))
+                os.remove("xml/PSP/{}.xml".format(nome_xml))
             except:
                 instrucao = '''Instruções: 
             ```
@@ -520,7 +507,7 @@ async def tcxs(msg):
              ```
     <Query class="type:x-xmb/folder-pixmap" key="ps3_{nome_xml}" attr="ps3_{nome_xml}" src="xmb://localhost/dev_hdd0/game/TCXSPROJECT/USRDIR/XMLS/PS3/{nome_xml}.xml#ps3_items_link" />```''')
 
-                jon = open("images/{}.xml".format(nome_xml), "w")
+                jon = open("xml/PS3/{}.xml".format(nome_xml), "w")
                 for i in arq:
                     j = i.replace('', '')
                     jon.writelines(j)
@@ -531,9 +518,9 @@ async def tcxs(msg):
                                       reply_to_message_id=msg['message_id'])
 
                 await bot.sendDocument(msg['chat']['id'],
-                                       document=open("images/{}.xml".format(nome_xml), 'rb'),
+                                       document=open("xml/PS3/{}.xml".format(nome_xml), 'rb'),
                                        reply_to_message_id=msg['message_id'])
-                os.remove("images/{}.xml".format(nome_xml))
+                os.remove("xml/PS3/{}.xml".format(nome_xml))
             except:
                 instrucao = '''Instruções: 
          ```

@@ -16,7 +16,7 @@ from amanobot.exception import TelegramError, NotEnoughRightsError
 from amanobot.namedtuple import InlineKeyboardMarkup
 from config import bot, bot_id, sudoers
 from db_handler import conn, cursor
-from get_strings import strings, Strings
+
 
 async def is_admin(chat_id, user_id, reply_id=None):
     if int(chat_id) < 0:  # Groups and supergoups IDs.
@@ -55,6 +55,7 @@ async def is_admin(chat_id, user_id, reply_id=None):
 
     else:  # User IDs.
         dic = dict(user=False, reply=False, bot=False)
+
     return dic
 
 
@@ -96,14 +97,11 @@ async def admins(msg):
                                                   reply_to_message_id=msg['message_id'])
                         else:
                             await bot.kickChatMember(msg['chat']['id'], reply_id)
-                            await bot.sendMessage(msg['chat']['id'], f'{msg["from"]["first_name"]} baniu {reply_name}!', reply_to_message_id=msg['message_id'])
+                            await bot.sendMessage(msg['chat']['id'], f'{msg["from"]["first_name"]} baniu {reply_name}!',
+                                                  reply_to_message_id=msg['message_id'])
                     else:
                         await bot.sendMessage(msg['chat']['id'], 'Ei, eu nao tenho admin aqui',
                                               reply_to_message_id=msg['message_id'])
-
-
-
-
 
 
         elif msg['text'].split()[0] == '/kick' or msg['text'].split()[0] == '!kick' or msg['text'].split()[0] == 'kick':
@@ -240,7 +238,7 @@ async def admins(msg):
                                               reply_to_message_id=msg['message_id'])
 
 
-        elif msg['text'].split()[0] == '/unban' or msg['text'].split()[0] == '!unban' :
+        elif msg['text'].split()[0] == '/unban' or msg['text'].split()[0] == '!unban' or msg['text'].split()[0] == 'unban' or msg['text'].split()[0] == 'disban' or msg['text'].split()[0] == 'desbanir':
             print('Usuario {} solicitou /unban'.format(msg['from']['first_name']))
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
