@@ -8,8 +8,8 @@
 #     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
 #     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
 #     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     |        Github Gorpo Dev: https://github.com/gorpo         |
-#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
+#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+
 import html
 import re
 import random
@@ -25,21 +25,23 @@ from config import bot, version, bot_username, git_repo, logs,sudoers
 from db_handler import cursor
 from get_strings import strings, Strings
 import sqlite3
-
+from datetime import datetime
 
 async def tcxs(msg):
     #variaveis iniciais---------------------:
     conexao_sqlite = sqlite3.connect('bot.db')
     conexao_sqlite.row_factory = sqlite3.Row
     cursor_sqlite = conexao_sqlite.cursor()
+    data = datetime.now().strftime('%d/%m/%Y %H:%M')
     try:#SISTEMA DE CADASTRO LOJA PARA DOADORES-------------------------------------->
         if msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == logs or msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == 758600965 or msg['chat']['type'] == 'private' and msg.get('document') and msg['from']['id'] == 628238139: #id_mit = 758600965   id_ted = 628238139
             if msg['document']['file_name'].split('.')[-1] == 'pkg' and 'tcxs' in msg['document']['file_name'].lower():
                 id_pkg = msg['document']['file_id']
                 nome_pkg = msg['document']['file_name']
-                cursor_sqlite.execute(f"INSERT INTO loja_doadores(int_id,versao,pkg)VALUES(null,'{nome_pkg}','{id_pkg}')")
+                uploader = msg['from']['username']
+                cursor_sqlite.execute(f"INSERT INTO loja_doadores(int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
                 conexao_sqlite.commit()
-                await bot.sendMessage(msg['chat']['id'],f'`Loja para Doadores atualizada na Database:` agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
+                await bot.sendMessage(msg['chat']['id'],f'`Loja para Doadores atualizada na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
     except:
         pass
     try:#SISTEMA DE CADASTRO FIX HAN-------------------------------------->
@@ -47,9 +49,10 @@ async def tcxs(msg):
             if msg['document']['file_name'].split('.')[0].lower() == 'fix_han' and msg['document']['file_name'].split('.')[-1].lower() == 'pkg':
                 id_pkg = msg['document']['file_id']
                 nome_pkg = msg['document']['file_name']
-                cursor_sqlite.execute(f"INSERT INTO fix_han (int_id,versao,pkg)VALUES(null,'{nome_pkg}','{id_pkg}')")
+                uploader = msg['from']['username']
+                cursor_sqlite.execute(f"INSERT INTO fix_han (int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
                 conexao_sqlite.commit()
-                await bot.sendMessage(msg['chat']['id'],f'`Fix HAN atualizado na Database:` agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
+                await bot.sendMessage(msg['chat']['id'],f'`Fix HAN atualizado na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
     except:
         pass
     try:#SISTEMA DE CADASTRO FIX HEN-------------------------------------->
@@ -57,9 +60,10 @@ async def tcxs(msg):
             if msg['document']['file_name'].split('.')[0].lower() == 'fix_hen' and msg['document']['file_name'].split('.')[-1].lower() == 'pkg':
                 id_pkg = msg['document']['file_id']
                 nome_pkg = msg['document']['file_name']
-                cursor_sqlite.execute(f"INSERT INTO fix_hen (int_id,versao,pkg)VALUES(null,'{nome_pkg}','{id_pkg}')")
+                uploader = msg['from']['username']
+                cursor_sqlite.execute(f"INSERT INTO fix_hen (int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
                 conexao_sqlite.commit()
-                await bot.sendMessage(msg['chat']['id'],f'`Fix HEN atualizado na Database:` agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
+                await bot.sendMessage(msg['chat']['id'],f'`Fix HEN atualizado na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
     except:
         pass
     try:#SISTEMA DE CADASTRO FIX XML CFW-------------------------------------->
@@ -67,9 +71,10 @@ async def tcxs(msg):
             if msg['document']['file_name'].split('.')[0].lower() == 'category_network_tool2' and msg['document']['file_name'].split('.')[-1].lower() == 'xml':
                 id_pkg = msg['document']['file_id']
                 nome_pkg = msg['document']['file_name']
-                cursor_sqlite.execute(f"INSERT INTO fix_cfw_xml (int_id,versao,pkg)VALUES(null,'{nome_pkg}','{id_pkg}')")
+                uploader = msg['from']['username']
+                cursor_sqlite.execute(f"INSERT INTO fix_cfw_xml (int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
                 conexao_sqlite.commit()
-                await bot.sendMessage(msg['chat']['id'],f'`Fix XML para CFW atualizado na Database:` agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
+                await bot.sendMessage(msg['chat']['id'],f'`Fix XML para CFW atualizado na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
     except:
         pass
     try:#SISTEMA DE CADASTRO FIX XML HEN-------------------------------------->
@@ -77,9 +82,10 @@ async def tcxs(msg):
             if msg['document']['file_name'].split('.')[0].lower() == 'category_network' and msg['document']['file_name'].split('.')[-1].lower() == 'xml':
                 id_pkg = msg['document']['file_id']
                 nome_pkg = msg['document']['file_name']
-                cursor_sqlite.execute(f"INSERT INTO fix_hen_xml (int_id,versao,pkg)VALUES(null,'{nome_pkg}','{id_pkg}')")
+                uploader = msg['from']['username']
+                cursor_sqlite.execute(f"INSERT INTO fix_hen_xml (int_id,uploader,versao,pkg,data)VALUES(null,'{uploader}','{nome_pkg}','{id_pkg}','{data}')")
                 conexao_sqlite.commit()
-                await bot.sendMessage(msg['chat']['id'],f'`Fix XML para HEN atualizado na Database:` agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
+                await bot.sendMessage(msg['chat']['id'],f'`Fix XML para HEN atualizado na Database:` @{uploader} agora os usuarios irão receber a ***{nome_pkg}***','markdown',reply_to_message_id=msg['message_id'])
     except:
         pass
 
@@ -102,7 +108,9 @@ async def tcxs(msg):
                     for resultado in resultados:
                         id_pkg = resultado['pkg']
                         nome_pkg = resultado['versao']
-                    await bot.sendDocument(msg['chat']['id'],document=id_pkg, caption=nome_pkg)
+                        data_att = resultado['data']
+                        uploader_id = resultado['uploader']
+                    await bot.sendDocument(msg['chat']['id'],document=id_pkg, caption=f'{nome_pkg} upada em {data_att} por @{uploader_id}')
                 #FIX HAN DATABASE-------------------------------------------------------------------------------------------------->
                 cursor_sqlite.execute("""SELECT * FROM fix_han""")
                 resultados = cursor_sqlite.fetchall()
@@ -141,7 +149,11 @@ async def tcxs(msg):
                     await bot.sendDocument(msg['chat']['id'], document=id_pkg,caption='XML exclusivo para quem usa HEN')
         except Exception as e:
             pass
+
         #LOJA PARA USUARIOS GRATUITOS ------------------------------------------------------------------->
+        if msg.get('text') == 'luppy solta a att' and msg['chat']['title'] == '☠️‍TCXS_Project☠️':
+            await bot.sendMessage(msg['chat']['id'],f"@{msg['from']['first_name']} você esta tentando roubar a TCXS Store, cara vou pegar seu ip e te hackear agora mesmo!!! ",'markdown', reply_to_message_id=msg['message_id'])
+
         if msg['text'] == 'loja gratis' or msg['text'] == 'free pkg' or msg['text'] == 'Loja gratis' or msg['text'] == 'gratis' or msg['text'] == 'Gratis' or msg['text'] == 'Free pkg':
             await bot.sendMessage(msg['chat']['id'],'Salve, venho trazer a você nossa nova att GRATUITA, espero que goste!      ----    ----     ----   Caso tenha dificuldades com o download em segundo plano confira este tutorial exclusivo feito para você doador amado que contribui para este projeto se manter em pe: https://youtu.be/_21a5REKhBc',reply_to_message_id=msg['message_id'])
             await bot.sendMessage(msg['chat']['id'],'Espero que tenha um pendrive em mãos e saiba usar a loja, não daremos suporte para USUARIOS GRATUITOS, agora  copie os arquivos abaixo para a raiz de um pendrive e coloque na USB direita do seu console, caso use HAN ative o debug ou se usa HEN ative o hen. ESTA ATT NAO USA NENHUM TIPO DE PATCH OU FIX!',reply_to_message_id=msg['message_id'])

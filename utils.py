@@ -9,8 +9,8 @@
 #     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
 #     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
 #     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     |        Github Gorpo Dev: https://github.com/gorpo         |
-#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
+#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+
 import os
 import html
 import aiohttp

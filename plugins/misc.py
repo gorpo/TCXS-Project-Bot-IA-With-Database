@@ -8,8 +8,8 @@
 #     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
 #     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
 #     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     |        Github Gorpo Dev: https://github.com/gorpo         |
-#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
+#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+
 
 import html
 import re
@@ -244,7 +244,7 @@ ID: {bot_id}''',
         
                 #---------------------------------------------------------------------------------------------------------------
 
-        elif msg['text'].lower() == 'pau no cu' or msg['text'].lower() == 'pnc'and msg.get('reply_to_message'):
+        elif msg['text'].lower() == 'pau no cu' and msg.get('reply_to_message'):
             
             if msg['reply_to_message'].get('text'):
                 text = msg['reply_to_message']['text']
@@ -261,7 +261,7 @@ ID: {bot_id}''',
                                               reply_to_message_id=msg['message_id'])
                 return True
 
-        elif msg['text'].lower() == 'filho da puta' or msg['text'].lower() == 'pnc'and msg.get('reply_to_message'):
+        elif msg['text'].lower() == 'filho da puta' and msg.get('reply_to_message'):
             
             if msg['reply_to_message'].get('text'):
                 text = msg['reply_to_message']['text']

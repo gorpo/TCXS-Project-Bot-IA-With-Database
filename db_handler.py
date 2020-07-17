@@ -22,20 +22,19 @@ try:
     except:
         pass
     # tabela da loja_doadores TCXS STORE PKG para doadores
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_doadores (int_id integer not null primary key autoincrement, versao varchar(5000), pkg varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_doadores (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix HAN
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_han (int_id integer not null primary key autoincrement, versao varchar(5000), pkg varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_han (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix HEN
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen (int_id integer not null primary key autoincrement, versao varchar(5000), pkg varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen (int_id integer not null primary key autoincrement,  uploader varchar(5000),versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix XML EXCLUSIVO CFW
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_cfw_xml (int_id integer not null primary key autoincrement, versao varchar(5000), pkg varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_cfw_xml (int_id integer not null primary key autoincrement,  uploader varchar(5000),versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix XML EXCLUSIVO HEN
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen_xml (int_id integer not null primary key autoincrement, versao varchar(5000), pkg varchar(5000));  """)
-
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen_xml (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     #tabela das mensagens aleatorias da IA
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT);  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT,usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
     #tabela dos comandos que podem ser cadastrados com #      | deletar %  recadastrar $
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS comandos   (int_id integer not null primary key autoincrement, tipo varchar(5000), comando varchar(5000), resposta varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS comandos   (int_id integer not null primary key autoincrement, tipo varchar(5000), comando varchar(5000), resposta varchar(5000),usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
     #insere um comando na tabela para questao de testes do bot
     cursor.execute(f"""INSERT INTO comandos(int_id,tipo,comando,resposta)VALUES(1,'texto','oi','Olá Brow, como você vai?')""")
     #tabela para cadastrar perguntas feitas pelos usuarios usando ??
@@ -46,11 +45,6 @@ try:
     cursor.execute(f"""INSERT INTO frequencia(valor)VALUES('1')""")
     #tabela das palavras que podem ser definidas como proibidas no grupo
     cursor.execute("""  CREATE TABLE IF NOT EXISTS proibido (termo varchar(5000));  """)
-
-
-
-
-
     conn.commit()
     conn.close()
 except:
@@ -63,10 +57,7 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS chats (chat_id INTEGER,
                                                     rules,
                                                     goodbye,
                                                     goodbye_enabled INTEGER,
-                                                    ia INTEGER,
                                                     warns_limit INTEGER,
-                                                    antipedro_enabled INTEGER,
-                                                    antipedro_list,
                                                     chat_lang,
                                                     cached_admins)''')
 
@@ -119,8 +110,8 @@ def add_chat(chat_type, chat_id, chat_lang='en'):
             conn.commit()
     elif chat_type == 'supergroup' or chat_type == 'group':
         if not chat_exists(chat_id):
-            cursor.execute('INSERT INTO chats (chat_id, welcome_enabled, antipedro_list, chat_lang) VALUES (?,?,?,?)',
-                           (chat_id, True, '[]', chat_lang))
+            cursor.execute('INSERT INTO chats (chat_id, welcome_enabled,  chat_lang) VALUES (?,?,?)',
+                           (chat_id, True,  chat_lang))
             conn.commit()
     elif chat_type == 'channel':
         if not channel_exists(chat_id):

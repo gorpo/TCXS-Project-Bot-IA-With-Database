@@ -8,8 +8,8 @@
 #     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
 #     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
 #     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     |        Github Gorpo Dev: https://github.com/gorpo         |
-#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
+#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+
 
 import html
 import re
@@ -29,42 +29,54 @@ import dropbox
 import re
 import wikipedia
 import sqlite3
-
-
-
+from config import bot, sudoers, logs, bot_username
+from datetime import datetime
 async def comandos_db(msg):
     # FUNÇÕES DO BOT------------------------------------>
     d = dropbox.Dropbox('qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwig')
     conexao_sqlite = sqlite3.connect('bot.db')
     conexao_sqlite.row_factory = sqlite3.Row
     cursor_sqlite = conexao_sqlite.cursor()
+    if msg['chat']['type'] == 'private':
+        grupo = f'@{bot_username}'
+    else:
+        try:
+            grupo = f"https://t.me/{msg['chat']['username']}"
+        except:
+            grupo = f"Secreto: {msg['chat']['title']}"
+            pass
     chat_id = msg['chat']['id']
+    usuario = msg['from']['username']
     try:
         texto = msg['text']
     except:
         pass
+    data = datetime.now().strftime('%d/%m/%Y %H:%M')
     chat_type = msg['chat']['type']
     if chat_type == 'supergroup':  # se o chat for supergrupo ele manda mensagem
-        ## SISTEMA DE FALA AUTOMATICA DO BOT COM BASE NOS POSTS DOS USUARIOS SQLITE3------------------------------------------->
+     ## SISTEMA DE FALA AUTOMATICA DO BOT COM BASE NOS POSTS DOS USUARIOS SQLITE3------------------------------------------->
         try:
             if msg.get('sticker'):
                 id_sticker = msg['sticker']['file_id']
                 await bot.sendSticker(msg['from']['id'], sticker=id_sticker)
-                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem)VALUES(null,'sticker','{id_sticker}')""")
+                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'sticker','{id_sticker}','{usuario}','{grupo}','{data}')""")
                 conexao_sqlite.commit()
             if msg.get('photo'):
                 id_foto = msg['photo'][0]['file_id']
-                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem)VALUES(null,'imagem','{id_foto}')""")
+                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'imagem','{id_foto}','{usuario}','{grupo}','{data}')""")
                 conexao_sqlite.commit()
-                await bot.sendPhoto(-1001402280935, id_foto)
+                try:
+                    await bot.sendPhoto(-1001402280935, id_foto)
+                except:
+                    pass
                 try:
                     await bot.sendPhoto(msg['from']['id'], photo=id_foto, caption='Você mandou esta foto no grupo.')
                 except:
                     pass
             if msg.get('document'):
                 id_documento = msg['document']['file_id']
-                await  bot.sendDocument(msg['from']['id'], id_documento)
-                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem)VALUES(null,'documento','{id_documento}')""")
+                #await  bot.sendDocument(msg['from']['id'], id_documento)
+                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'documento','{id_documento}','{usuario}','{grupo}','{data}')""")
                 conexao_sqlite.commit()
                 try:
                     captado = msg['caption']
@@ -73,15 +85,18 @@ async def comandos_db(msg):
                 await bot.sendDocument(-1001166426209, id_documento, captado)
             if msg.get('audio'):
                 id_audio = msg['audio']['file_id']
-                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem)VALUES(null,'audio','{id_audio}')""")
+                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'audio','{id_audio}','{usuario}','{grupo}','{data}')""")
                 conexao_sqlite.commit()
             if msg.get('video'):
                 id_video = msg['video']['file_id']
-                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem)VALUES(null,'video','{id_video}')""")
+                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'video','{id_video}','{usuario}','{grupo}','{data}')""")
                 conexao_sqlite.commit()
-                await bot.sendVideo(-1001402280935, id_video)
                 try:
-                    await bot.sendVideo(msg['from']['id'], id_video, caption='Você mandou este video no grupo.')
+                    await bot.sendVideo(-1001402280935, id_video)
+                except:
+                    pass
+                try:
+                    await bot.sendVideo(msg['from']['id'], id_video, caption=f'@{usuario} Você mandou este video no {grupo}.')
                 except:
                     pass
             if msg.get('voice'):
@@ -98,7 +113,7 @@ async def comandos_db(msg):
                 # conexao_sqlite.commit()
             if msg.get('text'):  # ALTERAR A FREQUENCIA DO BOT------------------------------------------------------------------------------>
                 texto = msg['text']
-                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem)VALUES(null,'texto','{texto}')""")
+                cursor_sqlite.execute(f"""INSERT INTO mensagens(int_id,tipo,mensagem,usuario,grupo,data)VALUES(null,'texto','{texto}','{usuario}','{grupo}','{data}')""")
                 conexao_sqlite.commit()
                 if texto.lower().startswith('frequencia'):
                     valor = texto[11:]
@@ -130,16 +145,17 @@ async def comandos_db(msg):
                     tipo_mensagem = mensagens_sqlite[randomico][1]
                     if m.startswith('fale') or m.lower().startswith('luppy') or 'att' in m or m.startswith('frequencia') or m.startswith('#') or m.startswith('comandos') or m.startswith('%') or m.startswith('$') or m.startswith('/') or m.startswith('permitir') or m.startswith('proibir') or m.startswith('proibidas'):
                         pass
-                    else:  # SISTEMA DE RESPOSTA AUTOMATICA COM BASE NA VARIAVEL "tipo" DA DATABASE-------------------------------->
+###--->>> SISTEMA DE RESPOSTA AUTOMATICA COM BASE NA VARIAVEL "tipo" DA DATABASE  |  COMENTE E DESCOMENTE LINHAS PARA QUE O BOT ENVIE OU NAO AS MENSAGENS-------------------------------->
+                    else:
                         if tipo_mensagem == 'imagem':
                             await bot.sendPhoto(chat_id, photo=m)
                             print(f'🤖 Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {m}')
                         if tipo_mensagem == 'documento':
-                            await bot.sendDocument(chat_id, document=m)
-                            print(f'🤖 Bot enviou um documento no grupo {msg["chat"]["title"]} com a id {m}')
+                            #await bot.sendDocument(chat_id, document=m)
+                            print(f'🤖 Bot tentou enviar um documento no grupo {msg["chat"]["title"]} com a id {m}')
                         if tipo_mensagem == 'audio':
-                            await bot.sendAudio(chat_id, audio=m)
-                            print(f'🤖 Bot enviou um audio no grupo {msg["chat"]["title"]} com a id {m}')
+                            #await bot.sendAudio(chat_id, audio=m)
+                            print(f'🤖 Bot tentou enviar um audio no grupo {msg["chat"]["title"]} com a id {m}')
                         if tipo_mensagem == 'video':
                             await bot.sendVideo(chat_id, video=m)
                             print(f'🤖 Bot enviou um video no grupo {msg["chat"]["title"]} com a id {m}')
@@ -150,9 +166,9 @@ async def comandos_db(msg):
                             await bot.sendSticker(chat_id, sticker=m)
                             print(f'🤖 Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {m}')
         except Exception as e:
-            print(f'Erro no sistema de fala automatica: {e}')
+            print(f'Erro no sistema de fala automatica: {e}\nTente remover as linhas dos "canais" que ele envia fotos/videos e que ele envia documentos')
             pass
-        # SISTEMA QUE DELETA MENSAGENS PROIBIDAS --------------------------------------------------------------------->
+    # SISTEMA QUE DELETA MENSAGENS PROIBIDAS --------------------------------------------------------------------->
         try:  # verifica se a palavra é proibida, se for deleta a mensagem do usuario e envia um aviso------>
             cursor_sqlite.execute("""SELECT * FROM proibido; """)
             mensagens_proibidas = cursor_sqlite.fetchall()
@@ -203,7 +219,6 @@ async def comandos_db(msg):
         if msg.get('text'):
             texto = msg['text']
             try:
-                # print(f"Usuário: @{msg['from']['username']} | Grupo: {msg['chat']['title']} | Mensagem: {texto}")
                 if texto == 'amigo':
                     await bot.sendVideo(chat_id, video=open('images/marcinho.mp4', 'rb'),
                                   reply_to_message_id=msg['message_id'])
@@ -248,7 +263,7 @@ async def comandos_db(msg):
                         await bot.sendVideo(chat_id, video=resposta, reply_to_message_id=msg['message_id'])
             except Exception as e:
                 print(f'Erro no sistema de respostas CDRUD: {e}')
-# SISTEMA CADASTRO DE RESPOSTAS COM BASE NOS COMANDOS CADASTRADOS MANUALMENTE NO GRUPO | CRUD----------------------------------------->
+# SISTEMA CADASTRO DE RESPOSTAS COM BASE NOS COMANDOS CADASTRADOS MANUALMENTE NO GRUPO | CRUD---------------------------------------------------------------------->
             ##SISTEMA DE CADASTRO USANDO REPLY------------------------------------------------>
             try:  # IMAGENS na Database-------------------------------------------------------------->
                 if 'photo' in msg.get('reply_to_message') and texto.startswith('#'):
@@ -263,7 +278,7 @@ async def comandos_db(msg):
                     if existe_cadastro_imagem == 1:
                         await bot.sendMessage(chat_id, "🤖 `Comando já cadastrado, tente outro`", 'markdown')
                     else:
-                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta) VALUES ('imagem','{comando}','{id_foto}')""")
+                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('imagem','{comando}','{id_foto}','{usuario}','{grupo}','{data}')""")
                         conexao_sqlite.commit()
                         await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\n`Comando:` {comando}\n`File_id:` {id_foto}",'markdown')
             except:
@@ -281,7 +296,7 @@ async def comandos_db(msg):
                     if existe_cadastro_video == 1:  # se o valor existe_cadastro esta como 1 ele avisa que ja existe cadastro
                         await bot.sendMessage(chat_id, "🤖 `Comando já cadastrado, tente outro`", 'markdown')
                     else:
-                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta) VALUES ('video','{comando}','{id_video}')""")
+                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('video','{comando}','{id_video}','{usuario}','{grupo}','{data}')""")
                         conexao_sqlite.commit()
                         await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\n`Comando:` {comando}\n`File_id:` {id_video}",'markdown')
             except:
@@ -299,7 +314,7 @@ async def comandos_db(msg):
                     if existe_cadastro_document == 1:  # se o valor existe_cadastro esta como 1 ele avisa que ja existe cadastro
                         await bot.sendMessage(chat_id, "🤖 `Comando já cadastrado, tente outro`", 'markdown')
                     else:
-                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta) VALUES ('documento','{comando}','{id_documento}')""")
+                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('documento','{comando}','{id_documento}','{usuario}','{grupo}','{data}')""")
                         conexao_sqlite.commit()
                         await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\n`Comando:` {comando}\n`File_id:` {id_documento}",'markdown')
             except:
@@ -318,7 +333,7 @@ async def comandos_db(msg):
                     if existe_cadastro_voz == 1:  # se o valor existe_cadastro esta como 1 ele avisa que ja existe cadastro
                         await bot.sendMessage(chat_id, "🤖 `Comando já cadastrado, tente outro`", 'markdown')
                     else:
-                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta) VALUES ('voz','{comando}','{id_voz}')""")
+                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('voz','{comando}','{id_voz}','{usuario}','{grupo}','{data}')""")
                         conexao_sqlite.commit()
                         await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\n`Comando:` {comando}\n`File_id:` {id_voz}",'markdown')
             except:
@@ -336,7 +351,7 @@ async def comandos_db(msg):
                     if existe_cadastro_audio == 1:  # se o valor existe_cadastro esta como 1 ele avisa que ja existe cadastro
                         await bot.sendMessage(chat_id, "🤖 `Comando já cadastrado, tente outro`", 'markdown')
                     else:
-                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta) VALUES ('audio','{comando}','{id_audio}')""")
+                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('audio','{comando}','{id_audio}','{usuario}','{grupo}','{data}')""")
                         conexao_sqlite.commit()
                         await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\n`Comando:` {comando}\n`File_id:` {id_audio}",'markdown')
             except:
@@ -354,7 +369,7 @@ async def comandos_db(msg):
                     if existe_cadastro_text == 1:  # se o valor existe_cadastro esta como 1 ele avisa que ja existe cadastro
                         await bot.sendMessage(chat_id, "🤖 `Comando já cadastrado, tente outro`", 'markdown')
                     elif existe_cadastro_text == 0:  # se o valor de existe_cadastro nao foi alterado ele cadastra novo comando
-                        cursor_sqlite.execute(f"""INSERT INTO comandos(id,'texto')VALUES('{comando}','{id_text}')""")
+                        cursor_sqlite.execute(f"""INSERT INTO comandos(tipo,comando,resposta,usuario,grupo,data)VALUES('texto','{comando}','{id_text}','{usuario}','{grupo}','{data}')""")
                         conexao_sqlite.commit()
                         await bot.sendMessage(chat_id,f"`🤖 Dados inseridos com exito.\nComando:` {comando}\n`File_id:` {id_text}",'markdown')
             except:
@@ -375,7 +390,7 @@ async def comandos_db(msg):
                         await bot.sendMessage(chat_id, "Comando já cadastrado, tente outro",
                                         reply_to_message_id=msg['message_id'])
                     else:
-                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta) VALUES ('texto','{comando}','{resposta}')""")
+                        cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('texto','{comando}','{resposta}','{usuario}','{grupo}','{data}')""")
                         conexao_sqlite.commit()
                         await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\nComando: {comando}\nResposta: {resposta}",reply_to_message_id=msg['message_id'])
             except:
@@ -390,9 +405,10 @@ async def comandos_db(msg):
                     cursor_sqlite.execute(f"""DELETE FROM comandos WHERE comando='{comando}'""")
                     conexao_sqlite.commit()
                     await bot.sendMessage(chat_id, f'Comando: {comando} apagado do sistema.',reply_to_message_id=msg['message_id'])
-                    cursor_sqlite.execute(f"""INSERT INTO comandos(id,'texto')VALUES('{comando}','{resposta}')""")
+                    cursor_sqlite.execute(f"""INSERT INTO comandos(tipo,comando,resposta,usuario,grupo,data)VALUES('texto',{comando}','{resposta}','{usuario}','{grupo}','{data}')""")
                     conexao_sqlite.commit()
-                    await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\n`Comando:` {comando}\n`Resposta:` {resposta}",'markdown')
+                    await bot.sendMessage(chat_id, f"🤖 Dados inseridos com exito.`Comando:` {comando}`Resposta:` {resposta}", 'markdown',        reply_to_message_id=msg['message_id'])
+
             except:
                 pass
             try:  # DELETAR COMANDOS CADASTRADOS USANDO O %------------>
@@ -515,6 +531,8 @@ async def comandos_db(msg):
                 texto = r.recognize_google(audio, language='pt-BR')
                 await bot.sendMessage(chat_id, f"`{msg['from']['first_name']} disse:`\n```{texto}```", 'markdown',reply_to_message_id=msg['message_id'])
             if msg.get('text'):
+                if msg.get('text') == 'luppy solta a att':
+                    await bot.sendMessage(chat_id, f"@{msg['from']['first_name']} você esta tentando roubar a TCXS Store, cara vou pegar seu ip e te hackear agora mesmo!!! ", 'markdown',reply_to_message_id=msg['message_id'])
                 cursor_sqlite.execute("""SELECT * FROM mensagens; """)
                 mensagens_sqlite = cursor_sqlite.fetchall()
                 quantidade_mensagens = len(mensagens_sqlite)
