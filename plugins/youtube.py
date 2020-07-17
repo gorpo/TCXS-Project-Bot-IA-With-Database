@@ -1,4 +1,15 @@
-
+# -*- coding: utf-8 -*-
+#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
+#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
+#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
+#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
+#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
+#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
+#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
+#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
+#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
+#     |        Github Gorpo Dev: https://github.com/gorpo         |
+#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
 import html
 import re
 import random
@@ -74,7 +85,7 @@ async def youtube(msg):
 
 #----------------------------------------------------------------------------------------------------------------------------------------------
 
-        elif msg['text'].split()[0] == 'downloadyoutube':   #aqui era /ytdl tirei pra nao pesar o server
+        elif msg['text'].split()[0] == '/ytdl':   #aqui era /ytdl tirei pra nao pesar o server
             
             text = msg['text'][6:]
 

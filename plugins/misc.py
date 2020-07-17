@@ -1,4 +1,15 @@
-
+# -*- coding: utf-8 -*-
+#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
+#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
+#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
+#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
+#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
+#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
+#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
+#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
+#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
+#     |        Github Gorpo Dev: https://github.com/gorpo         |
+#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
 
 import html
 import re
@@ -50,8 +61,7 @@ async def misc(msg):
                 reply_id = msg['reply_to_message']['message_id']
             else:
                 reply_id = None
-            await bot.sendMessage(msg['chat']['id'], msg['text'][6:], 'markdown',
-                                  reply_to_message_id=reply_id)
+            await bot.sendMessage(msg['chat']['id'], f"`{msg['text'][6:]}`", 'markdown', reply_to_message_id=reply_id)
             return True
 
 
@@ -102,6 +112,10 @@ ID: {bot_id}''',
 
                      ID: <code>{msg['from']['id']}</code>
                      Mensagem: {text}""", 'HTML')
+                await bot.sendMessage(logs, f"""<a href="tg://user?id={msg['from']['id']}">{msg['from'][
+                    'first_name']}</a> reportou um bug:
+                                     ID: <code>{msg['from']['id']}</code>
+                                     Mensagem: {text}""", 'HTML')
                 await bot.sendMessage(msg['chat']['id'], 'O bug foi reportado com sucesso para a minha equipe!',
                                       reply_to_message_id=msg['message_id'])
             return True
@@ -125,7 +139,7 @@ ID: {bot_id}''',
                 text = msg['text'][9:] or msg.get('reply_to_message', {}).get('text')
                 if not text:
                     await bot.sendMessage(msg['chat']['id'],
-                                          '''*Uso:* `/hastebin <texto>` - _envia um texto para o hastebin._''',
+                                          '''*Uso:* `/hastebin <codigo em qualquer linguagem>` - _envia seu codigo para o hastebin._''',
                                           'markdown',
                                           reply_to_message_id=msg['message_id'])
                 else:
@@ -145,13 +159,14 @@ ID: {bot_id}''',
             return True
 
 
-        elif msg['text'] == 'ban' or msg['text'] == '/ban' or msg['text'] == '/gorpo@' + bot_username:
+        elif msg['text'] == 'unban' or msg['text'] == '/unban' or msg['text'] == '/unban@' + bot_username:
             
             try:
                 await bot.unbanChatMember(msg['chat']['id'], msg['from']['id'])
+                await bot.sendMessage(msg['chat']['id'],"Desbani ele....",reply_to_message_id=msg['message_id'])
             except TelegramError:
                 await bot.sendMessage(msg['chat']['id'],
-                                      'Nao deu pra te remover, voce.... deve ser um admin ou eu nao sou admin nesta bosta.',
+                                      'Nao deu para debanir ele, talvez eu nao sou admin nesta bosta.',
                                       reply_to_message_id=msg['message_id'])
             return True
 
@@ -180,7 +195,7 @@ ID: {bot_id}''',
             return True
 
 
-        elif msg['text'] == 'suco':
+        elif msg['text'].lower() == 'suco':
             if msg['from']['id'] in sudoers:
                 is_sudo = 'é gostozinho'
             else:

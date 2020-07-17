@@ -1,3 +1,16 @@
+# -*- coding: utf-8 -*-
+#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
+#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
+#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
+#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
+#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
+#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
+#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
+#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
+#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
+#     |        Github Gorpo Dev: https://github.com/gorpo         |
+#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
+
 import html
 import re
 import random
@@ -5,11 +18,8 @@ import amanobot
 import aiohttp
 from amanobot.exception import TelegramError
 import time
-
 from utils import send_to_dogbin, send_to_hastebin
-
 from amanobot.namedtuple import InlineKeyboardMarkup
-
 import keyboard
 from config import bot, version, bot_username, git_repo,logs,sudoers
 from db_handler import cursor
@@ -18,9 +28,31 @@ from get_strings import strings, Strings
 async def start(msg):
     if msg.get('text'):
         strs = Strings(msg['chat']['id'])
+        strs = Strings(msg['chat']['id'])
+        if msg['text'] == 'lista jogos' or msg['text'] == 'lista de jogos' or msg['text'] == 'Lista jogos' or msg[
+            'text'] == 'Lista jogos' or msg['text'] == 'Lista de jogos' or msg['text'] == 'PSN' or msg[
+            'text'] == 'PSN Stuff' or msg['text'] == 'PSN stuff' or msg['text'] == 'psn' or msg['text'] == 'psn stuff':
+            if msg['chat']['type'] == 'private':
+                kb = InlineKeyboardMarkup(inline_keyboard=[])
+                smsg = strs.get('pm_start_msg')
+            else:
+                kb = InlineKeyboardMarkup(inline_keyboard=[
+                    [dict(text=strs.get('🎮 Jogos de A a B'), callback_data='AaB')] +
+                    [dict(text=strs.get('🎮 Jogos de B a D'), callback_data='BaD')] +
+                    [dict(text=strs.get('🎮 Jogos de E a G'), callback_data='EaG')],
+                    [dict(text=strs.get('🎮 Jogos de G a K'), callback_data='GaK')] +
+                    [dict(text=strs.get('🎮 Jogos de K a M'), callback_data='KaM')] +
+                    [dict(text=strs.get('🎮 Jogos de M a P'), callback_data='MaP')],
+                    [dict(text=strs.get('🎮 Jogos de R a S'), callback_data='RaS')] +
+                    [dict(text=strs.get('🎮 Jogos de S a T'), callback_data='SaT')] +
+                    [dict(text=strs.get('🎮 Jogos de T a Z'), callback_data='TaZ')]
+                ])
+                smsg = strs.get('''🎮 Temos jogos para download com link direto 🎮
+        Basta clicar no botão que te trarei a lista com link direto para download, pedimos sua contribuição para que este projeto se mantenha vivo, Obrigado a todos da TCXS!''')
+            await bot.sendMessage(msg['chat']['id'], smsg,
+                                  reply_to_message_id=msg['message_id'], reply_markup=kb)
 
         if msg['text'] == '/start' or msg['text'] == '!start' or msg['text'].split()[0] == '@gorpo_bot' + bot_username or msg['text'] == 'start':           
-
 
             if msg['chat']['type'] == 'private':
                 kb = InlineKeyboardMarkup(inline_keyboard=[
@@ -31,7 +63,6 @@ async def start(msg):
                 ])
                 smsg = strs.get('pm_start_msg')
                 print('Usuario {} solicitou /start -  isto nao foi gravado nos logs'.format(msg['from']['first_name']))
-               
             else:
                 kb = InlineKeyboardMarkup(inline_keyboard=[
                     [dict(text=strs.get('start_pm_button'), url='https://t.me/{}?start=start'.format(bot_username))]
@@ -288,9 +319,9 @@ Partnerships:
  
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
+            return True
 
-        
+
         elif msg['data'] == 'EaG':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),'''• Manicomio Bot
 <a href="http://zeus.dl.playstation.net/cdn/UP0006/NPUB30026_00/LXctHVuHjfmFMX4JXAmN74WdK2IMelGmWv3aeO2ebkp6ilhgOwtMs8fFF3GBw5yDNuaTkaMeU60mCn6Ek6PSV2ba9FCHxWY7epI8D.pkg"> EA SPORTS Fantasy Football Live Draft Tracker - Missing RAP?</a>
@@ -342,9 +373,9 @@ Partnerships:
 
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
+            return True
 
-        
+
         elif msg['data'] == 'GaK':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),'''• Manicomio Bot
 <a href="http://ares.dl.playstation.net/cdn/UP9000/NPUA80292_00/u18VSJaNLeV3c2c1ijIa9VUAP3L8smSleLmc4A37MoeTFYC1MeMVAiiOd7N3c6xYP9HbWWV7hWbE2do6DTiY8Gi7uRe1uvE91ct8h.pkg"> Gravity Crash - RAP not Required</a>
@@ -396,8 +427,8 @@ Partnerships:
 
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True             
-        
+            return True
+
 
         elif msg['data'] == 'KaM':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),'''• Manicomio Bot
@@ -449,7 +480,7 @@ Partnerships:
 
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
+            return True
 
         elif msg['data'] == 'MaP':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),'''• Manicomio Bot
@@ -500,8 +531,8 @@ Partnerships:
  
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
-            
+            return True
+
 
         elif msg['data'] == 'PaR':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),'''• Manicomio Bot
@@ -557,8 +588,8 @@ Partnerships:
 
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
-            
+            return True
+
         elif msg['data'] == 'RaS':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),'''• Manicomio Bot
 <a href="http://ares.dl.playstation.net/cdn/UP0017/NPUA30061_00/hkiNXzOQvXbKnEQiWrHImTLNZwAwxCwizmhvjhwcMtXfCbKPHgSzHeVLUoDdNtrsgsVjRHnjrqSgpQUeXeKjbNvDaDRdqIeJQGlbe.pkg"> Rochard - RAP not Required</a>
@@ -613,7 +644,7 @@ Partnerships:
                 
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
+            return True
 
 
 
@@ -673,7 +704,7 @@ Partnerships:
  
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
+            return True
 
         elif msg['data'] == 'TaZ':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),'''• Manicomio Bot
@@ -725,7 +756,7 @@ Partnerships:
  
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True       
+            return True
 
         elif msg['data'] == 'AaB':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
@@ -783,6 +814,6 @@ Partnerships:
 
 ''', parse_mode='html',
                                       disable_web_page_preview=True)
-            return True    
+            return True
 
 

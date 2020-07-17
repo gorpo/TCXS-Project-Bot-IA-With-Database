@@ -1,22 +1,15 @@
-# Copyright (C) 2018-2019 Amano Team <contact@amanoteam.ml>
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy of
-# this software and associated documentation files (the "Software"), to deal in
-# the Software without restriction, including without limitation the rights to
-# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-# the Software, and to permit persons to whom the Software is furnished to do so,
-# subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
+# -*- coding: utf-8 -*-
+#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
+#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
+#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
+#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
+#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
+#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
+#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
+#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
+#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
+#     |        Github Gorpo Dev: https://github.com/gorpo         |
+#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
 import json
 import time
 
@@ -71,13 +64,7 @@ async def is_admin(chat_id, user_id, reply_id=None):
 async def admins(msg):
     if msg.get('text'):
         if msg['text'].split()[0] == '/ban' or msg['text'].split()[0] == '!ban':
-
             print('Usuario {} solicitou /ban'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /ban  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/ban.txt','a')
-            arquivo.write(log)
-            arquivo.close()
-
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
             else:
@@ -119,18 +106,8 @@ async def admins(msg):
                                               reply_to_message_id=msg['message_id'])
 
 
-
-
-
-
-
         elif msg['text'].split()[0] == '/kick' or msg['text'].split()[0] == '!kick' or msg['text'].split()[0] == 'kick':
             print('Usuario {} solicitou /kick'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /kick  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/ban.txt','a')
-            arquivo.write(log)
-            arquivo.close()
-
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
             else:
@@ -174,10 +151,6 @@ async def admins(msg):
 
         elif msg['text'].split()[0] == '/mute' or msg['text'].split()[0] == '!mute' or msg['text'].split()[0] == 'mute':
             print('Usuario {} solicitou /mute'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /mute  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/ban.txt','a')
-            arquivo.write(log)
-            arquivo.close()
 
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
@@ -221,13 +194,7 @@ async def admins(msg):
 
 
         elif msg['text'].split()[0] == '/unmute' or msg['text'].split()[0] == '!unmute' or msg['text'].split()[0] == 'unmute':
-
             print('Usuario {} solicitou /unmute'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /unmute  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/ban.txt','a')
-            arquivo.write(log)
-            arquivo.close()
-
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
             else:
@@ -275,12 +242,6 @@ async def admins(msg):
 
         elif msg['text'].split()[0] == '/unban' or msg['text'].split()[0] == '!unban' or msg['text'].split()[0] == 'unban' or msg['text'].split()[0] == 'disban' or msg['text'].split()[0] == 'desbanir':
             print('Usuario {} solicitou /unban'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /unban  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/ban.txt','a')
-            arquivo.write(log)
-            arquivo.close()
-
-
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
             else:
@@ -325,13 +286,7 @@ async def admins(msg):
 
 
         elif msg['text'].split()[0] == '/pin' or msg['text'].split()[0] == '!pin' or msg['text'].split()[0] == 'fixa' or msg['text'].split()[0] == 'fixar':
-
             print('Usuario {} solicitou /pin'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /pin  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
-
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
             elif (await is_admin(msg['chat']['id'], msg['from']['id']))['user']:
@@ -344,11 +299,6 @@ async def admins(msg):
 
         elif msg['text'].split()[0] == '/unpin' or msg['text'].split()[0] == '!unpin':
             print('Usuario {} solicitou /unpin'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /unpin  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
-
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
             elif (await is_admin(msg['chat']['id'], msg['from']['id']))['user']:
@@ -359,10 +309,6 @@ async def admins(msg):
 
         elif msg['text'].startswith('/title') or msg['text'].startswith('!title') or msg['text'].startswith('titulo'):
             print('Usuario {} solicitou /title'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /title  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
             text = msg['text'][7:]
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
@@ -386,10 +332,6 @@ async def admins(msg):
 
         elif msg['text'] == '/config' or msg['text'] == 'configurar o bot':
             print('Usuario {} solicitou /config'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /config  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
             else:
@@ -406,10 +348,6 @@ async def admins(msg):
 
         elif msg['text'] == '/admdebug':
             print('Usuario {} solicitou /admdebug'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /admdebug  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
             res = await is_admin(msg['chat']['id'], msg['from']['id'],
                                  msg['reply_to_message']['from']['id'] if msg.get('reply_to_message') else None)
             await bot.sendMessage(msg['chat']['id'], res)

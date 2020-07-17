@@ -1,3 +1,16 @@
+# -*- coding: utf-8 -*-
+# ███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
+# ████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
+# ██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
+# ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
+# ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
+# ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
+#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
+#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
+#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
+#     |        Github Gorpo Dev: https://github.com/gorpo         |
+#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
+
 import json
 from glob import glob
 from dbh import dbc, db

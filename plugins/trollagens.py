@@ -1,3 +1,15 @@
+# -*- coding: utf-8 -*-
+#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
+#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
+#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
+#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
+#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
+#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
+#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
+#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
+#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
+#     |        Github Gorpo Dev: https://github.com/gorpo         |
+#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
 import html
 import re
 import random
@@ -10,13 +22,8 @@ from utils import send_to_dogbin, send_to_hastebin
 
 async def trollagens(msg):
     if msg.get('text'):
-
-
-  
         if msg['text'] == 'chartubate':
             await bot.sendMessage(msg['chat']['id'], 'ai noob ja conferiu o chartubate da nossa musa Sherry -->> https://m.chaturbate.com/sherryshen/'.format(msg['from']['first_name']),reply_to_message_id=msg['message_id'])
-                  
-
         if msg['text'] == 'vanessinha':
             await bot.sendMessage(msg['chat']['id'], '`vanessinha tira o gutto do serio {} `'.format(msg['from']['first_name']),'markdown',reply_to_message_id=msg['message_id'])
             await bot.sendPhoto(msg['chat']['id'], photo='AgADAQADQ6gxG-BOyER2xRrlf-rZJIfSbgYABAEAAwIAA3gAA8puAAIWBA', reply_to_message_id=msg['message_id'])
@@ -44,7 +51,7 @@ async def trollagens(msg):
          #tcxs pyject store creator
         if msg['text'] == 'tcxs pyject' or msg['text'] == 'pyject' or msg['text'] == 'Tcxs pyject' or msg['text'] == 'TCXS Pyject' or msg['text'] == 'Pyject' or msg['text'] == 'Criador de loja' or msg['text'] == 'criador de loja' or msg['text'] == 'programa que cria loja' or msg['text'] == 'cria loja':
             await bot.sendMessage(msg['chat']['id'], 'Salve {}  O @GorpoOrko criou um programa que cria lojas em PKG e tambem cria a loja diretamente no PlayStation3, o programa é super facil de usar!  Caso tenha alguma duvida o @GorpoOrko irá atender a pedidos,perguntas e respostas somente via comentarios no github, siga o @GorpoOrko no Github e fique por dentro dos maiores hacks e programas mais atuais para seu console!  Você pode baixar a souce neste link: https://github.com/gorpo/TCXS_Pyject_PlayStation3_Store_Creator e o tutorial de uso do programa neste link: https://www.youtube.com/watch?v=EQbymbu5htA'.format(msg['from']['first_name']),reply_to_message_id=msg['message_id'])
-            
+
 
 
 
@@ -74,8 +81,8 @@ async def trollagens(msg):
         elif msg['text'].split()[0] == 'biblioteca' or msg['text'].split()[0] == '/biblioteca':
             await bot.sendMessage(msg['chat']['id'], '`Eu tenho uma biblioteca hacker cheinha de livros hacker bem como alguns livros sobre ghoetia, satanismo e anarquia, confere la:` http://tcxsproject.com.br/dev','markdown',
                                                   reply_to_message_id=msg['message_id'])    
-        elif msg['text'].split()[0] == 'oi':
-            await bot.sendMessage(msg['chat']['id'], '`oi {}`'.format(msg['from']['first_name']),'markdown',
+        elif msg['text'].split()[0] == '.':
+            await bot.sendMessage(msg['chat']['id'], '@{}`Relaxa que eu to aqui `'.format(msg['from']['first_name']),'markdown',
                                                   reply_to_message_id=msg['message_id'])    
         elif msg['text'].split()[0] == 'brick':
             await bot.sendMessage(msg['chat']['id'], 'https://www.youtube.com/watch?v=AaQJ23Hosc8','markdown',

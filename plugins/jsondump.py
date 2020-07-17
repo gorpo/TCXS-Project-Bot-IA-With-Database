@@ -1,4 +1,15 @@
-
+# -*- coding: utf-8 -*-
+#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
+#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
+#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
+#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
+#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
+#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
+#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
+#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
+#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
+#     |        Github Gorpo Dev: https://github.com/gorpo         |
+#     [+]   Thanks: https://github.com/AmanoTeam/amanobot       [+]
 import html
 import re
 import random
@@ -17,8 +28,7 @@ from io import BytesIO
 
 async def jsondump(msg):
     if msg.get('text'):
-        if msg['text'].startswith('/jsondump') or msg['text'].startswith('!jsondump') or msg[
-            'text'] == '/jsondump@' + bot_username or msg['text'].startswith('jsondump'):
+        if msg['text'].startswith('/jsondump') or msg['text'].startswith('!jsondump') or msg['text'] == '/jsondump@' + bot_username or msg['text'].startswith('jsondump'):
             msgjson = json.dumps(msg, indent=2, sort_keys=False)
             
             if '-f' not in msg['text'] and len(msgjson) < 4080:
