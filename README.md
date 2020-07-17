@@ -1,59 +1,60 @@
-[![Build](https://img.shields.io/badge/dev-gorpo-brightgreen.svg)]()
-[![Stage](https://img.shields.io/badge/Release-Stable-brightgreen.svg)]()
-[![Build](https://img.shields.io/badge/python-v3.7-blue.svg)]()
-[![Build](https://img.shields.io/badge/windows-7%208%2010-blue.svg)]()
-[![Build](https://img.shields.io/badge/Linux-Ubuntu%20Debian-orange.svg)]()
-[![Build](https://img.shields.io/badge/arquiterura-64bits-blue.svg)]()
-<h2 align="center">Manicomio Telegram Heroku Bot IA</h2>
+# Hosting telegram bot on [Heroku](https://heroku.com) for free.
+Easy way to host your python telegram bot on Heroku
 
-<h2>Instruções:</h2><br>
-1. Edite no arquivo config se quer rodar o bot local ou no heroku, comente e descomente as linhas.<br>
-2. Edite requeriments.txt caso tenha adicionado novas libs.<br>
-3. Especifique a versão do python no arquivo runtime, confira as versões de python disponiveis no heroku https://devcenter.heroku.com/articles/python-runtimes<br>
-4. Crie um bot no Botfather e pegue o token do bot.<br>
-5. insira este bot em um canal e pegue o id do canal, ele servirá para os logs.<br>
-6. pegue sua id ela servirá para você ser adm master.<br>
-<br>
-<h2>Via linha de comando - CLI</h2><br>
-<code>cd Manicomio-Bot-IA</code><br>
-<code>heroku login</code><br>
-<code>heroku create --region us manicomio</code> seta us como regiao e nome_do_app defina o nome do  app no heroku<br>
-<code>git init</code><br>
-<code>git add *</code><br>
-<code>git commit -m "Primeiro commit!"</code><br>
-<code>heroku git:remote -a manicomio</code><br>
+## Deploying via [Heroku Toolbelt](https://toolbelt.heroku.com/) (CLI)
+Install [Heroku Toolbelt](https://toolbelt.heroku.com/), then:
+### Clone repository
+`git clone https://github.com/Kylmakalle/heroku-telegram-bot.git`
+### Edit files
+1. Edit [bot.py](https://github.com/Kylmakalle/heroku-telegram-bot/blob/master/bot.py) file with your code
+
+    1. **ATTENTION!** Do not collapse/delete/comment `some_token = os.environ[SOME_TOKEN]` style stings _(you can delete redis setup line if you do not need it)_, **do not change them with your REAL tokens**, all tokens will be setted up below in this guide!
+    
+    2. [More About Config Vars](https://devcenter.heroku.com/articles/config-vars)
+    3. Also, don't do like [this](http://i.imgur.com/Yni1jZX.png), it's insecure, **realy.**
 
 
-<code>git push heroku master</code>              deploy do programa no heroku<br>
-<code>heroku config:set TELEGRAM_TOKEN=1186597860:AAHZTQT--xYhNHhkO8SbxlSxrdwVnkvi38s</code> seta as config vars, insira seu token<br>
-<code>heroku config:set LOGS=-1001215401730</code> seta a id do canal de logs que o bot ja deve estar e ter admin<br>
-<code>heroku config:set SUDOERS=522510051</code> seta o sudo ou seja adm master do bot<br>
-<code>heroku ps:scale bot=1</code> start bot dyno - inicia seu bot<br>
-<code>heroku logs --tail</code> tiva os logs no terminal ou cmd<br>
-<code>heroku ps:stop bot</code> para o bot dyno  - para seu bot
+2. Edit [requirments.txt](https://github.com/Kylmakalle/heroku-telegram-bot/blob/master/requirements.txt) with your code's dependencies
+3. Specify your python [runtime](https://github.com/Kylmakalle/heroku-telegram-bot/blob/master/runtime.txt), avaliable versions listed [here](https://devcenter.heroku.com/articles/python-runtimes)
 
-<br><br>
-<h2>links uteis</h2><br>
-- https://devcenter.heroku.com/articles/dynos<br>
-- https://devcenter.heroku.com/articles/config-vars<br>
-- https://devcenter.heroku.com/articles/heroku-redis<br>
-- https://devcenter.heroku.com/articles/error-codes<br>
+### Go to command line
+```
+cd heroku-telegram-bot
+heroku login
+heroku create --region eu appname # create app in eu region, common regions: eu, us
+heroku addons:create heroku-redis:hobby-dev -a appname # (Optionaly) installing redis
+heroku buildpacks:set heroku/python # set python buildpack
+git push heroku master # deploy app to heroku
+heroku config:set TELEGRAM_TOKEN=123456789:AAABBBCCCDDDEEEFFFGGGHHHIIIJJJKKKLL # set config vars, insert your own
+heroku config:set SOME_API_TOKEN=qwertyuiop1234567890
+                ...
+heroku ps:scale bot=1 # start bot dyno
+heroku logs --tail # If for some reason it’s not working, check the logs
+heroku ps:stop bot #stop bot dyno
+```
 
-<br>
-<h2>Deploying via Heroku Dashboard</h2><br>
-https://dashboard.heroku.com<br>
-1. Fork este repositorio.<br>
-3. Vá para https://dashboard.heroku.com, faça login, Pressione _Novo_ e escolha _Criar novo aplicativo._<br>
-4. Preencha um _App Name_ e escolha _Runtime Region._<br>
-5. Conecte seu repositório GitHub na página _Deploy_.<br>
-6. Configuração ** Automatics deploys ** _ (Opcionalmente) ._<br>
-7. _Implante uma filial do GitHub._<br>
-8. Em seguida, vá para uma página _Settings_, clique em _Reveal Config Vars_ e adicione seus próprios, por exemplo:<br>
-    8.1 TELEGRAM_TOKEN=118232260:AAHZTQT--xYhNHhkOsdfbxlSxrdwVnkvi38s <br>
-    8.2 LOGS=-10012154123123 #id do canal do bot<br>
-    8.3 SUDOERS=234234234234 #sua id<br>
-9. ** Finalmente **, vá para a página _Resources_.<br>
-    1. Instale o _Heroku Redis_ add-on _ (Opcionalmente) _<br>
-    2. Pressione um botão pequeno da caneta, mova o controle deslizante e clique em _Confirmar_, que iniciará o bot dyno.<br>
-    3. Simplesmente mova o controle deslizante para trás se precisar parar o bot dyno, lembre-se de clicar em _Confirmar_.<br>
-    4. Se, por algum motivo, não estiver funcionando, verifique os logs.<br>
+## Deploying via [Heroku Dashboard](https://dashboard.heroku.com) (GUI)
+1. [Fork](https://github.com/Kylmakalle/heroku-telegram-bot/fork) this repo to your account. 
+2. [Edit files](https://github.com/Kylmakalle/heroku-telegram-bot#edit-files)
+3. Go to [Dashboard](https://dashboard.heroku.com), login, Press _New_ and choose _Create new app._
+4. Fill in an _App Name_ and choose _Runtime Region._
+5. Connect your GitHub repo at _Deploy_ page.
+6. Setup **Automatics deploys** _(Optionaly)._
+7. _Deploy a GitHub branch._
+8. Then go to a _Settings_ page, click _Reveal Config Vars_ and then add your own, for example:
+![Config Vars](http://i.imgur.com/C3cmphh.png)
+9. **Finally**, go to the _Resources_ page.
+    1. Install _Heroku Redis_ add-on _(Optionaly)_
+    2. Press on a small pen button, move slider and then click _Confirm_, that will start bot dyno.
+    3. Simply move slider back if you need to stop bot dyno, remember to click _Confirm_.
+    4. If for some reason it’s not working, check the logs here 
+    
+    ![Logs](http://i.imgur.com/rIHU6zF.png)
+
+### More about
+- https://devcenter.heroku.com/articles/dynos
+- https://devcenter.heroku.com/articles/config-vars
+- https://devcenter.heroku.com/articles/heroku-redis
+- https://devcenter.heroku.com/articles/error-codes
+
+Thanks to [Roman Zaynetdinov](https://github.com/zaynetro) for awesome and easy CLI guide.

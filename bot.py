@@ -1,17 +1,48 @@
-# -*- coding: utf-8 -*-
-print(r'''
-███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-     |        Github Gorpo Dev: https://github.com/gorpo         |
-     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
+
+print(r'''
+
+╔╦╗╔═╗═╗ ╦╔═╗  ╔═╗╦═╗╔═╗ ╦╔═╗╔═╗╔╦╗  ╦ ╦╔═╗╔═╗╦╔═╔═╗╦═╗  ╔╦╗╔═╗╔═╗╔╦╗
+ ║ ║  ╔╩╦╝╚═╗  ╠═╝╠╦╝║ ║ ║║╣ ║   ║   ╠═╣╠═╣║  ╠╩╗║╣ ╠╦╝   ║ ║╣ ╠═╣║║║
+ ╩ ╚═╝╩ ╚═╚═╝  ╩  ╩╚═╚═╝╚╝╚═╝╚═╝ ╩   ╩ ╩╩ ╩╚═╝╩ ╩╚═╝╩╚═   ╩ ╚═╝╩ ╩╩ ╩	
+
+                 _dP                 9m_     
+               _#P                     9#_                         
+              d#@                       9#m                        
+             d##                         ###                       
+            J###                         ###L                      
+            {###K                       J###K                      
+            ]####K      ___aaa___      J####F                      
+        __gmM######_  w#P""   ""9#m  _d#####Mmw__                  
+     _g##############mZ_         __g##############m_               
+   _d####M@PPPP@@M#######Mmp gm#########@@PPP9@M####m_             
+  a###""          ,Z"#####@" '######"\g          ""M##m            
+ J#@"             0L  "*##     ##@"  J#              *#K           
+ #"               `#    "_gmwgm_~    dF               `#_          
+7F                 "#_   ]#####F   _dK                 JE          
+]                    *m__ ##### __g@"                   F          
+                       "PJ#####LP"                                 
+ `                       0######_                      '           
+                       _0########_                                   
+     .               _d#####^#####m__              ,              
+      "*w_________am#####P"   ~9#####mw_________w*"                  
+          ""9@#####@M""           ""P@#####@M""                    
+
+
+
+
+
+
+╔╦╗╔═╗═╗ ╦╔═╗  ╔═╗╦═╗╔═╗ ╦╔═╗╔═╗╔╦╗  ╦ ╦╔═╗╔═╗╦╔═╔═╗╦═╗  ╔╦╗╔═╗╔═╗╔╦╗
+ ║ ║  ╔╩╦╝╚═╗  ╠═╝╠╦╝║ ║ ║║╣ ║   ║   ╠═╣╠═╣║  ╠╩╗║╣ ╠╦╝   ║ ║╣ ╠═╣║║║
+ ╩ ╚═╝╩ ╚═╚═╝  ╩  ╩╚═╚═╝╚╝╚═╝╚═╝ ╩   ╩ ╩╩ ╩╚═╝╩ ╩╚═╝╩╚═   ╩ ╚═╝╩ ╩╩ ╩
+
+Manicômio Telegram BOT - @tcxs_bot 
+
+Iniciando a hackeada na galera.
+
+
+Iniciando o Manicômio Bot TCXS Project...
 ''')
 
 import asyncio
@@ -19,10 +50,12 @@ import json
 import html
 import traceback
 import amanobot.aio
+import telepot
 from amanobot.exception import TelegramError, TooManyRequestsError, NotEnoughRightsError
 from amanobot.aio.loop import MessageLoop
 from colorama import Fore
 from urllib3.exceptions import ReadTimeoutError
+
 import backups
 import db_handler as db
 from config import bot, na_bot, enabled_plugins, logs, version, backups_chat
@@ -53,16 +86,14 @@ async def handle(msg):
             formatted_update = json.dumps(msg, indent=3)
             formatted_exc = traceback.format_exc()
             exc_url = await send_to_dogbin('Update:\n' + formatted_update + '\n\n\n\nFull Traceback:\n' + formatted_exc)
-            print(f"""Ocorreu um erro com plugin: {plugin}
-Tipo do erro: {e.__class__.__name__}
-Descrição: {html.escape(e.description if isinstance(e, TelegramError) else str(e))}
-Erro completo: {exc_url}""")
-#            await bot.sendMessage(logs, '''• <b>Erro:</b>
-# » Plugin: <code>{plugin}</code>
-# » Tipo do erro: <code>{exc_type}</code>
-# » Descrição: <i>{exc_desc}</i>
-#- <a href="{exc_url}">Erro completo</a>'''.format(plugin=plugin, exc_type=e.__class__.__name__,  exc_desc=html.escape(e.description if isinstance(e, TelegramError) else str(e)), exc_url=exc_url), parse_mode='html', disable_web_page_preview=True)
+            await bot.sendMessage(-1001215401730, '''• <b>Erro:</b>
+ » Plugin: <code>{plugin}</code>
+ » Tipo do erro: <code>{exc_type}</code>
+ » Descrição: <i>{exc_desc}</i>
 
+- <a href="{exc_url}">Erro completo</a>'''.format(plugin=plugin, exc_type=e.__class__.__name__,
+                                                  exc_desc=html.escape(e.description if isinstance(e, TelegramError) else str(e)), exc_url=exc_url),
+                               parse_mode='html', disable_web_page_preview=True)
 
 
 if __name__ == '__main__':
@@ -86,8 +117,11 @@ if __name__ == '__main__':
             pass
         db.del_restarted()
     else:
-        #por aqui mensagem q vai para os grupos quando ligar o bot$$$$$$$$$$$$$
-        #na_bot.sendMessage(logs, '''Manicômio bot iniciado com sucesso, 28 plugins foram carregados, digite /comandos para saber os comandos do bot.'''.format(version, len(ep), len(n_ep),': ' + (', '.join(n_ep)) if n_ep else ''))
-        pass
-    loop.run_forever()
+        na_bot.sendMessage(logs, '''Manicômio bot iniciado com sucesso, 28 plugins foram carregados, digite /comandos@gorpo_bot para saber os comandos do bot.'''.format(version, len(ep), len(n_ep),
+                                            ': ' + (', '.join(n_ep)) if n_ep else ''))
+    
+    
+    
 
+
+    loop.run_forever()
