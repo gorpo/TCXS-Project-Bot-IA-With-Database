@@ -1,80 +1,23 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+# Copyright (C) 2018-2019 Amano Team <contact@amanoteam.ml>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 from amanobot.namedtuple import InlineKeyboardMarkup
-
-store_free = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='📦 TCXS Store PKG', callback_data='download_store_free')] +
-            [dict(text="🗳️ FIX TCXS Store ", callback_data='download_fix')],
-            [dict(text='📺 Tutorial Segundo Plano', callback_data='tutorial_segundo_plano')] +
-            [dict(text="🎧 Fone Bluetooth ", callback_data='fone_bluetooth')],
-            [dict(text='📲 Uso de Proxy', callback_data='proxy_usuarios')] +
-            [dict(text='« Voltar', callback_data='inicio_menu')],])
-
-
-store_doadores = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='⚠️ Como Participar,leia é importante ⚠️', callback_data='como_participar')] ,
-            [dict(text="🤑 Doar Agora", callback_data='mercado_pago')],
-            [dict(text='📦 TCXS Store PKG', callback_data='download_store_doadores')],
-            [dict(text="🗳️ FIX HAN PKG ", callback_data='download_fix_han_doadores')],
-            [dict(text="🗳️ FIX HEN PKG ", callback_data='download_fix_hen_doadores')],
-            [dict(text="🗳️ FIX CFW XML ", callback_data='download_fix_cfw_doadores')],
-            [dict(text="🗳️ FIX HEN XML ", callback_data='download_fix_hen_xml_doadores')],
-            [dict(text="📺 INSTALAÇÃO EXPLOIT HAN E HEN!! ", callback_data='tutorial_loja')],
-            [dict(text="📺 INSTALAÇÃO EM CONSOLES CFW ", callback_data='tutorial_cfw')],
-            [dict(text='📺 TUTORIAL SEGUNDO PLANO', callback_data='tutorial_segundo_plano_doadores')],
-            [dict(text="🎧 FONE BLUETOOTH PARA JOGAR ", callback_data='fone_bluetooth_doadores')],
-            [dict(text='📲 PORQUE DEVE USAR PROXY NO PS3', callback_data='proxy_usuarios_doadores')] ,
-            [dict(text='« Voltar', callback_data='inicio_menu')]])
-
-
-
-comandos_usuarios = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='🦸 Comandos', callback_data='comandos_users')] +
-            [dict(text="🦸 Sites", callback_data='sites_users')],
-            [dict(text='🦸 Criar XML', callback_data='cria_xml_users')]+
-            [dict(text='« Voltar', callback_data='inicio_menu')]])
-
-comandos_admins = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='🦸 Gerenciar Grupos', callback_data='gerenciar_grupos')],
-            [dict(text="🦸 Cadastrar Comandos", callback_data='cadastrar_comandos')],
-            [dict(text='🦸 Área do Desenvolvedor', callback_data='area_dev')],
-            [dict(text='« Voltar', callback_data='inicio_menu')]])
-
-ferramentas_gerais = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='🧰 Ferramentas', callback_data='ferramenta_comandos')],
-            [dict(text='« Voltar', callback_data='inicio_menu')]])
-
-
-
-info_extras = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='📣 Como adquirir Store PKG', callback_data='info_adquirir')],
-            [dict(text='📣 Sobre as Doações', callback_data='info_doacao')],
-            [dict(text='📣 Pré-requisitos', callback_data='info_requisitos')],
-            [dict(text='📣 Suporte', callback_data='info_suporte')],
-            [dict(text='« Voltar', callback_data='inicio_menu')]])
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 all_cmds = InlineKeyboardMarkup(inline_keyboard=[

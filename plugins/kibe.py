@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import os
 
@@ -29,7 +18,11 @@ async def kibe(msg):
     if msg.get('text'):
         if msg['text'].startswith('/stickerid') or msg['text'].startswith('!stickerid'):
 
-            
+            print('Usuario {} solicitou /stickerid'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /stickerid  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             if msg.get('reply_to_message') and msg['reply_to_message'].get('sticker'):
                 await bot.sendMessage(msg['chat']['id'], "Sticker ID:\n```" +
                                       msg['reply_to_message']['sticker']['file_id'] + "```",
@@ -41,7 +34,11 @@ async def kibe(msg):
 
 
         elif msg['text'].startswith('/getsticker') or msg['text'].startswith('!getsticker'):
-            
+            print('Usuario {} solicitou /getsticker'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /getsticker  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             if msg.get('reply_to_message') and msg['reply_to_message'].get('sticker'):
                 chat_id = msg['chat']['id']
                 file_id = msg['reply_to_message']['sticker']['file_id']
@@ -54,8 +51,12 @@ async def kibe(msg):
             return True
 
 
-        elif msg['text'].startswith('/kibe') or msg['text'].startswith('!kibe') or msg['text'] == 'kibe':
-            
+        elif msg['text'].startswith('/kibe') or msg['text'].startswith('!kibe') or msg['text'] == kibe:
+            print('Usuario {} solicitou /kibe'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /kibe  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             if msg.get('reply_to_message') and msg['reply_to_message'].get('sticker'):
                 user = msg['from']
                 file_id = msg['reply_to_message']['sticker']['file_id']
@@ -102,7 +103,11 @@ async def kibe(msg):
 
 
         elif msg['text'].startswith('/criar_sticker') or msg['text'].startswith('!make_kibe'):
-            
+            print('Usuario {} solicitou /criar_sticker'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /criar_sticker  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             user = msg['from']
             name = user['first_name']
             name = name[:50]
