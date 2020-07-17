@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-# ███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-# ████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-# ██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-# ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-# ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-# ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import html
 import re
@@ -91,6 +80,11 @@ compiler_args = {
 async def rextester(msg):
     if msg.get('text'):
         if msg['text'].startswith('/rextester'):
+            print('Usuario {} solicitou /rextester'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /rextester  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             text = msg['text'][10:]
             rex = re.split('[ |\n]+', text, 2)
             code = rex[2:]
@@ -131,6 +125,11 @@ async def rextester(msg):
             return True
 
         if msg['text'].startswith('/rextester@gorpo_bot'):
+                print('Usuario {} solicitou /rextester@gorpo_bot'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou /rextester@gorpo_bot  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
                 text = msg['text'][20:]
                 rex = re.split('[ |\n]+', text, 2)
                 code = rex[2:]
@@ -172,7 +171,11 @@ async def rextester(msg):
 
 
         if msg['text'].startswith('codding'):
-                
+                print('Usuario {} solicitou codding'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou codding(rextester)  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
                 text = msg['text'][7:]
                 rex = re.split('[ |\n]+', text, 2)
                 code = rex[2:]
@@ -213,7 +216,11 @@ async def rextester(msg):
                 return True       
 
         if msg['text'].startswith('-'):
-                
+                print('Usuario {} solicitou rextester com (-)'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou rextester com (-)  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
                 text = msg['text'][1:]
                 rex = re.split('[ |\n]+', text, 2)
                 code = rex[2:]

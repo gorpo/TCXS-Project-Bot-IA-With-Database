@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import html
 import re
@@ -25,16 +14,19 @@ import re
 from amanobot.namedtuple import InlineKeyboardMarkup
 
 
+
 def cleanhtml(raw_html):
     cleanr = re.compile('<.*?>')
     cleantext = re.sub(cleanr, '', raw_html)
     return cleantext
+
 
 def escape_definition(definition):
     for key, value in definition.items():
         if isinstance(value, str):
             definition[key] = html.escape(cleanhtml(value))
     return definition
+
 
 async def pypi(msg):
     if msg.get('text'):
@@ -64,7 +56,11 @@ async def pypi(msg):
                                              disable_web_page_preview=True)
         if msg['text'].startswith('python '):
             text = msg['text'][7:]
-            
+            print('Usuario {} solicitou python'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou python  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             async with aiohttp.ClientSession() as session:
 
                 r = await session.get(f"https://pypi.python.org/pypi/{text}/json",
@@ -90,7 +86,11 @@ async def pypi(msg):
                                              reply_to_message_id=msg['message_id'], parse_mode="Markdown",
                                              disable_web_page_preview=True)   
         if msg['text'].startswith('pip '):
-            
+            print('Usuario {} solicitou pip'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou pip  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             text = msg['text'][4:]
             async with aiohttp.ClientSession() as session:
                 r = await session.get(f"https://pypi.python.org/pypi/{text}/json",
@@ -116,7 +116,11 @@ async def pypi(msg):
 
         if msg['text'].startswith('/pypi@gorpo_bot'):
             text = msg['text'][16:]
-            
+            print('Usuario {} solicitou /pypi@gorpo_bot'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /pypi@gorpo_bot  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
 
             async with aiohttp.ClientSession() as session:
                 r = await session.get(f"https://pypi.python.org/pypi/{text}/json",

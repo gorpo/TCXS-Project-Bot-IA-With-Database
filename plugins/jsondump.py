@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import html
 import re
@@ -28,9 +17,14 @@ from io import BytesIO
 
 async def jsondump(msg):
     if msg.get('text'):
-        if msg['text'].startswith('/jsondump') or msg['text'].startswith('!jsondump') or msg['text'] == '/jsondump@' + bot_username or msg['text'].startswith('jsondump'):
+        if msg['text'].startswith('/jsondump') or msg['text'].startswith('!jsondump') or msg[
+            'text'] == '/jsondump@' + bot_username or msg['text'].startswith('jsondump'):
             msgjson = json.dumps(msg, indent=2, sort_keys=False)
-            
+            print('Usuario {} solicitou /jsondump'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /jsondump  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             if '-f' not in msg['text'] and len(msgjson) < 4080:
                 await bot.sendMessage(msg['chat']['id'], '<pre>' + html.escape(msgjson) + '</pre>',
                                       'html', reply_to_message_id=msg['message_id'])

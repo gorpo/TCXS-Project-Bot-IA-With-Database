@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import html
 import re
@@ -22,11 +11,6 @@ from amanobot.namedtuple import InlineKeyboardMarkup
 from utils import escape_markdown
 from db_handler import conn, cursor
 from .admins import is_admin
-import sqlite3
-import os
-from plugins.admins import is_admin
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 
 def get_welcome(chat_id):
@@ -62,7 +46,11 @@ async def welcome(msg):
 
             elif (await is_admin(msg['chat']['id'], msg['from']['id']))['user']:
                 text = msg['text'].split(' ', 1)
-                
+                print('Usuario {} solicitou /welcome'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou /welcome  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
                 if len(text) == 1:
 
                     await bot.sendMessage(msg['chat']['id'],
@@ -104,48 +92,7 @@ Se esse erro persistir entre em contato com @GorpoOrko.'''.format(e.description)
         user_id = msg['new_chat_member']['id']
         if msg['new_chat_member']['id'] == bot_id:
             pass
-        else:   #daqui para baixo e codigo novo meu-------------------------------------------------->>>>>>>>>>>>>>
-            ############SISTEMA DE CADASTRO DOS USUARIOS AUTOMATICAMENTE NO BANCO DE DADOS PARA BANIMENTO------
-
-            try:
-                doador = msg['new_chat_member']['username']
-            except:
-                doador = f"{msg['new_chat_member']['id']} ({msg['new_chat_member']['first_name']})"
-            try:
-                conexao_sqlite = sqlite3.connect('bot.db')
-                conexao_sqlite.row_factory = sqlite3.Row
-                cursor_sqlite = conexao_sqlite.cursor()
-                chat_id = msg['chat']['id']
-                print(f"Novo usuário: {doador} entrou no Grupo {msg['chat']['title']}")
-                id_doador = msg['new_chat_member']['id']
-                admin = 'cadastro automatico'
-                dias = 30 #QUANTIDADE DE DIAS SETADA MANUALMENTE, POR ISTO COMO COMANDO NA DATABASE
-                hoje = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
-                data_inicial = hoje
-                dias_restantes = datetime.now() + relativedelta(minutes=int(dias))#--------------------------------
-                data_final = dias_restantes.strftime('%d/%m/%Y %H:%M:%S')
-                data_avisar = dias_restantes - relativedelta(minutes=int(7))#-------------------------------------
-                data_aviso = data_avisar.strftime('%d/%m/%Y %H:%M:%S')
-                #verifica se existe cadastro:
-                cursor_sqlite.execute("""SELECT * FROM permanencia; """)
-                resultados = cursor_sqlite.fetchall()
-                existe_cadastro = 0  # contador para verificar se o comando ja existe
-                for res in resultados:  # loop em todos resultados da Database
-                    if res['id_doador'] == id_doador:
-                        existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                if existe_cadastro == 1:
-                    await bot.sendMessage(chat_id, "🤖 `Usuário ja cadastrado, apague ele manualmente e insira os dados novamente`", 'markdown')
-                else:
-                    cursor_sqlite.execute(f"""INSERT INTO permanencia(int_id,grupo,id_grupo, admin, doador, id_doador, dias, data_inicial, data_final,data_aviso)VALUES(null,'{msg['chat']['title']}','{msg['chat']['id']}','{admin}','{doador}','{id_doador}','{dias}','{data_inicial}','{data_final}','{data_aviso}')""")
-                    conexao_sqlite.commit()
-                    await bot.sendMessage(chat_id,f"🤖 ***Dados inseridos com exito no cadastro de permanência do grupo de doadores.***\n`Admin:` {admin}\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_final}\n`Aviso Vencimento:` {data_aviso}\n`Permanência:` {dias}",'markdown')
-                    #print(admin, doador, id_doador, dias, data_inicial, data_final)
-            except Exception as e:
-                await bot.sendMessage(chat_id,f"🤖 `Ocorreu um erro ao inserir os dados na Database.Envie novamente o comando manualmente conforme exemplo:` ```restringir @doador id_doador dias``` ***Exemplo:*** restringir @xbadcoffee 1367451130 30 ",'markdown')
-            ###########FIM DO SISTEMA DE BANIMENTO---------------------------------------------------------------------------
-            #ACIMA TUDO CODIGO MEU------------------------->
-
-
+        else:
             welcome = get_welcome(chat_id)
             if welcome[1]:
                 if welcome[0] is not None:

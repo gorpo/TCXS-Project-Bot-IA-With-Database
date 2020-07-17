@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-# ███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-# ████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-# ██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-# ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-# ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-# ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import html
 import re
@@ -35,7 +24,11 @@ async def reddit(msg):
     if msg.get('text'):
         if msg['text'].split()[0] == '/r' or msg['text'].split()[0] == '!r':
             sub = msg['text'][3:]
-            
+            print('Usuario {} solicitou /reddit'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /reddit  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             if sub:
                 sub = re.findall(r'\S*', sub)
                 sub = "r/" + sub[0] if sub[0:2] != "r/" else sub[0]
@@ -93,7 +86,11 @@ async def reddit(msg):
 
         if msg['text'].split()[0] == 'reddit':
                 sub = msg['text'][7:]
-                
+                print('Usuario {} solicitou /reddit'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou /reddit  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
                 if sub:
                     sub = re.findall(r'\S*', sub)
                     sub = "r/" + sub[0] if sub[0:2] != "r/" else sub[0]
