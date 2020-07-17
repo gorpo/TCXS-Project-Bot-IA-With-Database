@@ -18,12 +18,7 @@ async def coub(msg):
             text = msg['text'][16:]
             
             try:
-                print('Usuario {} solicitou /coub@gorpo_bot'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /coub@gorpo_bot  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
-
+                
                 async with aiohttp.ClientSession() as session:
                     r = await session.get(f'https://coub.com/api/v2/search/coubs?q={text}')
                     rjson = await r.json()
@@ -44,11 +39,7 @@ async def coub(msg):
             text = msg['text'][4:]
             
             try:
-                print('Usuario {} solicitou /coub'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /coub  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 async with aiohttp.ClientSession() as session:
                     r = await session.get(f'https://coub.com/api/v2/search/coubs?q={text}')
                     rjson = await r.json()

@@ -22,11 +22,7 @@ async def tcxs(msg):
     if msg.get('text'):
 
         if msg['text'] == 'tcxs' or msg['text'] == 'tcxs project' or msg['text'] == 'TCXS' or msg['text'] == 'TCXS Project':
-            print('Usuario {} solicitou tcxs'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou tcxs --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'], '`{} O nome TCXS foi criado com base nos botoes do PlayStation3, TRIANGLE - CIRCLE - X - SQUARE, ou seja, triangulo, bolinha, x e quadrado, kkk. Como nosso dev era publicitario e odiava a cena vendo alguns imbecis AUTO PROMOVER seu nome criando lojas e projetos, ele decidiu entrar na cena com uma nomenclatura que lembrasse a cena hacker, ou seja, siglas! Siglas esyão no cotidiano de todo mundo e é facil sua absorção bem como dentro da parte web e publicitaria a sigla tem um forte papel facilitando a digitacao e pesquisa, entao com este intuito nos denominados de TCXS Project, a palavra Project veio da vontade de que nunca morra, sendo assim um projeto qualquer um que tiver habilidade e capacidade pode entrar na equipe e ajudar a coordenar bem como tocar o projeto, ja vimos na cena varios adms passarem pela TCXS, ela e um projeto feito a varias maos e cada um doa de forma gratuita seu tempo e conhecimento para disponibilizar tudo que temos em nossas redes e arquivos. Ficamos gratos a todos que passaram por esta equipe seja dos adms aos users e seria impossivel enumerar todos, voces que sao a TCXS Project e formam este projeto que ja esta indo para seu terceiro ano!  OBRIGADO COMUNIDADE GAMER, HACKER, EXPLOITER, DEVS, USUARIOS E SIMPATIZANTES, SEM VOCES NAO EXISTIRIAMOS!`'.format(msg['from']['first_name']),'markdown',reply_to_message_id=msg['message_id'])
          
         if msg['text'] == 'proxy' or msg['text'] == 'Proxy' :
@@ -38,61 +34,33 @@ async def tcxs(msg):
             
        
         if msg['text'] == 'torrent' or msg['text'] == 'Torrent' or msg['text'] == 'torrents' or msg['text'] == 'Torrents':
-            print('Usuario {} solicitou tcxs'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou tcxs --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+           
             await bot.sendMessage(msg['chat']['id'], '{} aqui nosso canal de torrents com pkg para download: https://t.me/tcxsp'.format(msg['from']['first_name']),'markdown',reply_to_message_id=msg['message_id'])
         
 
         if msg['text'] == 'codigo de erro' or msg['text'] == 'lista de erros' or msg['text'] == 'erro psn' or msg['text'] == 'estou com erro' or msg['text'] == 'ta dando erro' or msg['text'] == 'deu erro' or msg['text'] == 'meu videogame ta com problema':
-            print('Usuario {} solicitou tcxs'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou tcxs --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'], '`Querido usúario do sistema PlayStation3 e praticamente impossivel decorar ou trazer a minha base de dados todos os erros, imagina entao se um humano saberia o erro por um codigo, entao vou te fornecer aqui o site oficial da sony e na lista voce podera encontrar seu erro e solucao, caso seu erro persista seu erro esta ocorrendo com o exploit, ai aconselho que voce refaca todo o seu exploit novamente, nao e dificil mas antes veja aqui se seu erro tem solucao:` https://www.playstation.com/pt-pt/get-help/#!/error-code/ ','markdown',reply_to_message_id=msg['message_id'])
         
         if msg['text'] == 'rap' or msg['text'] == 'raps' or msg['text'] == 'licenca' or msg['text'] == '14.000' or msg['text'] == 'assinatura':
-            print('Usuario {} solicitou raps'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou raps --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'], 'Agora precisamos apenas do PKG das licenças, no HEN as mesmas licenças servem para todos! Tutorial:https://www.youtube.com/watch?v=EYr_MKaL1Tg    Download: https://www.mediafire.com/file/23nzljx8w83dbl0/14Mil-raps-.pkg/file',reply_to_message_id=msg['message_id'])
         
 
         if msg['text'] == 'desbloqueio' or msg['text'] == 'o meu ps3' or msg['text'] == 'Desbloqueio' or msg['text'] == 'desbloquear o ps3' or msg['text'] == 'desbloquear' or msg['text'] == 'desbloquear meu videogame' or msg['text'] == 'desbloquear o meu ps3' or msg['text'] == 'desbloquear o playstation' or msg['text'] == 'desbloquear o meu console' or msg['text'] == 'desbloqueei meu videogame' or msg['text'] == 'desbloqueei meu console':
-            print('Usuario {} solicitou desbloqueio'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou desbloqueio --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'], '`{} Tem certeza que ele foi feito de forma correta? O Joao PSX alem de fornecer arquivos bugados e ate mesmo mostrar bugs de mais ao vivo acaba nao fornecendo um material confiavel bem como ele nao tem total dominio doque faz como podemos ver nos videos a quantidade de erros ( ele podia editar os videos), enfim aconselho que veja, reveja e se possivel faça o exploit em cima deste tutorial:` https://www.youtube.com/watch?v=XUUieW4bv_Y'.format(msg['from']['first_name']),'markdown',reply_to_message_id=msg['message_id'])
         
         if 'mercado pago' in msg['text'] or msg['text'] == 'Mercado Pago' or msg['text'] == 'Mercado pago':
-            print('Usuario {} solicitou MERCADO PAGO'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou MERCADO PAGO --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'],  'Olá que bom que você quer doar, {} aqui esta o link de pagamento  ----->   https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=354396246-315fce8c-d8f9-4aa0-8583-95d678936375'.format(msg['from']['first_name']),reply_to_message_id=msg['message_id'])
         
         if msg['text'] == 'tutorial segundo plano' or msg['text'] == 'download segundo plano' or msg['text'] == 'downloads em segundo plano' or msg['text'] == 'Tutorial' or msg['text'] == 'Download em segundo plano' or msg['text'] == 'Downloads em segundo plano'or msg['text'] == 'download em segundo plano':
-            print('Usuario {} solicitou tutorial segundo plano'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou tutorial segundo plano --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'], '{} O nosso admin @MsT3Dz  criou um tutorial exclusivo de como fazer os downloads na TCXS Project, bem como os downloads em segundo plano. Confira o tutorial completo: https://youtu.be/_21a5REKhBc'.format(msg['from']['first_name']),reply_to_message_id=msg['message_id'])
         
         if msg['text'] == 'tutorial' or msg['text'] == 'instalar' or msg['text'] == 'instalar a loja' or msg['text'] == 'instalar  loja' or msg['text'] == 'como instalar a loja' or msg['text'] == 'Como instalar a loja' or msg['text'] == 'Como instalo a loja'or msg['text'] == 'Instalação' or msg['text'] == 'Tutorial de instalação' or msg['text'] == 'Instalação da tcxs' or msg['text'] == 'instalar a tcxs' or msg['text'] == 'Instalação':
-            print('Usuario {} solicitou tutorial instalar loja'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou tutorial instalar loja --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'], '{} O nosso admin @MsT3Dz  criou um tutorial exclusivo de como instalar a loja: https://www.youtube.com/watch?v=aG1jLj8QuBY'.format(msg['from']['first_name']),reply_to_message_id=msg['message_id'])
         
 #--------------------------------------------------------------------------------------------------

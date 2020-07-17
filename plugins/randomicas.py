@@ -25,7 +25,7 @@ async def randomicas(msg):
         if msg['text'] == 'ps2':
             await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbde_lDfbzhCcTg7M1iPa0_G_rF6UQACsgADGepZRCV_bEET9yWbGgQ',  reply_to_message_id=msg['message_id'])
         if msg['text'] == 'ps3':
-            await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbZe_lDfCr4OQAUoUIpgaTusH4LRnwACswADGepZRHSHRzFv7pF5GgQ', reply_to_message_id=msg['message_id'])
+            await bot.sendVideo(msg['chat']['id'], video='AAMCAQADHQRRhrPvAAIS0V7_9mwf8l1awkJia_vSIK-7I4a7AAKzAAMZ6llEdIdHMW_ukXk1cHhIFwADAQAHbQADKkcAAhoE', reply_to_message_id=msg['message_id'])
         if msg['text'] == 'exclusivos':
             await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbhe_lDfqKXeXTKts9b5692tHUMg7gACsAADGepZRO4jb6TTGEoWGgQ', reply_to_message_id=msg['message_id'])
         if msg['text'] == 'emuladores':
@@ -35,11 +35,7 @@ async def randomicas(msg):
 
         #----ATT PARA DOADORES TCXS PROJECT---------------------------------------->
         if msg['text'] == 'luppy solta a att3.9':
-            print('Usuario {} solicitou att DE DOADORES'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou att DE DOADORES --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],  msg['chat']['title'], time.ctime())
-            arquivo = open('logs/grupos.txt', 'a')
-            arquivo.write(log)
-            arquivo.close()
+            
             #-------INSTRUÇÕES------>>
             await bot.sendMessage(msg['chat']['id'], 'Olá, bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO 3.6 e caso use o fix de acordo com seu Exploit/Desbloqueio, se voce tem han ou CFW use o FIX HAN, caso contrário e seja o Exploit HEN em seu console use o FIX HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale o FIX, após o FIX instalado instale a TCXS Store 3.6 PKG, recomendamos reiniciar o console após este processo!!',  reply_to_message_id=msg['message_id'])
             await bot.sendMessage(msg['chat']['id'],'`TUTORIAL DE COMO INSTALAR A LOJA EXPLOIT HAN E HEN!!`  https://cos.tv/videos/play/1586413688272059934', 'markdown',  reply_to_message_id=msg['message_id'])
@@ -80,14 +76,8 @@ async def randomicas(msg):
 
             # ----------------att gratuita pros pau no cu
         if msg['text'] == 'loja gratis' or msg['text'] == 'free pkg' or msg['text'] == 'Loja gratis' or msg[
-            'text'] == 'gratis' or msg['text'] == 'Gratis' or msg['text'] == 'pkg':
-            print('Usuario {} solicitou Loja Gratis'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou Loja Gratis --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],
-                                                                                             msg['chat']['title'],
-                                                                                             time.ctime())
-            arquivo = open('logs/grupos.txt', 'a')
-            arquivo.write(log)
-            arquivo.close()
+            'text'] == 'gratis' or msg['text'] == 'Gratis' or msg['text'] == 'Free pkg':
+           
             await bot.sendMessage(msg['chat']['id'],
                                   'Salve, venho trazer a você nossa nova att GRATUITA, espero que goste!      ----    ----     ----   Caso tenha dificuldades com o download em segundo plano confira este tutorial exclusivo feito para você doador amado que contribui para este projeto se manter em pe: https://youtu.be/_21a5REKhBc',
                                   reply_to_message_id=msg['message_id'])
@@ -106,23 +96,6 @@ async def randomicas(msg):
 
 
 
-
-
-
-
-            # EHI e o HTTP injector id /jsondump
-        if msg['text'] == 'http injector':
-            await bot.sendDocument(msg['chat']['id'], document='BQADAQADaAADLwfYRuyWgyR0n8a4FgQ',
-                                   reply_to_message_id=msg['message_id'])
-
-        if msg['text'] == 'ehi secreta do behemoth':
-            await bot.sendDocument(msg['chat']['id'], document='BQADAQADjAADUmHxR6cWprvULnsfFgQ',
-                                   reply_to_message_id=msg['message_id'])
-            await bot.sendMessage(msg['chat']['id'],
-                                  '`Nome: TCXS  -  Senha: 1234 - Limite: 100 - Validade: 02/11/2020`', 'markdown',
-                                  reply_to_message_id=msg['message_id'])
-            await bot.sendAnimation(msg['chat']['id'], animation='CgADAQAD2wEAArGrywvbWKz2FOpQcxYE',
-                                    reply_to_message_id=msg['message_id'])
 
             # exemplo de foto com ID para pegar vai na foto e usa /jsondump
         if 'aham' in msg['text']:
@@ -204,7 +177,7 @@ async def randomicas(msg):
         
 
 
-        if msg['text'].split()[0] == '/comandos@gorpo_bot' or msg['text'] == "comandos" or msg['text'] == "/comandos" or msg['text'] == "Comandos" or msg['text'] == "comandos do bot" or msg['text'] == "oque o bot faz" or msg['text'] == "oque teu bot faz" or msg['text'] == "oque este bot faz" or msg['text'] == "Oque teu bot faz":
+        if msg['text'].split()[0] == '/comandos@gorpo_bot'  or msg['text'] == "/comandos" or msg['text'] == "Comandos" or msg['text'] == "comandos do bot" or msg['text'] == "oque o bot faz" or msg['text'] == "oque teu bot faz" or msg['text'] == "oque este bot faz" or msg['text'] == "Oque teu bot faz":
             await bot.sendMessage(msg['chat']['id'], """Nem todos os comandos do bot podem funcionar para os usuarios, administradores tem privilegios em cima de alguns comandos: 
 /start - inicia o bot
 /welcome - Define a mensagem de welcome.

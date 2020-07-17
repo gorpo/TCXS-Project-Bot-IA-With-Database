@@ -42,11 +42,7 @@ async def youtube(msg):
     if msg.get('text'):
 
         if msg['text'].startswith('/yt '):
-            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             res = await search_yt(msg['text'][4:])
 
 
@@ -57,11 +53,7 @@ async def youtube(msg):
             return True
 
         if msg['text'].startswith('youtube '):
-            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             res = await search_yt(msg['text'][8:])
 
             vids = ['{}: <a href="{}">{}</a>'.format(num + 1, i['url'], i['title']) for num, i in enumerate(res)]
@@ -71,11 +63,7 @@ async def youtube(msg):
             return True    
 
         if msg['text'].startswith('/yt@gorpo_bot '):
-            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             res = await search_yt(msg['text'][14:])
 
             vids = ['{}: <a href="{}">{}</a>'.format(num + 1, i['url'], i['title']) for num, i in enumerate(res)]
@@ -87,11 +75,7 @@ async def youtube(msg):
 #----------------------------------------------------------------------------------------------------------------------------------------------
 
         elif msg['text'].split()[0] == 'downloadyoutube':   #aqui era /ytdl tirei pra nao pesar o server
-            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             text = msg['text'][6:]
 
             if text:

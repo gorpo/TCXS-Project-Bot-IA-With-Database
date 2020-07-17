@@ -15,11 +15,7 @@ async def gif(msg):
     if msg.get('text'):
         if msg['text'].startswith('/gif') or msg['text'].startswith('gif'):
             text = msg['text'][5:]
-            print('Usuario {} solicitou /gif'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /gif  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             async with aiohttp.ClientSession() as session:
                 r = await session.get("http://api.giphy.com/v1/gifs/search",
                                       params=dict(q=text, api_key=giphy_key, limit=7))
@@ -35,11 +31,7 @@ async def gif(msg):
             return True
 
         if msg['text'].startswith('/gif@gorpo_bot'):
-            print('Usuario {} solicitou /gif'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /gif  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             text = msg['text'][14:]
             async with aiohttp.ClientSession() as session:
                 r = await session.get("http://api.giphy.com/v1/gifs/search",

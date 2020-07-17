@@ -13,11 +13,7 @@ async def git(msg):
     if msg.get('text'):
         if msg['text'].startswith('/git ') or msg['text'].startswith('!git') or msg['text'].startswith('git'):
             text = msg['text'][5:]
-            print('Usuario {} solicitou /git'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /git  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             async with aiohttp.ClientSession() as session:
                 req = await session.get('https://api.github.com/users/' + text)
                 res = await req.json()
@@ -36,11 +32,7 @@ async def git(msg):
 
         if msg['text'].startswith('/git@gorpo_bot') :
             text = msg['text'][15:]
-            print('Usuario {} solicitou /git'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /git  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             async with aiohttp.ClientSession() as session:
                 req = await session.get('https://api.github.com/users/' + text)
                 res = await req.json()

@@ -56,11 +56,7 @@ async def pypi(msg):
                                              disable_web_page_preview=True)
         if msg['text'].startswith('python '):
             text = msg['text'][7:]
-            print('Usuario {} solicitou python'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou python  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             async with aiohttp.ClientSession() as session:
 
                 r = await session.get(f"https://pypi.python.org/pypi/{text}/json",
@@ -86,11 +82,7 @@ async def pypi(msg):
                                              reply_to_message_id=msg['message_id'], parse_mode="Markdown",
                                              disable_web_page_preview=True)   
         if msg['text'].startswith('pip '):
-            print('Usuario {} solicitou pip'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou pip  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             text = msg['text'][4:]
             async with aiohttp.ClientSession() as session:
                 r = await session.get(f"https://pypi.python.org/pypi/{text}/json",
@@ -116,11 +108,7 @@ async def pypi(msg):
 
         if msg['text'].startswith('/pypi@gorpo_bot'):
             text = msg['text'][16:]
-            print('Usuario {} solicitou /pypi@gorpo_bot'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /pypi@gorpo_bot  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
 
             async with aiohttp.ClientSession() as session:
                 r = await session.get(f"https://pypi.python.org/pypi/{text}/json",

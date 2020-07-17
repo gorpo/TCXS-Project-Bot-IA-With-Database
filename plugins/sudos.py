@@ -27,11 +27,7 @@ async def sudos(msg):
         if msg['from']['id'] in sudoers:
 
             if msg['text'] == '!sudos' or msg['text'] == '/sudos' or msg['text'] == 'sudos':
-                print('Usuario {} solicitou /sudos'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /sudos  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 await bot.sendMessage(msg['chat']['id'], '''*Lista de sudos:*
 
 [*] COMANDOS ACEITOS APENAS PELO GORPO [*]
@@ -56,12 +52,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].split()[0] == '!eval' or msg['text'].split()[0] == 'eval' or msg['text'].split()[0] == 'funcao' or msg['text'].split()[0] == '/eval':
-                print('Usuario {} solicitou /eval(executar função python)'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /eval(executar função python) --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
-
+                
                 text = msg['text'][6:]
                 try:
                     res = (await eval(text[6:]) if re.match(r'(\W+)?await', text) else eval(text))
@@ -84,11 +75,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].split()[0] == '!plist' or msg['text'].split()[0] == 'plist':
-                print('Usuario {} solicitou /plist(listar plugins)'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /plist(listar plugins)  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 from bot import ep, n_ep
                 if msg['text'].split(' ', 1)[-1] == 'errors':
                     if n_ep:
@@ -108,11 +95,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].startswith('!upload'):
-                print('Usuario {} solicitou /upload'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /upload  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 text = msg['text'][8:]
                 if msg.get('reply_to_message'):
                     sent = await bot.sendMessage(msg['chat']['id'], '⏰ Enviando o arquivo para o servidor...',
@@ -133,12 +116,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].startswith('upload'):
-                print('Usuario {} solicitou upload'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou upload  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
-
+                
                 text = msg['text'][7:]
                 if msg.get('reply_to_message'):
                     sent = await bot.sendMessage(msg['chat']['id'], '⏰ Enviando o arquivo para o servidor...',
@@ -157,11 +135,7 @@ baixar - baixa um documento para o server
                                                   '❌ Ocorreu um erro!\n\n{}'.format(traceback.format_exc()))
 
             elif msg['text'].startswith('baixar'):
-                print('Usuario {} solicitou baixar'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou baixar  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 text = msg['text'][7:]
                 if msg.get('reply_to_message'):
                     sent = await bot.sendMessage(msg['chat']['id'], '⏰ Enviando o arquivo para o servidor...',
@@ -182,11 +156,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'] == '!restart' or msg['text'] == '/restart@gorpo_bot' + bot_username or msg['text'] == 'restart' or msg['text'] == 'reiniciar':
-                print('Usuario {} solicitou /restart'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /restart  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 sent = await bot.sendMessage(msg['chat']['id'], 'Reiniciando...',
                                              reply_to_message_id=msg['message_id'])
                 db.set_restarted(sent['chat']['id'], sent['message_id'])
@@ -195,11 +165,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].split()[0] == 'cmd' :
-                print('Usuario {} solicitou cmd'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou cmd  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 text = msg['text'][4:]
                 if re.match('(?i).*poweroff|halt|shutdown|reboot', text):
                     res = 'Comando proibido.'
@@ -217,11 +183,7 @@ baixar - baixa um documento para o server
                 return True
 
             elif msg['text'].split()[0] == '!doc' or msg['text'].split()[0] == 'doc':
-                print('Usuario {} solicitou /doc'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /doc --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 text = msg['text'][5:]
                 if text:
                     try:
@@ -238,11 +200,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'] == '!del' or msg['text'] == 'del' or msg['text'] == 'deletar':
-                print('Usuario {} solicitou /del'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /del  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 if msg.get('reply_to_message'):
                     try:
                         await bot.deleteMessage((msg['chat']['id'], msg['reply_to_message']['message_id']))
@@ -256,11 +214,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].split()[0] == '!exec' or msg['text'].split()[0] == 'exec':
-                print('Usuario {} solicitou /exec'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /exec  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 text = msg['text'][6:]
 
                 # Merge global and local variables
@@ -282,11 +236,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'] == '':#aqui era !upgrade
-                print('Usuario {} solicitou /upgrade'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /upgrade  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 sent = await bot.sendMessage(msg['chat']['id'], 'Atualizando a base do bot...',
                                              reply_to_message_id=msg['message_id'])
                 proc = await asyncio.create_subprocess_shell(
@@ -306,11 +256,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].startswith('!leave') or msg['text'].startswith('leave'):
-                print('Usuario {} solicitou /leave'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /leave  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 if len(msg['text'].split()) == 2:
                     chat_id = msg['text'].split()[1]
                 else:
@@ -324,11 +270,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].startswith('!chat') or msg['text'].startswith('chat'):
-                print('Usuario {} solicitou /chat'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /chat  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 if ' ' in msg['text']:
                     chat = msg['text'].split()[1]
                 else:
@@ -381,11 +323,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'] == '!promote' or msg['text'] == 'promovido' or msg['text'] == 'promover':
-                print('Usuario {} solicitou /promote'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /promote --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 if 'reply_to_message' in msg:
                     reply_id = msg['reply_to_message']['from']['id']
                 else:
@@ -408,11 +346,7 @@ baixar - baixa um documento para o server
 
 
             elif msg['text'].split()[0] == '!backup' or msg['text'] == 'backup' or msg['text'] == '/backup' or msg['text'] == '/backup@gorpo_bot':
-                print('Usuario {} solicitou /backup'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /backup --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 sent = await bot.sendMessage(msg['chat']['id'], '⏰ Fazendo backup...',
                                              reply_to_message_id=msg['message_id'])
 
@@ -435,11 +369,7 @@ baixar - baixa um documento para o server
                 return True
 
             elif '|' in msg['text']:
-                print('Usuario {} solicitou desligamento temporario do bot definindo uma hora'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou desligamento temporario do bot definindo uma hora --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 h = msg['text'].split('|')[0]
                 m = msg['text'].split('|')[1]
                 hm = (int(h),int(m))

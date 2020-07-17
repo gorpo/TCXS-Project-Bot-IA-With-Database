@@ -37,11 +37,7 @@ async def translate(msg):
     if msg.get('text'):
         if msg['text'].startswith('/tr ') or msg['text'] == '/trad' or msg['text'] == 'traduz' or msg['text'] == 'tradutor' or msg['text'] == 'traduzir' or msg['text'] == 'tradução' or msg['text'] == 'traduçao' or msg['text'] == 'traducao':
             text = msg['text'][4:]
-            print('Usuario {} solicitou /tr traduzir'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /tr traduzir  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             lang = get_lang(text)
             if msg.get('reply_to_message'):
                 if msg['reply_to_message'].get('text'):

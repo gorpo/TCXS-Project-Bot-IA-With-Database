@@ -46,11 +46,7 @@ async def welcome(msg):
 
             elif (await is_admin(msg['chat']['id'], msg['from']['id']))['user']:
                 text = msg['text'].split(' ', 1)
-                print('Usuario {} solicitou /welcome'.format(msg['from']['first_name']))
-                log = '\nUsuario {} solicitou /welcome  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-                arquivo = open('logs/grupos.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 if len(text) == 1:
 
                     await bot.sendMessage(msg['chat']['id'],

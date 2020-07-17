@@ -16,11 +16,7 @@ async def dice(msg):
             
 
             dados = random.randint(1, 6)
-            print('Usuario {} solicitou /dados'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou /dados  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
-            arquivo = open('logs/grupos.txt','a')
-            arquivo.write(log)
-            arquivo.close()
+            
             await bot.sendMessage(msg['chat']['id'], '🎲 O dado parou no número: {}'.format(dados),
                                   reply_to_message_id=msg['message_id'])
             return True

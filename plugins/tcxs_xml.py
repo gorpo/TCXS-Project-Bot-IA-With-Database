@@ -40,11 +40,7 @@ async def tcxs_xml(msg):
 </View>
 </XMBML>''')
                 #bot envia mensagem
-                print('Usuario {} solicitou a criação de um XML de PS1 com os dados {}.xml'.format(msg['from']['first_name'],nome_xml))
-                log = '\nUsuario {} solicitou a criação de um XML de PS1 com os dados {}.xml --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],nome_xml,msg['chat']['title'],time.ctime())
-                arquivo = open('logs/jogos_xml.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 await bot.sendMessage(msg['chat']['id'], (f'Seu xml de PlaysTation1 meu mestre ```{arq}```'), 'markdown',
                                       reply_to_message_id=msg['message_id'])
 
@@ -121,11 +117,7 @@ async def tcxs_xml(msg):
 </View>
 </XMBML>''')
                 # bot envia mensagem
-                print('Usuario {} solicitou a criação de um XML de PS2 com os dados {}.xml'.format(msg['from']['first_name'],nome_xml))
-                log = '\nUsuario {} solicitou a criação de um XML de PS2 com os dados {}.xml --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],nome_xml,msg['chat']['title'],time.ctime())
-                arquivo = open('logs/jogos_xml.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 await bot.sendMessage(msg['chat']['id'], (f'Seu xml de PlaysTation2 meu mestre ```{arq}```'), 'markdown',
                                       reply_to_message_id=msg['message_id'])
 
@@ -203,11 +195,7 @@ async def tcxs_xml(msg):
 </View>
 </XMBML>''')
                 # bot envia mensagem
-                print('Usuario {} solicitou a criação de um XML de PSP com os dados {}.xml'.format(msg['from']['first_name'],nome_xml))
-                log = '\nUsuario {} solicitou a criação de um XML de PSP com os dados {}.xml --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],nome_xml,msg['chat']['title'],time.ctime())
-                arquivo = open('logs/jogos_xml.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 await bot.sendMessage(msg['chat']['id'], (f'Seu xml meu mestre ```{arq}```'), 'markdown',
                                       reply_to_message_id=msg['message_id'])
 
@@ -304,11 +292,7 @@ async def tcxs_xml(msg):
 </View>
 </XMBML>''')
                 # bot envia mensagem
-                print('Usuario {} solicitou a criação de um XML de PS3 com os dados {}.xml'.format(msg['from']['first_name'],nome_xml))
-                log = '\nUsuario {} solicitou a criação de um XML de PS3 com os dados {}.xml --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],nome_xml,msg['chat']['title'],time.ctime())
-                arquivo = open('logs/jogos_xml.txt','a')
-                arquivo.write(log)
-                arquivo.close()
+                
                 await bot.sendMessage(msg['chat']['id'], (f'Seu xml meu mestre ```{arq}```'), 'markdown',
                                       reply_to_message_id=msg['message_id'])
 

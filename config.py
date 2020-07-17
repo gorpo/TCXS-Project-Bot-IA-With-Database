@@ -5,14 +5,14 @@ import os
 
 
 #LOCAL CONFIG rodar em local host use as linhas abaixo--->
-#token = "1186597860:AAHZTQT--xYhNHhkO8SbxlSxrdwVnkvi38s"
-#logs = -1001215401730
-#sudoers = [522510051]
+token = "1186597860:AAGVtPY-1nHFdufqXDe06lI66UG9ttlwbVM"
+logs = -1001215401730
+sudoers = [522510051]
 
 #HEROKU CONFIG - rodar no heroku use as linhas abaixo------->
-token = os.environ['TELEGRAM_TOKEN']
-logs = os.environ['LOGS']
-sudoers = os.environ['SUDOERS']
+#token = os.environ['TELEGRAM_TOKEN']
+#logs = os.environ['LOGS']
+#sudoers = os.environ['SUDOERS']
 
 
 #----------------------------------------------------
@@ -70,8 +70,5 @@ enabled_plugins = [
     'hora_data',
     'trollagens',
     'randomicas',
-    'calculadora',
     'tcxs_xml',
-    'users',
-    'musicas_cursos',
 ]
