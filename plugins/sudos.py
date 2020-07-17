@@ -29,10 +29,9 @@ from amanobot.exception import TelegramError
 from emoji import emojize
 import db_handler as db
 from utils import backup_sources
-from config import bot, bot_id, bot_username, git_repo, sudoers,logs,token_dropbox
+from config import bot, bot_id, bot_username, git_repo, sudoers,logs
 import subprocess
 import sqlite3
-import dropbox
 
 
 async def sudos(msg):
@@ -44,7 +43,7 @@ async def sudos(msg):
                     conexao_sqlite = sqlite3.connect('bot.db') #conecta a nossa database atual
                     cursor_sqlite = conexao_sqlite.cursor()
                     t = time.localtime()
-                    nome_bkp = f'images/bot_{t[2]}_{t[1]}_{t[0]}.db'
+                    nome_bkp = f'backups/bot_{t[2]}_{t[1]}_{t[0]}.db'
                     backup_db = sqlite3.connect(nome_bkp)#backup da database
                     cursor_backup = backup_db.cursor()
                     with backup_db:
@@ -63,7 +62,6 @@ async def sudos(msg):
                 conexao_sqlite.commit()
                 await bot.sendMessage(msg['chat']['id'],'***Todas mensagens aleatórias foram apagadas da IA***','Markdown')
                 await bot.sendDocument(msg['chat']['id'], open(nome_bkp, 'rb'), caption="🤖 Aqui esta uma cópia da sua database" )
-                os.remove(nome_bkp)
 
 
             if msg['text'] == '!sudos' or msg['text'] == '/sudos' or msg['text'] == 'sudos':
@@ -379,34 +377,27 @@ baixar - baixa um documento para o server
                 return True
 
             #SISTEMA DE BACKUP
-            elif msg['text'].split()[0] == '!backup' or msg['text'].split()[0] == 'backup' or msg['text'].split()[0] == '/backup' or msg['text'].split()[0] == '/backup@gorpo_bot':
-                sent = await bot.sendMessage(msg['chat']['id'], '⏰ Fazendo backup...', reply_to_message_id=msg['message_id'])
+            elif msg['text'].split()[0] == '!backup' or msg['text'] == 'backup' or msg['text'] == '/backup' or msg['text'] == '/backup@gorpo_bot':
+                sent = await bot.sendMessage(msg['chat']['id'], '⏰ Fazendo backup...',
+                                             reply_to_message_id=msg['message_id'])
+
                 if 'pv' in msg['text'].lower() or 'privado' in msg['text'].lower():
                     msg['chat']['id'] = msg['from']['id']
-                try:
-                    nome_arquivo = f"{msg['text'].split()[1]}_"
-                except:
-                    nome_arquivo = '_'
-                print(nome_arquivo)
 
                 cstrftime = datetime.now().strftime('%d/%m/%Y - %H:%M:%S')
-                fname = backup_sources(nome_arquivo)
+                fname = backup_sources()
                 if not os.path.getsize(fname) > 52428800:
                     await bot.sendDocument(msg['chat']['id'], open(fname, 'rb'), caption="📅 " + cstrftime)
-                    targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}"
-                    d = dropbox.Dropbox(token_dropbox)
-                    with open(fname, "rb") as f:
-                        meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
-                    link = d.sharing_create_shared_link(targetfile)
-                    url = link.url
-                    dl_url = re.sub(r"\?dl\=0", "?dl=1", url)
-                    await bot.editMessageText((sent['chat']['id'], sent['message_id']), f"`✅ Backup concluído:`\nDropbox link:{dl_url}")
+                    await bot.editMessageText((sent['chat']['id'], sent['message_id']), '✅ Backup concluído!')
                     os.remove(fname)
                 else:
-                    await bot.editMessageText((sent['chat']['id'], sent['message_id']), f'Ei, o tamanho do backup passa de 50 MB, então não posso enviá-lo aqui.\n\nNome do arquivo: `{fname}`',parse_mode='Markdown')
+                    await bot.editMessageText((sent['chat']['id'], sent['message_id']),
+                                              f'Ei, o tamanho do backup passa de 50 MB, então não posso enviá-lo aqui.\n\nNome do arquivo: `{fname}`',
+                                              parse_mode='Markdown')
                 return True
             #SISTEMA QUE DEIXA O BOT OFFLINE ATE A HORA DEFINIDA
             elif '|' in msg['text']:
+                
                 h = msg['text'].split('|')[0]
                 m = msg['text'].split('|')[1]
                 hm = (int(h),int(m))
