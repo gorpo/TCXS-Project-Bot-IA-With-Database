@@ -12,11 +12,13 @@
 
 import json
 import time
+
 from amanobot.exception import TelegramError, NotEnoughRightsError
 from amanobot.namedtuple import InlineKeyboardMarkup
+
 from config import bot, bot_id, sudoers
 from db_handler import conn, cursor
-from get_strings import strings, Strings
+
 
 async def is_admin(chat_id, user_id, reply_id=None):
     if int(chat_id) < 0:  # Groups and supergoups IDs.
@@ -55,6 +57,7 @@ async def is_admin(chat_id, user_id, reply_id=None):
 
     else:  # User IDs.
         dic = dict(user=False, reply=False, bot=False)
+
     return dic
 
 
@@ -96,14 +99,11 @@ async def admins(msg):
                                                   reply_to_message_id=msg['message_id'])
                         else:
                             await bot.kickChatMember(msg['chat']['id'], reply_id)
-                            await bot.sendMessage(msg['chat']['id'], f'{msg["from"]["first_name"]} baniu {reply_name}!', reply_to_message_id=msg['message_id'])
+                            await bot.sendMessage(msg['chat']['id'], f'{msg["from"]["first_name"]} baniu {reply_name}!',
+                                                  reply_to_message_id=msg['message_id'])
                     else:
                         await bot.sendMessage(msg['chat']['id'], 'Ei, eu nao tenho admin aqui',
                                               reply_to_message_id=msg['message_id'])
-
-
-
-
 
 
         elif msg['text'].split()[0] == '/kick' or msg['text'].split()[0] == '!kick' or msg['text'].split()[0] == 'kick':
@@ -240,7 +240,7 @@ async def admins(msg):
                                               reply_to_message_id=msg['message_id'])
 
 
-        elif msg['text'].split()[0] == '/unban' or msg['text'].split()[0] == '!unban' :
+        elif msg['text'].split()[0] == '/unban' or msg['text'].split()[0] == '!unban' or msg['text'].split()[0] == 'unban' or msg['text'].split()[0] == 'disban' or msg['text'].split()[0] == 'desbanir':
             print('Usuario {} solicitou /unban'.format(msg['from']['first_name']))
             if msg['chat']['type'] == 'private':
                 await bot.sendMessage(msg['chat']['id'], 'Este comando só funciona em grupos ¯\\_(ツ)_/¯')
@@ -340,8 +340,10 @@ async def admins(msg):
                         [dict(text='⚙️ Opções do chat', callback_data='options {}'.format(msg['chat']['id']))],
                         [dict(text='🗑 Deletar mensagem', callback_data='del_msg')]
                     ])
-                    await bot.sendMessage(msg['from']['id'], 'Menu de configuração do chat {}'.format(msg['chat']['title']),reply_markup=kb)
-                    await bot.sendMessage(msg['chat']['id'], 'Enviei um menu de configurações no seu pv.',reply_to_message_id=msg['message_id'])
+                    await bot.sendMessage(msg['from']['id'], 'Menu de configuração do chat {}'.format(msg['chat']['title']),
+                                          reply_markup=kb)
+                    await bot.sendMessage(msg['chat']['id'], 'Enviei um menu de configurações no seu pv.',
+                                          reply_to_message_id=msg['message_id'])
             return True
 
         elif msg['text'] == '/admdebug':
@@ -352,6 +354,7 @@ async def admins(msg):
             return True
 
     elif msg.get('data'):
+
         if msg['data'].startswith('options'):
             await bot.answerCallbackQuery(msg['id'], 'Abrindo...')
             if (await is_admin(msg['data'].split()[1], msg['from']['id']))['user']:
@@ -361,7 +364,10 @@ async def admins(msg):
                     [dict(text='None', callback_data='ai_switch {}'.format(msg['data'].split()[1]))],
                     [dict(text='« Voltar', callback_data='back {}'.format(msg['data'].split()[1]))]
                 ])
-                await bot.editMessageText((msg['from']['id'], msg['message']['message_id']), 'Opções do chat {}'.format(info['title']),  reply_markup=kb)
+                await bot.editMessageText((msg['from']['id'], msg['message']['message_id']),
+                                    'Opções do chat {}'.format(info['title']),
+                                    reply_markup=kb)
+
         elif msg['data'].startswith('back'):
             info = await bot.getChat(msg['data'].split()[1])
             kb = InlineKeyboardMarkup(inline_keyboard=[

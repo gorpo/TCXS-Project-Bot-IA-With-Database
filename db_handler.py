@@ -1,6 +1,16 @@
 
 import sqlite3
 
+
+
+
+
+
+
+
+
+
+
 #dados anteriores---------------------->
 
 try:
@@ -11,12 +21,8 @@ try:
         cursor.execute(f"""INSERT INTO frequencia(valor)VALUES('1')""")
     except:
         pass
-    # admin usuario id_usuario dias data_inicial data_final grupo
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS permanencia  (int_id integer not null primary key autoincrement, grupo varchar(5000), id_grupo varchar(5000), admin varchar(5000),doador varchar(500), id_doador varchar(500), dias varchar(500), data_inicial varchar(500),  data_final varchar(5000),data_aviso varchar(5000));  """)
     # tabela da loja_doadores TCXS STORE PKG para doadores
     cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_doadores (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
-    # tabela da loja_doadores TCXS STORE PKG para doadores
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_free (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix HAN
     cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_han (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix HEN
@@ -25,17 +31,8 @@ try:
     cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_cfw_xml (int_id integer not null primary key autoincrement,  uploader varchar(5000),versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix XML EXCLUSIVO HEN
     cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen_xml (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
-
-
-
-
     #tabela das mensagens aleatorias da IA
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement,grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),id_mensagem varchar(500), mensagem varchar(5000));  """)
-    # tabela principal da IA com que seta oque ela faz ou nao
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS inteligencia  (grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),inteligencia varchar(500));  """)
-
-    # tabela dos LOGS DOS USUARIOS | tudo que é enviado pelos usuarios ficam nestes logs
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS  logs_usuarios (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT,usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT,usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
     #tabela dos comandos que podem ser cadastrados com #      | deletar %  recadastrar $
     cursor.execute("""  CREATE TABLE IF NOT EXISTS comandos   (int_id integer not null primary key autoincrement, tipo varchar(5000), comando varchar(5000), resposta varchar(5000),usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
     #insere um comando na tabela para questao de testes do bot
@@ -43,18 +40,17 @@ try:
     #tabela para cadastrar perguntas feitas pelos usuarios usando ??
     cursor.execute("""  CREATE TABLE IF NOT EXISTS perguntas  (int_id integer not null primary key autoincrement, usuario varchar(5000), pergunta varchar(5000));  """)
     #tabela de frequencia para dizer quanto o bot pode falar
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS frequencia  (id_grupo INTEGER, grupo varchar(5000), valor int);  """)#chat_id INTEGER,
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS frequencia  (valor int);  """)
     # seta a frequencia com 1 para o bot sempre falar pouco quando iniciado
-    #cursor.execute(f"""INSERT INTO frequencia(valor)VALUES('0')""")
+    cursor.execute(f"""INSERT INTO frequencia(valor)VALUES('1')""")
     #tabela das palavras que podem ser definidas como proibidas no grupo
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS proibido (termo varchar(5000));  """) #chat_id INTEGER,
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS proibido (termo varchar(5000));  """)
     conn.commit()
     conn.close()
 except:
     pass
 conn = sqlite3.connect('bot.db')
 cursor = conn.cursor()
-
 cursor.execute('''CREATE TABLE IF NOT EXISTS chats (chat_id INTEGER,
                                                     welcome,
                                                     welcome_enabled INTEGER,
@@ -70,14 +66,15 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS users (
                                                     ia INTEGER,
                                                     chat_lang)''')
 
-cursor.execute('''CREATE TABLE IF NOT EXISTS channels (chat_id INTEGER)''')
+cursor.execute('''CREATE TABLE IF NOT EXISTS channels (
+                                                       chat_id INTEGER)''')
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS was_restarted_on (
                                                                chat_id INTEGER,
                                                                message_id INTEGER)''')
 
 
-def chat_exists(chat_id):#se o chat existir ele nao cadastra de novo o mesmo chat
+def chat_exists(chat_id):
     cursor.execute('SELECT * FROM chats WHERE chat_id = (?)', (chat_id,))
     if cursor.fetchone():
         return True

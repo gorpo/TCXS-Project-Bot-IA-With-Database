@@ -45,14 +45,15 @@ async def start(msg):
                     [dict(text=strs.get('🎮 Jogos de M a P'), callback_data='MaP')],
                     [dict(text=strs.get('🎮 Jogos de R a S'), callback_data='RaS')] +
                     [dict(text=strs.get('🎮 Jogos de S a T'), callback_data='SaT')] +
-                    [dict(text=strs.get('🎮 Jogos de T a Z'), callback_data='TaZ')] ])
+                    [dict(text=strs.get('🎮 Jogos de T a Z'), callback_data='TaZ')]
+                ])
                 smsg = strs.get('''🎮 Temos jogos para download com link direto 🎮
         Basta clicar no botão que te trarei a lista com link direto para download, pedimos sua contribuição para que este projeto se mantenha vivo, Obrigado a todos da TCXS!''')
-            await bot.sendMessage(msg['chat']['id'], smsg, reply_to_message_id=msg['message_id'], reply_markup=kb)
+            await bot.sendMessage(msg['chat']['id'], smsg,
+                                  reply_to_message_id=msg['message_id'], reply_markup=kb)
 
+        if msg['text'] == '/start' or msg['text'] == '!start' or msg['text'].split()[0] == '@gorpo_bot' + bot_username or msg['text'] == 'start':           
 
-
-        if msg['text'] == '/start' or msg['text'] == '!start' or msg['text'].split()[0] == '@gorpo_bot' + bot_username or msg['text'] == 'start':
             if msg['chat']['type'] == 'private':
                 kb = InlineKeyboardMarkup(inline_keyboard=[
                     [dict(text=strs.get('commands_button'), callback_data='all_cmds')] +
@@ -87,33 +88,25 @@ async def start(msg):
         if msg['data'] == 'tools_cmds':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
                                       text='''*Ferramentas:*
-/tr      -traduz um texto
-/yt      -pesquisa videos no YouTube
-/r       -pesquisa um termo no redit
-/clima   -exibe informacoes de clima
-/coub    -pesquisa de pequenas anima??es
-/dados   -jogo de dados
-/gif     -gif do giphy
-/git     -usuario do github
-/id      -id do usuario
-/ip      -informa dados de um ip
-/jsondump -retorna dados formatados
-/stickerid -pega id de um sticker
-/getsticker -baixa um sticker
-/pypi -pesquisa libs python
-/rextester -interpretador de varias linguagens de programação
-/mark -repete o texto informado usando Markdown
-/html -repete o texto informado usando HTML
-/request -faz uma requisicao a um site
-/rt -repete concordando com o usuario na reposta  
-/fala -Repete o texto que voce pedir para ele falar
-/print -gera um print doque falou
-/dogbin - envia seu material em texto para o dogbin
-/hastebin - envia seu material em texto para o hastebin
-/echo - Repete o texto informado.    
+
+/clima - Exibe informações de clima.
+/coub - Pesquisa de pequenas animações.
+/echo - Repete o texto informado.
+/gif - Pesquisa de GIFs.
+/git - Envia informações de um user do GitHub.
+/html - Repete o texto informado usando HTML.
+/ip - Exibe informações sobre um IP/domínio.
+/jsondump - Envia o json da mensagem.
+/mark - Repete o texto informado usando Markdown.
+/print - Envia uma print de um site.
+/pypi - Pesquisa de módulos no PyPI.
+/r - Pesquisa de tópicos no Reddit
+/request - Faz uma requisição a um site.
 /shorten - Encurta uma URL.
-/token - Exibe informaces de um token de bot.
-fale sobre -usa a IA do bot | digite: fale sobre tema''',
+/token - Exibe informações de um token de bot.
+/tr - Traduz um texto.
+/yt - Pesquisa vídeos no YouTube.
+/ytdl - Baixa o áudio de um vídeo no YouTube.''',
                                       parse_mode='Markdown',
                                       reply_markup=cmds_back)
             return True
@@ -122,22 +115,30 @@ fale sobre -usa a IA do bot | digite: fale sobre tema''',
         elif msg['data'] == 'admin_cmds':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
                                       '''*Comandos administrativos:*
+[+]TODOS COMANDOS LISTADOS ATE ULTIMA ATUALIZACAO[+]
+/comandos@gorpo_bot
 /start - inicia o bot
-/welcome - Define a mensagem de welcome.
 /ban- bane usuario
 /unban - desbane usuario
 /kick -kicka usuario
 /mute - muta usuario
 /unmute - desmuta usuario
-/unwarn - Remove as advert?ncias do usuario.
-/warn - Adverte um usuario.
 /pin - fixa posts
 /unpin - desfixa os posts
 /title - muda o titulo do grupo
 /defregras - define regras
 /regras - ve as regras
-/config - informacoes ser?o enviadas no privado
+/config - informa??es ser?o enviadas no privado
 /admdebug -  debug do admin
+/tr - Traduz um texto.
+/yt - Pesquisa v?deos no YouTube.
+/ytdl - Baixa o ?udio de um v?deo no YouTube.
+/r - pesquisa um termo no redit
+/clima - Exibe informa??es de clima
+/coub - Pesquisa de pequenas anima??es
+/dados - jogo de dados
+/gif - gif do giphy
+/git - usuario do github
 /id - id do usuario
 /ip - informa dados de um ip
 /jsondump - retorna dados formatados
@@ -145,15 +146,37 @@ fale sobre -usa a IA do bot | digite: fale sobre tema''',
 /getsticker - baixa um sticker
 /criar_sticker - cria um pacote de stickers
 /kibar  - copia um sticker para o pacote de stickers
+/pypi - pesquisa libs python
+/rextester - interpretador de varias linguagens de programa??o
 /mark - Repete o texto informado usando Markdown
 /html - Repete o texto informado usando HTML
-/request - Faz uma requisição a um site
-/torrent -jogos em pkg torrent
-/pkg_games -exibe nosso site de pkg's para ps3 gratis
-/site -exibe o site da equipe
-/facebook -exibe o facebook da equipe, cadastre-se
-/iptv -exibe nosso site de iptv gratis
-/anime -exibe nosso site de anime gratis''',
+/request - Faz uma requisi??o a um site
+fala - Repete o texto que voce pedir para ele falar
+site - exibe o site da equipe
+facebook - exibe o facebook da equipe, cadastre-se
+netflix - exibe nosso site de netflix gratis
+iptv - exibe nosso site de iptv gratis
+anime - exibe nosso site de anime gratis
+pkg - exibe nosso site de pkg's para ps3 gratis
+biblioteca - exibe nossa biblioteca hacker
+curso - exibe nosso site de  cursos
+doadores - exibe instru??es completas para doadores
+painel - exibe nosso painel hacker
+
+[*]COMANDOS EXCLUSIVOS DA ADM[*]
+/ban - Bane um usuário.
+/config - Envia um menu de configurações.
+/defregras - Define as regras do grupo.
+/kick - Kicka um usuário.
+/mute - Restringe um usuário.
+/pin - Fixa uma mensagem no grupo.
+/title - Define o título do grupo.
+/unban - Desbane um usuário.
+/unmute - Desrestringe um usuário.
+/unpin - Desfixa a mensagem fixada no grupo.
+/unwarn - Remove as advertências do usuário.
+/warn - Adverte um usuário.
+/welcome - Define a mensagem de welcome.''',
                                       parse_mode='Markdown',
                                       reply_markup=cmds_back)
             return True
@@ -161,33 +184,15 @@ fale sobre -usa a IA do bot | digite: fale sobre tema''',
 
         elif msg['data'] == 'user_cmds':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
-                                      '''*Comandos para usuários:*
-/start   -inicia o bot
-/regras  -leia nossas regras
-/admin   -lista os admins do grupo
-/freepkg -tras a loja gratuita para o usuario 
-/fix -tras o fix para aparecer a loja do usuario
-/tutorial - tutorial de como instalar a loja
-/rap - como por as licenças dos jogos  
-/desbloqueio - como desbloquear seu videogame
-/segundoplano -como usar download em segundo plano
-/codigoerro  -exibe os codigos de erro da PSN/PS3
-/lista jogos - lista com jogos PS3 para download direto
-/doadores -exibe instruces completas para doadores
-/mercadopago - link para doar e ter a loja premium
-/tcxs -informações sobre nosso nome
-/tcxspyject -programa para criar lojas no pc
-/ps1 -cria xml para loja
-/ps2 -cria xml para loja 
-/psp -cria xml para loja
-/ps3 -cria xml para loja
-/proxy -ajuda o usuario com velocidade no PS3
-/torrent -jogos em pkg torrent
-/pkg_games -exibe nosso site de pkg's para ps3 gratis
-/site -exibe o site da equipe
-/facebook -exibe o facebook da equipe, cadastre-se
-/iptv -exibe nosso site de iptv gratis
-/anime -exibe nosso site de anime gratis''',
+                                      '''*Comandos para usuários normais:*
+
+/admins - Mostra a lista de admins do chat.
+/dados - Envia um número aleatório de 1 a 6.
+/bug - Reporta um bug ao meu desenvolvedor.
+/id - Exibe suas informações ou de um usuário.
+/ping - Responde com uma mensagem de ping.
+/regras - Exibe as regras do grupo.
+/roleta - Para jogar a Roleta Russa.''',
                                       parse_mode='Markdown',
                                       reply_markup=cmds_back)
             return True
@@ -213,7 +218,7 @@ fale sobre -usa a IA do bot | digite: fale sobre tema''',
                                             [[dict(text=strs.get('back_button'), callback_data='start_back')]]
                                             )
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
-                                      "Selecione a linguagem:",
+                                      "Select your prefered lang below:",
                                       reply_markup=langs_kb)
             return True
 
@@ -244,7 +249,7 @@ fale sobre -usa a IA do bot | digite: fale sobre tema''',
                                       '''• Manicomio Bot
 
 Version: {version}
-Nosso site: <a href="https://tcxsproject.com.br">Manicomio TCXS Project</a>
+Nosso site: <a href="https://tcxsproject.com">Manicomio TCXS Project</a>
 Developers: <a href="https://github.com/gorpo">GorpoOrko</>
 
 

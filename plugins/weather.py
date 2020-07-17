@@ -40,7 +40,7 @@ async def weather(msg):
             if msg['text'][:6] == '':
                 res = '*Uso:* `/clima <cidade>` - _Obtem informações meteorológicas da cidade._'
             else:
-                cidade = msg['text'][6:]
+                cidade = msg['text'][7:]
                 try:
                     url = 'https://api.hgbrasil.com/weather'
                     key = '0418e7f0'

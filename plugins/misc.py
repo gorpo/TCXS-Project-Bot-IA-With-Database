@@ -159,6 +159,18 @@ ID: {bot_id}''',
             return True
 
 
+        elif msg['text'] == 'unban' or msg['text'] == '/unban' or msg['text'] == '/unban@' + bot_username:
+            
+            try:
+                await bot.unbanChatMember(msg['chat']['id'], msg['from']['id'])
+                await bot.sendMessage(msg['chat']['id'],"Desbani ele....",reply_to_message_id=msg['message_id'])
+            except TelegramError:
+                await bot.sendMessage(msg['chat']['id'],
+                                      'Nao deu para debanir ele, talvez eu nao sou admin nesta bosta.',
+                                      reply_to_message_id=msg['message_id'])
+            return True
+
+
         elif msg['text'].startswith('/request') or msg['text'].startswith('!request') or msg['text'] == '/request@' + bot_username or msg['text'] == 'request':
             if re.match(r'^(https?)://', msg['text'][9:]):
                 text = msg['text'][9:]

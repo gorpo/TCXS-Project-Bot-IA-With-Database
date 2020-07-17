@@ -66,13 +66,16 @@ def escape_markdown(text):
 
     return text
 
-def backup_sources(nome,output_file=None):
+def backup_sources(output_file=None):
     ctime = int(time.time())
     cstrftime = datetime.now().strftime('%d-%m-%Y_%H-%M')
+
     if isinstance(output_file, str) and not output_file.lower().endswith('.zip'):
         output_file += '.zip'
+
     t = time.localtime()
-    fname = output_file or f'{nome}{cstrftime}.zip'
+    fname = output_file or f'backup-{cstrftime}.zip'
+
     with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as backup:
         for folder, _, files in os.walk('.'):
             for file in files:
