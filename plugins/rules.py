@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-# ███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-# ████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-# ██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-# ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-# ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-# ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import html
 import re
@@ -49,7 +38,8 @@ async def rules(msg):
             return True
 
 
-        elif msg['text'] == '/rules' or msg['text'] == '!rules' or msg['text'] == '/regras' or msg['text'] == 'regras' or msg['text'] == '/regras@' + bot_username or msg['text'] == '/rules@' + bot_username:
+        elif msg['text'] == '/rules' or msg['text'] == '!rules' or msg['text'] == '/regras' or msg[
+            'text'] == 'regras' or msg['text'] == '/regras@' + bot_username or msg['text'] == '/rules@' + bot_username:
             
             rules = get_rules(msg['chat']['id']) or 'Sem regras!'
 
@@ -57,7 +47,9 @@ async def rules(msg):
             return True
 
 
-        elif msg['text'].split()[0] == '/defrules' or msg['text'].split()[0] == '/defregras' or msg['text'].split()[0] == '/defregras' or msg['text'].split()[0] == '!defregras' or msg['text'].split()[0] == '/defregras@' + bot_username or msg['text'].split()[0] == '/defrules@' + bot_username:
+        elif msg['text'].split()[0] == '/defrules' or msg['text'].split()[0] == '/defregras' or msg['text'].split()[
+            0] == '/defregras' or msg['text'].split()[0] == '!defregras' or msg['text'].split()[
+            0] == '/defregras@' + bot_username or msg['text'].split()[0] == '/defrules@' + bot_username:
             
             if (await is_admin(msg['chat']['id'], msg['from']['id']))['user']:
                 if len(msg['text'].split()) == 1:
