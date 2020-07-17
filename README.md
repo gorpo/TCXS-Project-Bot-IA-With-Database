@@ -4,7 +4,7 @@
 [![Build](https://img.shields.io/badge/windows-7%208%2010-blue.svg)]()
 [![Build](https://img.shields.io/badge/Linux-Ubuntu%20Debian-orange.svg)]()
 [![Build](https://img.shields.io/badge/arquiterura-64bits-blue.svg)]()
-<h2 align="center">Manicomio Telegram Heroku Bot IA</h2>
+<h2 align="center">Manicomio Telegram Heroku Bot</h2>
 
 <h2>Instruções:</h2><br>
 1. Edite no arquivo config se quer rodar o bot local ou no heroku, comente e descomente as linhas.<br>
@@ -15,7 +15,7 @@
 6. pegue sua id ela servirá para você ser adm master.<br>
 <br>
 <h2>Via linha de comando - CLI</h2><br>
-<code>cd Manicomio-Bot-IA</code><br>
+<code>cd manicomio_bot_heroku</code><br>
 <code>heroku login</code><br>
 <code>heroku create --region us manicomio</code> seta us como regiao e nome_do_app defina o nome do  app no heroku<br>
 <code>git init</code><br>
