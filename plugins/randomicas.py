@@ -21,7 +21,7 @@ async def randomicas(msg):
             await bot.sendMessage(msg['chat']['id'], 'https://www.youtube.com/watch?v=_wYG7iMa5uY', reply_to_message_id=msg['message_id'])      
             #videos dos jogos
         if msg['text'] == 'ps1':
-            await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbVe_lDehK8EitSnLO-jP2SIqZ00PAACsgADGepZRCV_bEET9yWbGgQ')
+            await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbVe_lDehK8EitSnLO-jP2SIqZ00PAACsgADGepZRCV_bEET9yWbGgQ',  reply_to_message_id=msg['message_id'])
         if msg['text'] == 'ps2':
             await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbde_lDfbzhCcTg7M1iPa0_G_rF6UQACsgADGepZRCV_bEET9yWbGgQ',  reply_to_message_id=msg['message_id'])
         if msg['text'] == 'ps3':
@@ -35,7 +35,11 @@ async def randomicas(msg):
 
         #----ATT PARA DOADORES TCXS PROJECT---------------------------------------->
         if msg['text'] == 'luppy solta a att3.9':
-            
+            print('Usuario {} solicitou att DE DOADORES'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou att DE DOADORES --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],  msg['chat']['title'], time.ctime())
+            arquivo = open('logs/grupos.txt', 'a')
+            arquivo.write(log)
+            arquivo.close()
             #-------INSTRUÇÕES------>>
             await bot.sendMessage(msg['chat']['id'], 'Olá, bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO 3.6 e caso use o fix de acordo com seu Exploit/Desbloqueio, se voce tem han ou CFW use o FIX HAN, caso contrário e seja o Exploit HEN em seu console use o FIX HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale o FIX, após o FIX instalado instale a TCXS Store 3.6 PKG, recomendamos reiniciar o console após este processo!!',  reply_to_message_id=msg['message_id'])
             await bot.sendMessage(msg['chat']['id'],'`TUTORIAL DE COMO INSTALAR A LOJA EXPLOIT HAN E HEN!!`  https://cos.tv/videos/play/1586413688272059934', 'markdown',  reply_to_message_id=msg['message_id'])
