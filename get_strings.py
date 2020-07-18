@@ -54,7 +54,7 @@ class Strings:
         if strings[self.language].get(string_key):
             return strings[self.language][string_key]
         elif platform == 'linux' or platform == 'linux2' and strings['pt'].get(string_key):
-            return strings['pt'][string_key, encoding="utf8"]
+            return strings['pt'][string_key]
         elif platform == 'win32' and strings['pt'].get(string_key):
             return strings['pt'][string_key]
         else:
