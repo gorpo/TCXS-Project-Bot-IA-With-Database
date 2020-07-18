@@ -6,6 +6,6 @@ call git add *
 call git commit -m "Primeiro commit!"
 call heroku git:remote -a manicomio
 call git push heroku master 
-heroku buildpacks:add --index 1 heroku-community/apt
+call heroku buildpacks:add --index 1 heroku-community/apt
 call heroku ps:scale bot=1 
 call heroku logs --tail 
