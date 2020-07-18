@@ -101,12 +101,12 @@ async def users(msg):
         strs = Strings(msg['chat']['id'])
         if  msg['text'].lower() == 'comando' or msg['text'] == '/comando'  or msg['text'] == '/comandos' or msg['text'] == 'comandos' or 'help' in msg['text'].lower() or 'ajuda' in msg['text'].lower():
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=strs.get('📦 Store Free'), callback_data='store_free')] +
-                [dict(text=strs.get("📦 Store Doadores"), callback_data='store_doadores')],
-                [dict(text=strs.get('🦸 Usuários'), callback_data='comandos_usuarios')] +
-                [dict(text=strs.get("🧙‍ Admin's"), callback_data='comandos_admins')],
-                [dict(text=strs.get('🧰 Ferramentas'), callback_data='ferramentas_gerais')] +
-                [dict(text=strs.get('📣 Info | Extras'), callback_data='infos_extras')],])
+                [dict(text=strs.get('Store Free'), callback_data='store_free')] +
+                [dict(text=strs.get("Store Doadores"), callback_data='store_doadores')],
+                [dict(text=strs.get('Usuários'), callback_data='comandos_usuarios')] +
+                [dict(text=strs.get("Admin's"), callback_data='comandos_admins')],
+                [dict(text=strs.get('Ferramentas'), callback_data='ferramentas_gerais')] +
+                [dict(text=strs.get('Info | Extras'), callback_data='infos_extras')],])
             await bot.sendMessage(msg['chat']['id'],f"***{msg['from']['first_name']} {strs.get('pm_comandos_msg')}***" ,'markdown',  reply_markup=kb)
         #return True
 #PEGA OS DADOS DO keyboard.py ----------------------:
@@ -114,12 +114,12 @@ async def users(msg):
         strs = Strings(msg['message']['chat']['id'])
         if msg['data'] == 'inicio_menu':# precisa de dois menus para voltar para o inicio criando um loop entre os dois----->
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=strs.get('📦 Store Free'), callback_data='store_free')] +
-                [dict(text=strs.get("📦 Store Doadores"), callback_data='store_doadores')],
-                [dict(text=strs.get('🦸 Usuários'), callback_data='comandos_usuarios')] +
-                [dict(text=strs.get("🧙‍ Admin's"), callback_data='comandos_admins')],
-                [dict(text=strs.get('🧰 Ferramentas'), callback_data='ferramentas_gerais')] +
-                [dict(text=strs.get('📣 Info | Extras'), callback_data='infos_extras')], ])
+                [dict(text=strs.get('Store Free'), callback_data='store_free')] +
+                [dict(text=strs.get("Store Doadores"), callback_data='store_doadores')],
+                [dict(text=strs.get('Usuários'), callback_data='comandos_usuarios')] +
+                [dict(text=strs.get("Admin's"), callback_data='comandos_admins')],
+                [dict(text=strs.get('Ferramentas'), callback_data='ferramentas_gerais')] +
+                [dict(text=strs.get('Info | Extras'), callback_data='infos_extras')], ])
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"***{msg['from']['first_name']} {strs.get('pm_comandos_msg')}***", 'markdown',reply_markup=kb)
             #return True
 
@@ -129,24 +129,24 @@ async def users(msg):
             #return True
         #entrega da loja free:
         elif msg['data'].split()[0] == 'download_store_free':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos a ultima atualização da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console, ative o Hen e instale ela pelo Package Manager.\nCaso seja usuário de HAN será necessário usar o Fix,baixe ele, depois basta inserir o FIx e a Loja em seu pendrive e através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.store_free)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`INSTRUÇÕES:` ```------ Abaixo temos a ultima atualização da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console, ative o Hen e instale ela pelo Package Manager.\nCaso seja usuário de HAN será necessário usar o Fix,baixe ele, depois basta inserir o FIx e a Loja em seu pendrive e através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.store_free)
             await bot.sendDocument(msg['message']['chat']['id'], document='BQACAgEAAx0CTd0y0QABAfACXkmA716o7XaNW82C3Mr7O2c0bX8AApEAA0oQUUaFcnOHb037rhgE', caption='')
             #return True
         #entrega do fix
         elif msg['data'].split()[0] == 'download_fix':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.store_free)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.store_free)
             await bot.sendDocument(msg['message']['chat']['id'], document='BQACAgEAAx0CUYaz7wACJ_lfC5DOrfOmVoy_LlQ6UQtse3bVgAACxQADxKN4RUyRO66RWR8DGgQ', caption='')
             #return True
         elif msg['data'].split()[0] == 'tutorial_segundo_plano':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como fazer os Downloads em Segundo Plano em seu PlayStation3!```",'markdown', reply_markup=keyboard.store_free)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como fazer os Downloads em Segundo Plano em seu PlayStation3!```",'markdown', reply_markup=keyboard.store_free)
             await bot.sendMessage(msg['message']['chat']['id'], 'https://youtu.be/_21a5REKhBc')
             #return True
         elif msg['data'].split()[0] == 'fone_bluetooth':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Sabia que você pode usar seu fone bluetooth para jogos em seu PlayStation3?```",'markdown', reply_markup=keyboard.store_free)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Sabia que você pode usar seu fone bluetooth para jogos em seu PlayStation3?```",'markdown', reply_markup=keyboard.store_free)
             await bot.sendMessage(msg['message']['chat']['id'], 'https://www.youtube.com/watch?v=_wYG7iMa5uY')
             #return True
         elif msg['data'].split()[0] == 'proxy_usuarios':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Siga nosso tutorial de proxy para melhorar sua conexão e evitar banimento do seu PlayStation3!```",'markdown', reply_markup=keyboard.store_free)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Siga nosso tutorial de proxy para melhorar sua conexão e evitar banimento do seu PlayStation3!```",'markdown', reply_markup=keyboard.store_free)
             await bot.sendMessage(msg['message']['chat']['id'], 'https://youtu.be/l4o8ySk1Do4')
             #return True
 
@@ -167,7 +167,7 @@ async def users(msg):
 ##  ATUALIZAÇÃO PARA DOADORES ATRAVÉS DO SISTEMA DE BOTÕES------------------------------------------------------------------------------>>
         #LOJA PAGA PARA DOADORES COM DATABASE E BOTOES------------>
         elif msg['data'].split()[0] == 'download_store_doadores':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO 3.6 e caso use o fix de acordo com seu Exploit/Desbloqueio, se voce tem han ou CFW use o FIX HAN, caso contrário e seja o Exploit HEN em seu console use o FIX HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale o FIX, após o FIX instalado instale a TCXS Store PKG, recomendamos reiniciar o console após este processo!!```",'markdown', reply_markup=keyboard.store_doadores)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`INSTRUÇÕES:` ```------ Bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO 3.6 e caso use o fix de acordo com seu Exploit/Desbloqueio, se voce tem han ou CFW use o FIX HAN, caso contrário e seja o Exploit HEN em seu console use o FIX HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale o FIX, após o FIX instalado instale a TCXS Store PKG, recomendamos reiniciar o console após este processo!!```",'markdown', reply_markup=keyboard.store_doadores)
             if msg['message']['chat']['title'] == 'Doadores TCXS 2020':
                 cursor_sqlite.execute("""SELECT * FROM loja_doadores""")
                 resultados = cursor_sqlite.fetchall()
@@ -186,7 +186,7 @@ async def users(msg):
 
         #FIX HAN PARA DOADORES COM DATABASE E BOTOES------------>
         elif msg['data'].split()[0] == 'download_fix_han_doadores':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.store_doadores)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.store_doadores)
             if msg['message']['chat']['title'] == 'Doadores TCXS 2020':
                 cursor_sqlite.execute("""SELECT * FROM fix_han""")
                 resultados = cursor_sqlite.fetchall()
@@ -254,23 +254,23 @@ async def users(msg):
 
         #ACIMA DISTO PARTE DA ATT QUE PRECISA DE DB | SEGUE CODIGOS DOS DOADORES E DA ATT PAGA--------------------->
         elif msg['data'].split()[0] == 'tutorial_loja':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store instalar a loja em seu PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store instalar a loja em seu PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'],'https://cos.tv/videos/play/1586413688272059934')
             #return True
         elif msg['data'].split()[0] == 'tutorial_cfw':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como usar em consoles CFW PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como usar em consoles CFW PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'],'https://cos.tv/videos/play/1586411677524278797')
             #return True
         elif msg['data'].split()[0] == 'tutorial_segundo_plano_doadores':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como fazer os Downloads em Segundo Plano em seu PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como fazer os Downloads em Segundo Plano em seu PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'],'https://youtu.be/_21a5REKhBc')
             #return True
         elif msg['data'].split()[0] == 'fone_bluetooth_doadores':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Sabia que você pode usar seu fone bluetooth para jogos em seu PlayStation3?```",'markdown', reply_markup=keyboard.store_doadores)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Sabia que você pode usar seu fone bluetooth para jogos em seu PlayStation3?```",'markdown', reply_markup=keyboard.store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'],'https://www.youtube.com/watch?v=_wYG7iMa5uY')
             #return True
         elif msg['data'].split()[0] == 'proxy_usuarios_doadores':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Siga nosso tutorial de proxy para melhorar sua conexão e evitar banimento do seu PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"`TUTORIAL:` ```------ Siga nosso tutorial de proxy para melhorar sua conexão e evitar banimento do seu PlayStation3!```",'markdown', reply_markup=keyboard.store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'],'https://youtu.be/l4o8ySk1Do4')
             #return True
 
