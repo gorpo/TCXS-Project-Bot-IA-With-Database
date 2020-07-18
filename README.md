@@ -83,6 +83,8 @@
 <b>Criando um novo branch</b><br>
 	<code>git branch bug-123</code><br>
 	<code>git branch gh-pages    - para sites</code><br>
+<b>Clonando um branch</b><br>
+	<code>git clone -b <branch> <remote_repo></code><br>	
 <b>Trocando para um branch existente</b><br>
 	<code>git checkout bug-123</code><br>
 <b>Neste caso, o ponteiro principal HEAD esta apontando para o branch chamado bug-123.</b><br>
