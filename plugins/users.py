@@ -114,12 +114,12 @@ async def users(msg):
         strs = Strings(msg['message']['chat']['id'])
         if msg['data'] == 'inicio_menu':# precisa de dois menus para voltar para o inicio criando um loop entre os dois----->
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=strs.get('📦 Store Free'), callback_data='store_free')] +
-                [dict(text=strs.get("📦 Store Doadores"), callback_data='store_doadores')],
-                [dict(text=strs.get('🦸 Usuários'), callback_data='comandos_usuarios')] +
-                [dict(text=strs.get("🧙‍ Admin's"), callback_data='comandos_admins')],
-                [dict(text=strs.get('🧰 Ferramentas'), callback_data='ferramentas_gerais')] +
-                [dict(text=strs.get('📣 Info | Extras'), callback_data='infos_extras')], ])
+                [dict(text='📦 Store Free', callback_data='store_free')] +
+                [dict(text="📦 Store Doadores", callback_data='store_doadores')],
+                [dict(text='🦸 Usuários', callback_data='comandos_usuarios')] +
+                [dict(text="🧙‍ Admin's", callback_data='comandos_admins')],
+                [dict(text='🧰 Ferramentas', callback_data='ferramentas_gerais')] +
+                [dict(text='📣 Info | Extras', callback_data='infos_extras')], ])
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"***{msg['from']['first_name']} {strs.get('pm_comandos_msg')}***", 'markdown',reply_markup=kb)
             #return True
 
