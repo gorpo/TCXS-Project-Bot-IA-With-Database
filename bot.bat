@@ -1,4 +1,4 @@
-
+call heroku ps:stop bot
 call heroku login
 call heroku create --region us manicomio 
 call git init
