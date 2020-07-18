@@ -101,12 +101,12 @@ async def users(msg):
         strs = Strings(msg['chat']['id'])
         if  msg['text'].lower() == 'comando' or msg['text'] == '/comando'  or msg['text'] == '/comandos' or msg['text'] == 'comandos' or 'help' in msg['text'].lower() or 'ajuda' in msg['text'].lower():
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=strs.get('📦 Store Free'), callback_data='store_free')] +
-                [dict(text=strs.get("📦 Store Doadores"), callback_data='store_doadores')],
-                [dict(text=strs.get('🦸 Usuários'), callback_data='comandos_usuarios')] +
-                [dict(text=strs.get("🧙‍ Admin's"), callback_data='comandos_admins')],
-                [dict(text=strs.get('🧰 Ferramentas'), callback_data='ferramentas_gerais')] +
-                [dict(text=strs.get('📣 Info | Extras'), callback_data='infos_extras')],])
+                [dict(text=strs.get('Store Free'), callback_data='store_free')] +
+                [dict(text=strs.get("Store Doadores"), callback_data='store_doadores')],
+                [dict(text=strs.get('Usuários'), callback_data='comandos_usuarios')] +
+                [dict(text=strs.get("Admin's"), callback_data='comandos_admins')],
+                [dict(text=strs.get('Ferramentas'), callback_data='ferramentas_gerais')] +
+                [dict(text=strs.get('Info | Extras'), callback_data='infos_extras')],])
             await bot.sendMessage(msg['chat']['id'],f"***{msg['from']['first_name']} {strs.get('pm_comandos_msg')}***" ,'markdown',  reply_markup=kb)
         #return True
 #PEGA OS DADOS DO keyboard.py ----------------------:
