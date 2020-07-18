@@ -15,9 +15,9 @@ for lang in langs:
     strings[lang] = {}
     if platform == 'linux' or platform == 'linux2':
         for file in glob('langs/{}/*.json'.format('pt')):
-            strings[lang].update(json.load(open(file)))
+            strings[lang].update(json.load(open(file, encoding="utf8")))
     if platform == 'win32':
-        for file in glob('langs/{}/*.json'.format('pt', encoding="utf8")):
+        for file in glob('langs/{}/*.json'.format('pt')):
             strings[lang].update(json.load(open(file, encoding="utf8")))
 
 
