@@ -43,7 +43,7 @@ async def ia_global(msg):
         pass
     try:
         d = dropbox.Dropbox(token_dropbox)
-        conexao_sqlite = sqlite3.connect('bot.db')
+        conexao_sqlite = sqlite3.connect('bot_database.db')
         conexao_sqlite.row_factory = sqlite3.Row
         cursor_sqlite = conexao_sqlite.cursor()
         chat_id = msg['chat']['id']

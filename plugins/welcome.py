@@ -112,7 +112,7 @@ Se esse erro persistir entre em contato com @GorpoOrko.'''.format(e.description)
             except:
                 doador = f"{msg['new_chat_member']['id']} ({msg['new_chat_member']['first_name']})"
             try:
-                conexao_sqlite = sqlite3.connect('bot.db')
+                conexao_sqlite = sqlite3.connect('bot_database.db')
                 conexao_sqlite.row_factory = sqlite3.Row
                 cursor_sqlite = conexao_sqlite.cursor()
                 chat_id = msg['chat']['id']

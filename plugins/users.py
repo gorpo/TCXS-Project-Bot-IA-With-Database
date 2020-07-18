@@ -34,7 +34,7 @@ from plugins.admins import is_admin
 
 async def users(msg):
     # variaveis que iniciam a Database para enviar a att paga pelos BOTOES
-    conexao_sqlite = sqlite3.connect('bot.db')
+    conexao_sqlite = sqlite3.connect('bot_database.db')
     conexao_sqlite.row_factory = sqlite3.Row
     cursor_sqlite = conexao_sqlite.cursor()
     try:

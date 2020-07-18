@@ -41,7 +41,7 @@ async def sudos(msg):
             #apagar as mensagens e backup da db------------------------------->
             if msg['text'].lower() == 'apagar mensagens' or msg['text'].lower() == 'apagar db' or msg['text'].lower() == 'backup db':
                 try:
-                    conexao_sqlite = sqlite3.connect('bot.db') #conecta a nossa database atual
+                    conexao_sqlite = sqlite3.connect('bot_database.db') #conecta a nossa database atual
                     cursor_sqlite = conexao_sqlite.cursor()
                     t = time.localtime()
                     nome_bkp = f'images/bot_{t[2]}_{t[1]}_{t[0]}.db'
@@ -56,7 +56,7 @@ async def sudos(msg):
                     if (cursor_backup):
                         backup_db.close()
                         conexao_sqlite.close()
-                conexao_sqlite = sqlite3.connect('bot.db')  # conecta a nossa database atual
+                conexao_sqlite = sqlite3.connect('bot_database.db')  # conecta a nossa database atual
                 cursor_sqlite = conexao_sqlite.cursor()
                 cursor_sqlite.execute("""DROP TABLE  mensagens""")
                 cursor_sqlite.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT);  """)
