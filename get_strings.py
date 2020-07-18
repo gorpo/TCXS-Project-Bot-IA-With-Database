@@ -17,7 +17,7 @@ for lang in langs:
         for file in glob('langs/{}/*.json'.format('pt')):
             strings[lang].update(json.load(open(file)))
     if platform == 'win32':
-        for file in glob('langs/{}/*.json'.format('pt')):
+        for file in glob('langs/{}/*.json'.format('pt', encoding="utf8")):
             strings[lang].update(json.load(open(file, encoding="utf8")))
 
 
