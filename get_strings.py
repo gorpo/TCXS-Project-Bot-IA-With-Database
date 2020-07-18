@@ -7,14 +7,14 @@ from db_handler import cursor
 
 strings = {}
 if platform == 'linux' or platform == 'linux2':
-    langs = [x.split('/')[1] for x in glob('langs/*/main.json')]
+    langs = [x.split('/')[1] for x in glob('langs/pt/main.json')]
 if platform == 'win32':
     langs = [x.split('/')[1] for x in glob('langs/pt/main.json')]
 
 for lang in langs:
     strings[lang] = {}
     if platform == 'linux' or platform == 'linux2':
-        for file in glob('langs/{}/*.json'.format(lang)):
+        for file in glob('langs/{}/*.json'.format('pt')):
             strings[lang].update(json.load(open(file)))
     if platform == 'win32':
         for file in glob('langs/{}/*.json'.format('pt')):
@@ -30,7 +30,7 @@ class Strings:
                 self.language = cursor.fetchone()[0]
             except (IndexError, TypeError):
                 if platform == 'linux' or platform == 'linux2':
-                    self.language = 'en'
+                    self.language = 'pt'
                 if platform == 'win32':
                     self.language = 'pt'
         else:
@@ -39,12 +39,12 @@ class Strings:
                 self.language = cursor.fetchone()[0]
             except (IndexError, TypeError):
                 if platform == 'linux' or platform == 'linux2':
-                    self.language = 'en'
+                    self.language = 'pt'
                 if platform == 'win32':
                     self.language = 'pt'
         if self.language not in langs:
             if platform == 'linux' or platform == 'linux2':
-                self.language = 'en'
+                self.language = 'pt'
             if platform == 'win32':
                 self.language = 'pt'
 
@@ -53,8 +53,8 @@ class Strings:
     def get(self, string_key):
         if strings[self.language].get(string_key):
             return strings[self.language][string_key]
-        elif platform == 'linux' or platform == 'linux2' and strings['en'].get(string_key):
-            return strings['en'][string_key]
+        elif platform == 'linux' or platform == 'linux2' and strings['pt'].get(string_key):
+            return strings['pt'][string_key]
         elif platform == 'win32' and strings['pt'].get(string_key):
             return strings['pt'][string_key]
         else:
