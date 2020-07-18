@@ -1,7 +1,7 @@
 
 call heroku login
 call heroku create --region us manicomio 
-call it init
+call git init
 call git add *
 call git commit -m "Primeiro commit!"
 call heroku git:remote -a manicomio
