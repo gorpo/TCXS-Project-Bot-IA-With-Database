@@ -20,8 +20,15 @@ import os
 #LOCAL CONFIG rodar em local host use as linhas abaixo--->
 token = "1186597860:AAGVtPY-1nHFdufqXDe06lI66UG9ttlwbVM"
 token_dropbox = 'qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwig'
+
+
+#permissoes
 logs = 522510051 #-1001215401730
-sudoers = [522510051]
+sudoers = [522510051,]
+administradores = [522510051,]
+
+
+
 
 #HEROKU CONFIG - rodar no heroku use as linhas abaixo------->
 #token = os.environ['TELEGRAM_TOKEN']

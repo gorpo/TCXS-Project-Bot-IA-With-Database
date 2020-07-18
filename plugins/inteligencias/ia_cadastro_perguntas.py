@@ -29,7 +29,7 @@ import dropbox
 import re
 import wikipedia
 import sqlite3
-from config import bot, sudoers, logs, bot_username,token_dropbox
+from config import bot, sudoers, logs, bot_username,token_dropbox,administradores
 from datetime import datetime
 from plugins.admins import is_admin
 
@@ -117,37 +117,11 @@ async def ia_cadastro_perguntas(msg):
                     print(e)
                     pass
                 try:  # LIMPAR PERGUNTAS DOS USUARIOS------------------------------------------------------------->
-                    if texto.lower() == 'limpar perguntas':
+                    if texto.lower() == 'apagar perguntas' and msg['from']['id'] in administradores:#admin manual setado no confis.py
                         if adm['user'] == True:
                             cursor_sqlite.execute("""DELETE FROM perguntas""")
                             conexao_sqlite.commit()
                             await bot.sendMessage(chat_id, f"🤖 {msg['from']['first_name']} Todas perguntas foram apagadas!")
-                        else:
-                            await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
-                except:
-                    pass
-                #sistea de upload para o dropbox | necessario mudar o caminho para sua pasta que quer baixar os arquivos----------------------------------------------------------->
-                try:  # UPLOAD DE DOCUMENTOS PARA O DROPBOX
-                    if 'document' in msg.get('reply_to_message') and texto.lower().startswith('dropbox'):
-                        if adm['user'] == True:
-                            id_arquivo = msg.get('reply_to_message')['document']['file_id']
-                            nome_arquivo = msg.get('reply_to_message')['document']['file_name']
-                            tamanho = msg.get('reply_to_message')['document']['file_size']
-                            if tamanho > 10000000:
-                                await bot.sendMessage(chat_id, '🤖 `Tamanho maximo para envio de 10mb`', 'markdown',
-                                                reply_to_message_id=msg['message_id'])
-                            if tamanho < 10000000:
-                                await bot.download_file(id_arquivo, f'images/{nome_arquivo}')
-                                await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei de baixar seu arquivo, vou upar ele para o Dropbox`",'markdown', reply_to_message_id=msg['message_id'])
-                                targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}"
-                                d = dropbox.Dropbox(token_dropbox)
-                                with open(f'images/{nome_arquivo}', "rb") as f:
-                                    meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
-                                link = d.sharing_create_shared_link(targetfile)
-                                url = link.url
-                                dl_url = re.sub(r"\?dl\=0", "?dl=1", url)
-                                await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei upar seu arquivo no Dropbox`\nlink:{dl_url}",'markdown', reply_to_message_id=msg['message_id'])
-                                os.remove(f'images/{nome_arquivo}')
                         else:
                             await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
                 except:
