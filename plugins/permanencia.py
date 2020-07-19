@@ -35,7 +35,7 @@ from dateutil.relativedelta import relativedelta
 
 async def permanencia(msg):
     try:# FUNÇÕES DO BOT------------------------------------>
-        conexao_sqlite = sqlite3.connect('bot.db')
+        conexao_sqlite = sqlite3.connect('bot_database.db')
         conexao_sqlite.row_factory = sqlite3.Row
         cursor_sqlite = conexao_sqlite.cursor()
         chat_id = msg['chat']['id']
