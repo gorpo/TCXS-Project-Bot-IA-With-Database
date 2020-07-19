@@ -43,6 +43,7 @@
 <code>heroku ps:scale bot=1</code> start bot dyno - inicia seu bot<br>
 <code>heroku logs --tail</code> tiva os logs no terminal ou cmd<br>
 <code>heroku ps:stop bot</code> para o bot dyno  - para seu bot
+<code>heroku apps:destroy -a manicomio</code> - deleta a aplicação no heroku
 <p>----------------------------------------------------------------------------------</p><br>
 <h1> ============ GIT ====================== </h1><br>
 <b>email:</b><br>
