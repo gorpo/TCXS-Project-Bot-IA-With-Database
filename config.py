@@ -94,6 +94,7 @@ enabled_plugins = [
     'inteligencia',
     'permanencia',
     'dropbox_upload',
+    'link_direto',
 
 ]
 #'antiflood',

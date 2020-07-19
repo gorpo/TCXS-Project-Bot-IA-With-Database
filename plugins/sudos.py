@@ -65,7 +65,8 @@ async def sudos(msg):
                 await bot.sendDocument(msg['chat']['id'], open(nome_bkp, 'rb'), caption="🤖 Aqui esta uma cópia da sua database" )
                 os.remove(nome_bkp)
             else:
-                await bot.sendMessage(msg['chat']['id'], '***Somente administradores podem apagar as perguntas cadastradas***', 'Markdown')
+                pass
+                #await bot.sendMessage(msg['chat']['id'], '***Somente administradores podem apagar as perguntas cadastradas***', 'Markdown')
 
 
             if msg['text'] == '!sudos' or msg['text'] == '/sudos' or msg['text'] == 'sudos':

@@ -48,7 +48,7 @@ async def dropbox_upload(msg):
             chat_type = msg['chat']['type']
             texto = msg['text']
             try:
-                if  'document' in msg.get('reply_to_message') and texto.lower().startswith('dropbox'):
+                if 'document' in msg.get('reply_to_message') and texto.lower().startswith('dropbox'):
                     id_arquivo = msg.get('reply_to_message')['document']['file_id']
                     nome_arquivo = msg.get('reply_to_message')['document']['file_name']
                     tamanho = msg.get('reply_to_message')['document']['file_size']
@@ -68,7 +68,8 @@ async def dropbox_upload(msg):
                         await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei upar seu arquivo no Dropbox`\nlink:{dl_url}",'markdown', reply_to_message_id=msg['message_id'])
                         os.remove(f'images/{nome_arquivo}')
                 else:
-                    await bot.sendMessage(msg['chat']['id'],f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
+                    pass
+                    #await bot.sendMessage(msg['chat']['id'],f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
             except:
                 pass
 

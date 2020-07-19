@@ -45,13 +45,23 @@ comandos_usuarios = InlineKeyboardMarkup(inline_keyboard=[
             [dict(text='« Voltar', callback_data='inicio_menu')]])
 
 comandos_admins = InlineKeyboardMarkup(inline_keyboard=[
+            [dict(text="🦸 Cadastrar Lojas", callback_data='cadastrar_lojas')],
+            [dict(text="🦸 Restringir Doadores", callback_data='restringir_doadores')],
             [dict(text='🦸 Gerenciar Grupos', callback_data='gerenciar_grupos')],
             [dict(text="🦸 Cadastrar Comandos", callback_data='cadastrar_comandos')],
+            [dict(text="🦸 Perguntas da IA", callback_data='perguntas_admins')],
+            [dict(text="🦸 Proibições da IA", callback_data='admin_proibicoes')],
+            [dict(text='🧰 Frequencia da IA', callback_data='admin_frequencia')],
+            [dict(text='🧰 Inteligência da IA', callback_data='admin_inteligencia')],
             [dict(text='🦸 Área do Desenvolvedor', callback_data='area_dev')],
             [dict(text='« Voltar', callback_data='inicio_menu')]])
 
 ferramentas_gerais = InlineKeyboardMarkup(inline_keyboard=[
             [dict(text='🧰 Ferramentas', callback_data='ferramenta_comandos')],
+            [dict(text='🧰 Frequencia da IA', callback_data='ferramenta_frequencia')],
+            [dict(text='🧰 Inteligência da IA', callback_data='ferramenta_inteligencia')],
+            [dict(text='🧰 Perguntas da IA', callback_data='ferramenta_perguntas')],
+            [dict(text='🧰 Proibições da IA', callback_data='ferramenta_proibicoes')],
             [dict(text='« Voltar', callback_data='inicio_menu')]])
 
 

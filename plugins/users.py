@@ -29,9 +29,6 @@ import sqlite3
 import os
 from plugins.admins import is_admin
 
-
-
-
 async def users(msg):
     # variaveis que iniciam a Database para enviar a att paga pelos BOTOES
     conexao_sqlite = sqlite3.connect('bot_database.db')
@@ -162,6 +159,8 @@ async def users(msg):
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Vejo que tem interesse em ser doador, usamos o sistema do Mercado Pago somente, favor nao insistir com outras formas.\nO Mercado Pago aceita pagamentos online e com cartão de crédito e boletos, este sistema é o mais seguro para nos da equipe e para vocês doadores, lembre que a doação é mensal e doando você faz parte da vaquina que mantem os servidores de 5tb da Dropbox onde encontram-se nossos jogos. Pedimos que antes de doar leia atentamente as regras como mencionado antes e após fazer sua doação envie o comprovante no privado de um de nossos administradores.```\n`Pra ver os administradores digite:` /admin",'markdown', reply_markup=keyboard.store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'], 'https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=354396246-315fce8c-d8f9-4aa0-8583-95d678936375')
             #return True
+
+
 
 
 ##  ATUALIZAÇÃO PARA DOADORES ATRAVÉS DO SISTEMA DE BOTÕES------------------------------------------------------------------------------>>
@@ -399,7 +398,8 @@ async def users(msg):
 
 
 
-        #COMANDOS ADMINS------------------->
+#COMANDOS ADMINS--------------------------------------------------------------------------------------->
+        #COMANDOS PARA OS BOTOES DOS ADMINISTRADORES
         elif msg['data'] == 'comandos_admins':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Os comandos aqui listados funcionam apenas para administradores de grupos e o menu Desenvolvedor somente quem hospeda pode usar. ```",'markdown', reply_markup=keyboard.comandos_admins)
             #return True
@@ -429,9 +429,22 @@ async def users(msg):
 /kibar -copia sticker para o pacote de stickers
 /mark -repete o texto markdown
 /html -repete o texto HTML
-/request -requisição site""", reply_markup=keyboard.comandos_admins)
+/request -requisição site
+/link - pega link de um arquivo use como resposta""", reply_markup=keyboard.comandos_admins)
             #return True
         elif msg['data'] == 'cadastrar_comandos':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
+💾***CADASTRO DE COMANDOS E REPOSTAS NA DATABASE***        
+🤖`Para cadastrar um comando no banco de dados:`
+#comando resposta que o usuário vai receber
+🤖`Para recadastrar um comando no banco de dados:`
+$comando resposta que o usuário vai receber
+🤖`Para deletar um comando`
+%comando 
+""",'markdown', reply_markup=keyboard.comandos_admins)
+
+            #return True
+        elif msg['data'] == 'cadastrar_lojas':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
 💾***CADASTRAR ARQUIVOS LOJAS DOADORES/FREE*** 
 ```Este bot cadastra as lojas para doadores e free, cadastra também os fix pkg e os fix xml, para atualizar as lojas ou fix pkg e xml basta enviar elas no privado do bot, e ele cadastrará seus arquivos desde que estejam de acordo com as instruções abaixo. Pode ocorrer falhas na hora de cadastrar️, caso não tenha cadastrado envie novamente o arquivo, jamais envie mais de um arquivo por vez.```
@@ -447,42 +460,67 @@ async def users(msg):
 🤖***Cadastrar Fix CFW XML:*** `Cadastre o FIX CFW XML enviando ela no meu privado exatamente conforme exemplo:` ***category_network_tool2.xml***
 
 🤖***Cadastrar Fix HEN XML:*** `Cadastre o FIX HEN XML enviando ela no meu privado exatamente conforme exemplo:` ***category_network.xml***
+""",'markdown', reply_markup=keyboard.comandos_admins)
 
+        elif  msg['data'] == 'restringir_doadores':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']), """
+💾***RESTRINGIR | LIMPAR | RECADASTRAR DOADORES*** 
+```---- Este bot cadastra os Doadores automáticamente, porém se por ventura ele falhar ou mesmo um administrador quiser Cadastar Manualmente o Doador por qualquer eventualidade, seja para conferir um cadastro automatico feito pelo Bot ou para poder dar mais dias de permanência ao Doador!```
 
-💾***CADASTRO DE COMANDOS E REPOSTAS NA DATABASE***        
-🤖`Para cadastrar um comando no banco de dados:`
-#comando resposta que o usuário vai receber
-🤖`Para recadastrar um comando no banco de dados:`
-$comando resposta que o usuário vai receber
-🤖`Para deletar um comando`
-%comando 
+🤖***Cadastro automático:*** `Automaticamente ao entrar em um grupo o doador é cadastrado com o prazo de 30 dias de permanencia.`
 
-💾***CADASTRO DE PERGUNTA DOS USUARIOS*** 
-```Sempre que um usuário enviar alguma pergunta com o ponto de interrogação ela será cadastrada na Database```
-🤖`Para ver as perguntas feitas pelo usuario digite:`
-perguntas 
-🤖`Para limpar as perguntas da Database digite:`
-limpar perguntas
-`Apaga tudo IA e faz backup da Database (somente adm master)`
+🤖***Conferir Doadores Cadastrados:*** `Para conferir os cadastros existentes no sistema basta digitar o comando consulta e o arroba do usuário marcando o mesmo que também poderá conferir seu prazo,lembrando que faltando 7 dias para o prazo de banimento do grupo o usuário será notificado sobre para assim poder ou não realizar uma doação e manter sua permanência, use o comando conforme exemplo:`
+consulta @UserGamer
 
-💾***EXTRAS***
-```Se usar a palavra dropbox como reposta em documentos e imagens eu farei o upload para seu dropbox```
-🤖`Pergunte ao bot com o comando:`
-fale sobre robôs
+🤖***Descadastrar ou Deletar Doador:*** `Descadastrar ou deletar um Doador é necessário para que possa ser feita a inclusão de mais dias na sua conta, para isto basta usar o comando seguido do arroba do Doador conforme exemplo:`
+limpar @Mst3Dz
 
+🤖***Cadastrar Manualmente um Doador:*** `Para cadastrar manualmente o doador é necessário pegar sua ID, para isto basta pegar qualquer mensagem deste doador e responder com o comando /id, após ter a ID do Doador tenha certeza que o mesmo não existe no Banco de Dados, para isto realize uma consulta e caso o Doador esteja cadastrado delete ele conforme instruções para deletar. Caso usuário não conste no Banco de Dados ou já tenha sido deletado execute o comando conforme exemplos:` ***restringir @usuario id_usuario quantidade_dias***
+`Exemplo na prática:` restringir @MsT3Dz 628238139 300000
+
+🤖***Depois de Banido oque acontece:*** `Após o doador ser banido os administradores são notificados, o nome deste doador é limpo do banco de dados e da lista de restritos do grupo, caso ele faça uma nova doação basta adiciona-lo no grupo sem a necessidade de qualquer comando.`
+    """, 'markdown', reply_markup=keyboard.comandos_admins)
+
+        elif msg['data'] == 'perguntas_admins':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']), """
+💾***SISTEMA DE PERGUNTAS E RESPOSTAS PARA ADMINS***
+```---- Este bot grava todas perguntas desde que contenham ??, avise seus usuários que quando quiserem cadastrar uma pergunta usem duas interrogações no final da frase e automáticamente sua pergunta será cadstrada e assim que um administrador ver pode responder ou cadastrar ela no robo ensinando a Inteligência Artificial.```
+🤖`Cadastrar pergunta exemplo:` Como faço para ser tao esperto como o robo?? 
+🤖`Ver perguntas cadastradas apenas digite:` perguntas  
+🤖`Limpar perguntas cadastradas ou já respondidas digite:` apagar perguntas
+    """, 'markdown', reply_markup=keyboard.comandos_admins)
+
+        elif msg['data'] == 'admin_frequencia':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
 💾***SOBRE A FREQUENCIA DE MENSAGENS*** 
-```Este bot envia mensagens baseado em uma frequencia que deve ser setada entre 2 e 10, onde:```
+```----  Este bot envia mensagens baseado em uma frequencia que deve ser setada entre 2 e 10, onde:```
 🤖`frequencia 0 = mudo`
 🤖`frequencia 2 = fala pouco`
 🤖`frequencia 10 = fala muito`
+    """,'markdown', reply_markup=keyboard.comandos_admins)
 
+        elif msg['data'] == 'admin_proibicoes':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
 💾***SOBRE PROIBIR E PERMITIR PALAVRAS***
-```Este bot pode restringir/permitir palavras com os comandos:```
-🤖`proibir uma palavra:` proibir 
-🤖`permitir uma palavra:` permtir 
+```----  Este bot pode restringir/permitir palavras com os comandos:```
+🤖`proibir uma palavra:` proibir corno
+🤖`permitir uma palavra:` permtir corno
 🤖`ver palavras proibidas:` proibidas
     """,'markdown', reply_markup=keyboard.comandos_admins)
-            #return True
+
+        elif msg['data'] == 'admin_inteligencia':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
+💾***SOBRE O ENVIO DE MENSAGENS DA IA*** 
+```----  Este bot envia mensagens baseado em dois tipos de inteligência, uma local e outra global, onde a local é tudo que aprendeu naquele grupo e ja a global é oque ele aprendeu por onde passou, veja exemplos:```
+🤖`inteligencia local = irá falar  somente sobre oque aprendeu neste grupo, comando:`
+inteligencia local
+🤖`inteligencia global = ira falar sobre tudo que aprendeu em todos os lugares que passou na internet`
+inteligencia global
+🤖`fale sobre = ele fala sobre determinado assunto, exemplo:`
+fale sobre playstation
+    """,'markdown', reply_markup=keyboard.comandos_admins)
+
+
         elif msg['data'] == 'area_dev':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
 apagar mensagens - apaga tudo IA e faz backup da Database.
@@ -500,11 +538,14 @@ restart - Reinicia o bot.
 upgrade - Atualiza a base do bot.(deprecated)
 upload - Envia um arquivo para o servidor.
 baixar - baixa um documento para o server
+dropbox - faz upload para o Dropbox
+link - gera um link direto do Telegram
 | - Define desligamento do bot, EX: 12|30""",'markdown', reply_markup=keyboard.comandos_admins)
             #return True
 
 
-        #FERRAMENTAS GERAIS------------------->
+#FERRAMENTAS GERAIS------------------------------------------------------------------------------------------------------------------------------------------------->
+        #menus de ferramentas:
         elif msg['data'] == 'ferramentas_gerais':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Informações extras ou complementares sobre o Bot ou Projeto TCXS Store PS3 Hacker Team.```",'markdown', reply_markup=keyboard.ferramentas_gerais)
             #return True
@@ -537,6 +578,46 @@ baixar - baixa um documento para o server
 /shorten - Encurta uma URL.
 /token - Exibe informaces de um token de bot.""", reply_markup=keyboard.ferramentas_gerais)
             #return True
+
+
+        elif msg['data'] == 'ferramenta_perguntas':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']), """
+💾***SISTEMA DE PERGUNTAS E RESPOSTAS PARA ADMINS***
+```---- Este bot grava todas perguntas desde que contenham ??, avise seus usuários que quando quiserem cadastrar uma pergunta usem duas interrogações no final da frase e automáticamente sua pergunta será cadstrada e assim que um administrador ver pode responder ou cadastrar ela no robo ensinando a Inteligência Artificial.```
+🤖`Cadastrar pergunta exemplo:` Como faço para ser tao esperto como o robo?? 
+🤖`Ver perguntas cadastradas apenas digite:` perguntas  
+🤖`Limpar perguntas cadastradas ou já respondidas digite:` apagar perguntas
+    """, 'markdown', reply_markup=keyboard.ferramentas_gerais)
+
+        elif msg['data'] == 'ferramenta_frequencia':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
+💾***SOBRE A FREQUENCIA DE MENSAGENS*** 
+```----  Este bot envia mensagens baseado em uma frequencia que deve ser setada entre 2 e 10,este comando pode funcionar somente para administradores dependendo das configurações, seus comandos são:```
+🤖`frequencia 0 = mudo`
+🤖`frequencia 2 = fala pouco`
+🤖`frequencia 10 = fala muito`
+    """,'markdown', reply_markup=keyboard.ferramentas_gerais)
+
+        elif msg['data'] == 'ferramenta_proibicoes':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
+💾***SOBRE PROIBIR E PERMITIR PALAVRAS***
+```----  Este bot pode restringir/permitir palavras, este comando pode funcionar somente para administradores dependendo das configurações, altere as proibições de palavras ou frases, link etc... com os comandos:```
+🤖`proibir uma palavra:` proibir corno
+🤖`permitir uma palavra:` permtir corno
+🤖`ver palavras proibidas:` proibidas
+    """,'markdown', reply_markup=keyboard.ferramentas_gerais)
+
+        elif msg['data'] == 'ferramenta_inteligencia':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
+💾***SOBRE O ENVIO DE MENSAGENS DA IA*** 
+```----  Este bot envia mensagens baseado em dois tipos de inteligência, uma local e outra global, onde a local é tudo que aprendeu naquele grupo e ja a global é oque ele aprendeu por onde passou,este comando pode ser restrito a administradores, veja exemplos:```
+🤖`inteligencia local = irá falar  somente sobre oque aprendeu neste grupo, comando:`
+inteligencia local
+🤖`inteligencia global = ira falar sobre tudo que aprendeu em todos os lugares que passou na internet`
+inteligencia global
+🤖`fale sobre = ele fala sobre determinado assunto, exemplo:`
+fale sobre playstation
+    """,'markdown', reply_markup=keyboard.ferramentas_gerais)
 
 
         #INFORMAÇÕES E EXTRAS------------------->
