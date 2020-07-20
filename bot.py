@@ -87,7 +87,7 @@ if __name__ == '__main__':
         db.del_restarted()
     else:
         #por aqui mensagem q vai para os grupos quando ligar o bot$$$$$$$$$$$$$
-        #na_bot.sendMessage(logs, '''Manicômio bot iniciado com sucesso, 28 plugins foram carregados, digite /comandos para saber os comandos do bot.'''.format(version, len(ep), len(n_ep),': ' + (', '.join(n_ep)) if n_ep else ''))
+        na_bot.sendMessage(logs, '''Manicômio bot iniciado com sucesso, 28 plugins foram carregados, digite /comandos para saber os comandos do bot.'''.format(version, len(ep), len(n_ep),': ' + (', '.join(n_ep)) if n_ep else ''))
         pass
     loop.run_forever()
 
