@@ -41,6 +41,7 @@ from plugins.inteligencias.ia_mensagens_proibidas import ia_mensagens_proibidas
 from plugins.inteligencias.ia_wikipedia import ia_wikipedia
 from plugins.inteligencias.ia_privado_bot import ia_privado_bot
 from plugins.inteligencias.ia_crawler_sites import crawling
+from plugins.inteligencias.ia_reconhecimento import ia_reconhecimento
 
 #IA depende da IA_global e IA_local
 #IA_global = manda mensagem de todo lugar pra todo lugar
@@ -123,7 +124,8 @@ async def inteligencia(msg):
                 ativa_cadastro_manual = await ia_cadastro_manual(msg)
                 ativa_mensagens_proibidas = await ia_mensagens_proibidas(msg)
                 ativa_wikipedia = await ia_wikipedia(msg)
-                ativa = await crawling(msg)
+                ativa_crawling = await crawling(msg)
+                ativa_reconhecimento = await ia_reconhecimento(msg)
 
 
 

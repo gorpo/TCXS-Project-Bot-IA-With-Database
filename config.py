@@ -18,7 +18,7 @@ import os
 
 
 #LOCAL CONFIG rodar em local host use as linhas abaixo--->
-token = "1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"#1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"
+token =  "1096480409:AAE6sg6eJZtH5Z_TEIzgq10SQtCvGf4KYSc" #"1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"#1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"
 token_dropbox = 'qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwig'
 
 
