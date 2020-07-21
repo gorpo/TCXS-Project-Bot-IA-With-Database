@@ -206,6 +206,9 @@ baixar - baixa um documento para o server
                         proc = await asyncio.create_subprocess_shell(text, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
                         stdout, stderr = await proc.communicate()
                         res = (f"<b>Output:</b>\n<code>{stdout.decode()}</code>"  if stdout else '') + (f"\n\n<b>Errors:</b>\n<code>{stderr.decode()}</code>"  if stderr else '')
+                        await bot.sendMessage(msg['chat']['id'], res or 'Comando executado.',
+                                                              parse_mode="HTML",
+                                                              reply_to_message_id=msg['message_id'])
                     if platform == 'win32':
                         proc = subprocess.Popen(text, shell=True,  stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                         stdout, stderr = proc.communicate()
@@ -225,7 +228,7 @@ baixar - baixa um documento para o server
                         #print(f'{separador.join(map(str, todas))}')
                         #print(todas)
                         os.remove('foo.txt')
-                    await bot.sendMessage(msg['chat']['id'],res or  f"`{separador.join(map(str, todas))}`",'markdown',  reply_to_message_id=msg['message_id'])
+                        await bot.sendMessage(msg['chat']['id'],f"`{separador.join(map(str, todas))}`",'markdown',  reply_to_message_id=msg['message_id'])
                 return True
 
 
