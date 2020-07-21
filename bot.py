@@ -10,8 +10,10 @@ print(r'''
      |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
      |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
      |        Github Gorpo Dev: https://github.com/gorpo         |
-     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
-''')
+     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]''')
+
+
+
 
 import asyncio
 import json
