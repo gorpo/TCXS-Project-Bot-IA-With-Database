@@ -31,16 +31,9 @@ import wikipedia
 import sqlite3
 from config import bot, sudoers, logs, bot_username,token_dropbox,token,administradores
 from datetime import datetime
-from plugins.admins import is_admin
-from plugins.admins import is_admin
-from plugins.inteligencias.ia_global import ia_global
-from plugins.inteligencias.ia_local import ia_local
-from plugins.inteligencias.ia_cadastro_perguntas import ia_cadastro_perguntas
-from plugins.inteligencias.ia_cadastro_manual import ia_cadastro_manual
-from plugins.inteligencias.ia_mensagens_proibidas import ia_mensagens_proibidas
-from plugins.inteligencias.ia_wikipedia import ia_wikipedia
-from plugins.inteligencias.ia_privado_bot import ia_privado_bot
 
+from plugins.admins import is_admin
+from bitlyshortener import Shortener
 
 
 async def link_direto(msg):
@@ -101,16 +94,17 @@ async def link_direto(msg):
         chat_type = msg['chat']['type']
         id_grupo = msg['chat']['id']
         texto = msg['text']
+        tokens_pool = ["a001cef9d44ed8083ed4d952d475e98079e60577", ]
+        shortener = Shortener(tokens=tokens_pool, max_cache_size=8192)
         if chat_type == 'supergroup':
-            if msg.get('text') == 'fotos':
 
-
-
-
-                a = await bot.getUserProfilePhotos(1023551462)
+            if msg.get('text') == 'avatar':
+                a = await bot.getUserProfilePhotos(msg.get('reply_to_message')['from']['id'])
                 b = a['photos'][0][0]['file_id']
-                print(b)
                 await bot.sendPhoto(chat_id,b)
+
+
+
 
             try:  # DOCUMENTOS
                 if 'document' in msg.get('reply_to_message') and texto == '/link' or 'document' in msg.get('reply_to_message') and texto == 'link':
@@ -120,7 +114,12 @@ async def link_direto(msg):
                     arquivo = await bot.getFile(id_documento)
                     tamanho = arquivo['file_size']
                     link = f"https://api.telegram.org/file/bot{token}/{arquivo['file_path']}"
-                    await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{link}",reply_to_message_id=msg['message_id'])
+                    try:
+                        a = shortener.shorten_urls([link])
+                        await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{a[0]}",reply_to_message_id=msg['message_id'])
+                        #await bot.sendMessage(msg['chat']['id'], '*Link Encurtado:* {}'.format(a[0]), 'Markdown', reply_to_message_id=msg['message_id'])
+                    except:
+                        await bot.sendMessage(msg['chat']['id'], '`Não foi possivel encurtar seu link, tente novamente, talves o serviço esteja offline.`', 'Markdown', reply_to_message_id=msg['message_id'])
             except Exception as e:
                 pass
             try:  # IMAGENS
@@ -131,7 +130,12 @@ async def link_direto(msg):
                     arquivo = await bot.getFile(id_foto)
                     tamanho = arquivo['file_size']
                     link = f"https://api.telegram.org/file/bot{token}/{arquivo['file_path']}"
-                    await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{link}",reply_to_message_id=msg['message_id'])
+                    try:
+                        a = shortener.shorten_urls([link])
+                        await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{a[0]}",reply_to_message_id=msg['message_id'])
+                        #await bot.sendMessage(msg['chat']['id'], '*Link Encurtado:* {}'.format(a[0]), 'Markdown', reply_to_message_id=msg['message_id'])
+                    except:
+                        await bot.sendMessage(msg['chat']['id'], '`Não foi possivel encurtar seu link, tente novamente, talves o serviço esteja offline.`', 'Markdown', reply_to_message_id=msg['message_id'])
             except Exception as e:
                 pass
             try:  # AUDIOS
@@ -142,7 +146,12 @@ async def link_direto(msg):
                     arquivo = await bot.getFile(id_documento)
                     tamanho = arquivo['file_size']
                     link = f"https://api.telegram.org/file/bot{token}/{arquivo['file_path']}"
-                    await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{link}",reply_to_message_id=msg['message_id'])
+                    try:
+                        a = shortener.shorten_urls([link])
+                        await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{a[0]}",reply_to_message_id=msg['message_id'])
+                        #await bot.sendMessage(msg['chat']['id'], '*Link Encurtado:* {}'.format(a[0]), 'Markdown', reply_to_message_id=msg['message_id'])
+                    except:
+                        await bot.sendMessage(msg['chat']['id'], '`Não foi possivel encurtar seu link, tente novamente, talves o serviço esteja offline.`', 'Markdown', reply_to_message_id=msg['message_id'])
             except Exception as e:
                 pass
             try:  # VIDEOS
@@ -153,23 +162,31 @@ async def link_direto(msg):
                     arquivo = await bot.getFile(id_documento)
                     tamanho = arquivo['file_size']
                     link = f"https://api.telegram.org/file/bot{token}/{arquivo['file_path']}"
-                    await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{link}",reply_to_message_id=msg['message_id'])
+                    try:
+                        a = shortener.shorten_urls([link])
+                        await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{a[0]}",reply_to_message_id=msg['message_id'])
+                    except:
+                        await bot.sendMessage(msg['chat']['id'], '`Não foi possivel encurtar seu link, tente novamente, talves o serviço esteja offline.`', 'Markdown', reply_to_message_id=msg['message_id'])
             except Exception as e:
                 pass
-            try:  # VIDEOS
-                if 'voice' in msg.get('reply_to_message') and texto == '/link' or 'voice' in msg.get('reply_to_message') and texto == '/link':
+            try:  # VOZ
+                if 'voice' in msg.get('reply_to_message') and texto == 'link' or 'voice' in msg.get('reply_to_message') and texto == '/link':
                     #if adm['user'] == True:
                     id_documento = msg.get('reply_to_message')['voice']['file_id']
                     nome = f"audio do {msg['from']['first_name']}"
                     arquivo = await bot.getFile(id_documento)
-                    tamanho = arquivo['file_size']
+                    #tamanho = arquivo['file_size']
                     link = f"https://api.telegram.org/file/bot{token}/{arquivo['file_path']}"
-                    await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nTamanho:{tamanho}\nLink:{link}",reply_to_message_id=msg['message_id'])
+                    try:
+                        a = shortener.shorten_urls([link])
+                        await bot.sendMessage(chat_id,f"🤖 Aqui está seu link direto.\nArquivo:{nome}\nLink:{a[0]}",reply_to_message_id=msg['message_id'])
+                    except:
+                        await bot.sendMessage(msg['chat']['id'], '`Não foi possivel encurtar seu link, tente novamente, talves o serviço esteja offline.`', 'Markdown', reply_to_message_id=msg['message_id'])
             except Exception as e:
                 pass
     # excessão final caso de pau em tudo e fechar o banco de dados--->
     except Exception as e:
-        print(f'Erro no sistema de link direto:{e}')
+        #print(f'Erro no sistema de link direto:{e}')
         pass
 
 

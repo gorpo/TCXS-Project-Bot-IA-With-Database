@@ -42,9 +42,6 @@ async def ia_wikipedia(msg):
     except Exception as e:
         pass
     try:
-        conexao_sqlite = sqlite3.connect('bot_database.db')
-        conexao_sqlite.row_factory = sqlite3.Row
-        cursor_sqlite = conexao_sqlite.cursor()
         chat_id = msg['chat']['id']
         # se a mensagem e no privado do bot-------------->
         if msg['chat']['type'] == 'private':

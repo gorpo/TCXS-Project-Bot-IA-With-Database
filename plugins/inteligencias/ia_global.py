@@ -116,31 +116,31 @@ async def ia_global(msg):
                                 tipo_mensagem = mensagens_sqlite[randomico][7]
                                 mb = mensagem_bot.split()[0]
                                 if mb.startswith('fale') or mb.startswith('luppy') or mb.startswith('frequencia') or mb.startswith('comando') or mb.startswith('proibidas') or mb.startswith('🤖') or mb.startswith('#') or mb.startswith('$') or mb.startswith('%') :
-                                    print('-----> bot tentou enviar uma mensagem proibida')
+                                    print(f'🤖 [*ia_global][proibido] Bot tentou enviar <{tipo_mensagem}> no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                                 else:
                                     if tipo_mensagem == 'imagem': #and id_grupo_db == msg['chat']['id']
                                         await bot.sendPhoto(chat_id, photo=mensagem_bot)
-                                        print(f'🤖 Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                        print(f'🤖 [*ia_global] Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                                     if tipo_mensagem == 'documento': #and id_grupo_db == msg['chat']['id']
                                         await bot.sendDocument(chat_id, document=mensagem_bot)
-                                        print(f'🤖 Bot enviou um documento no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                        print(f'🤖 [*ia_global] Bot enviou um documento no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                                     if tipo_mensagem == 'audio': #and id_grupo_db == msg['chat']['id']
                                         await bot.sendAudio(chat_id, audio=mensagem_bot)
-                                        print(f'🤖 Bot enivou um audio no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                        print(f'🤖 [*ia_global] Bot enivou um audio no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                                     if tipo_mensagem == 'video': #and id_grupo_db == msg['chat']['id']
                                         await bot.sendVideo(chat_id, video=mensagem_bot)
-                                        print(f'🤖 Bot enviou um video no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                        print(f'🤖 [*ia_global] Bot enviou um video no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                                     if tipo_mensagem == 'texto': #and id_grupo_db == msg['chat']['id']
                                         await bot.sendMessage(chat_id, mensagem_bot)
-                                        print(f'🤖 Bot enviou no grupo {msg["chat"]["title"]}: {mensagem_bot}')
+                                        print(f'🤖 [*ia_global] Bot enviou no grupo {msg["chat"]["title"]}: {mensagem_bot}')
                                     if tipo_mensagem == 'sticker': #and id_grupo_db == msg['chat']['id']
                                         await bot.sendSticker(chat_id, sticker=mensagem_bot)
-                                        print(f'🤖 Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                        print(f'🤖 [*ia_global] Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
 
                 except Exception as e:  #caso nao tenha grupo cadastrado ou de algum pau ele segue
                     contador = random.randint(0, 1)
                     frequencia = 1                 #porem agora ele so fala com a frequencia 1
-                    print(f'{contador} --- {frequencia} | erro: {e}')
+                    #print(f'{contador} --- {frequencia} | erro: {e}')
                     if contador < frequencia:  # se o contador for menor que a frequencia o bot entrara na conversa
                         pass
                     else:
@@ -152,28 +152,28 @@ async def ia_global(msg):
                         tipo_mensagem = mensagens_sqlite[randomico][7]
                         mb = mensagem_bot.split()[0]
                         if mb.startswith('fale') or mb.startswith('luppy') or mb.startswith('frequencia') or mb.startswith('comando') or mb.startswith('proibidas') or mb.startswith('🤖') or mb.startswith('#') or mb.startswith('$') or mb.startswith('%') :
-                                    print('-----> bot tentou enviar uma mensagem proibida')
+                                    print(f'🤖 [*global][proibido] Bot tentou enviar <{tipo_mensagem}> no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                         else:
                             if tipo_mensagem == 'imagem':
                                 await bot.sendPhoto(chat_id, photo=mensagem_bot)
-                                print(f'🤖 Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                print(f'🤖 [*ia_free] Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                             if tipo_mensagem == 'documento':
                                 #await bot.sendDocument(chat_id, document=mensagem_bot)
-                                print(f'🤖 Bot tentou enviar um documento no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                print(f'🤖 [*ia_free] Bot tentou enviar um documento no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                             if tipo_mensagem == 'audio':
                                 #await bot.sendAudio(chat_id, audio=mensagem_bot)
-                                print(f'🤖 Bot tentou enviar um audio no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                print(f'🤖 [*ia_free] Bot tentou enviar um audio no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                             if tipo_mensagem == 'video':
                                 await bot.sendVideo(chat_id, video=mensagem_bot)
-                                print(f'🤖 Bot enviou um video no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                print(f'🤖 [*ia_free] Bot enviou um video no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                             if tipo_mensagem == 'texto':
                                 await bot.sendMessage(chat_id, mensagem_bot)
-                                print(f'🤖 Bot enviou no grupo {msg["chat"]["title"]}: {mensagem_bot}')
+                                print(f'🤖 [*ia_free] Bot enviou no grupo {msg["chat"]["title"]}: {mensagem_bot}')
                             if tipo_mensagem == 'sticker':
                                 await bot.sendSticker(chat_id, sticker=mensagem_bot)
-                                print(f'🤖 Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                                print(f'🤖 [*ia_free] Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
                 except Exception as e:
-                    print(f'Erro no sistema de fala automatica: {e}\nTente remover as linhas dos "canais" que ele envia fotos/videos e que ele envia documentos')
+                    #print(f'Erro no sistema de fala automatica: {e}\nTente remover as linhas dos "canais" que ele envia fotos/videos e que ele envia documentos')
                     pass
 #excessao final para tratar do codigo todo--->
     except:

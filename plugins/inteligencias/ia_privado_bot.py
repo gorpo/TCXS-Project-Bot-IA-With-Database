@@ -10,7 +10,6 @@
 #     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
 #     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
-
 import html
 import re
 import random
@@ -32,8 +31,6 @@ import sqlite3
 from config import bot, sudoers, logs, bot_username,token_dropbox
 from datetime import datetime
 from plugins.admins import is_admin
-
-
 
 async def ia_privado_bot(msg):
     try:
@@ -76,22 +73,22 @@ async def ia_privado_bot(msg):
                 #else:
                 if tipo_mensagem == 'imagem':
                     await bot.sendPhoto(chat_id, photo=mensagem_bot)
-                    print(f'🤖 Bot enviou uma imagem no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                    print(f'🤖 [private_bot] Bot enviou uma imagem: {msg["chat"]["title"]} com a id {mensagem_bot}')
                 if tipo_mensagem == 'documento':
                     #await bot.sendDocument(chat_id, document=mensagem_bot)
-                    print(f'🤖 Bot tentou enviar um documento no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                    print(f'🤖 [private_bot] Bot tentou enviar um documento: {msg["chat"]["title"]} com a id {mensagem_bot}')
                 if tipo_mensagem == 'audio':
                     #await bot.sendAudio(chat_id, audio=mensagem_bot)
-                    print(f'🤖 Bot tentou enviar um audio no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                    print(f'🤖 [private_bot] Bot tentou enviar um audio: {msg["chat"]["title"]} com a id {mensagem_bot}')
                 if tipo_mensagem == 'video':
                     await bot.sendVideo(chat_id, video=mensagem_bot)
-                    print(f'🤖 Bot enviou um video no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                    print(f'🤖 [private_bot] Bot enviou um video: {msg["chat"]["title"]} com a id {mensagem_bot}')
                 if tipo_mensagem == 'texto':
                     await bot.sendMessage(chat_id, mensagem_bot)
-                    print(f'🤖 Bot enviou no grupo {msg["chat"]["title"]}: {mensagem_bot}')
+                    print(f'🤖 [private_bot] Bot enviou: {msg["chat"]["title"]}: {mensagem_bot}')
                 if tipo_mensagem == 'sticker':
                     await bot.sendSticker(chat_id, sticker=mensagem_bot)
-                    print(f'🤖 Bot enviou sticker no grupo {msg["chat"]["title"]} com a id {mensagem_bot}')
+                    print(f'🤖 [private_bot] Bot enviou sticker: {msg["chat"]["title"]} com a id {mensagem_bot}')
         except Exception as e:
             # print(f'Erro no sistema de fala automatica do Privado do Bot: {e}')
             pass

@@ -117,8 +117,7 @@ async def ia_cadastro_manual(msg):
                 except Exception as e:
                     print(f'Erro no sistema de respostas CDRUD: {e}')
 
-            if msg.get('text'):
-                texto = msg['text']
+
                 #SISTEMA DE CADASTRO MANUAL FEITO PELOS ADMS OU USUARIOS CASO DEFINIDO, UTILIZANDO O #
                 #SISTEMA CADASTRA, RECADASTRA E DELETA CADASTROS USANDO OS COMANDOS # | $ | %
                 try:  # SISTEMA DE CADASTRO DE COMANDOS DOS USUARIOS USANDO SOMENTE O # ------------------>
@@ -135,8 +134,7 @@ async def ia_cadastro_manual(msg):
                                 if res['comando'] == comando:
                                     existe_cadastro = 1  # troca o valor de existe_cadastro para 1
                             if existe_cadastro == 1:  # se o valor existe_cadastro esta como 1 ele avisa que ja existe cadastro
-                                await bot.sendMessage(chat_id, "Comando já cadastrado, tente outro",
-                                                reply_to_message_id=msg['message_id'])
+                                await bot.sendMessage(chat_id, "Comando já cadastrado, tente outro", reply_to_message_id=msg['message_id'])
                             else:
                                 cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('texto','{comando}','{resposta}','{usuario}','{grupo}','{data}')""")
                                 conexao_sqlite.commit()
@@ -161,7 +159,7 @@ async def ia_cadastro_manual(msg):
                         else:
                             await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
                 except Exception as e:
-                    print(e)
+                    print(f'Erro ao deletar comando cadastrado: {e}')
                     pass
                 try:  # DELETAR COMANDOS CADASTRADOS USANDO O %------------>
                     if texto.startswith('%'):
@@ -184,7 +182,7 @@ async def ia_cadastro_manual(msg):
                             todos_comandos.append(result['comando'])
                         await bot.sendMessage(chat_id,f'`Comandos cadastrados:`\n ***{separador.join(map(str, todos_comandos))}***','markdown', reply_to_message_id=msg['message_id'])
                 except Exception as e:
-                    print(e)
+                    print(f'Erro ao listar comandos: {e}')
                     pass
                 ##SISTEMA DE CADASTRO USANDO REPLY------------------------------------------------>
                 try:  # IMAGENS na Database-------------------------------------------------------------->
@@ -314,30 +312,7 @@ async def ia_cadastro_manual(msg):
                             await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
                 except:
                     pass
-                try:  # SISTEMA DE CADASTRO DE COMANDOS DOS USUARIOS USANDO SOMENTE O # -------------------------------------------------------------->
-                    if texto.startswith('#') and not msg.get('reply_to_message'):
-                        if adm['user'] == True:
-                            texto_cadastro = texto[1:].split(' ')
-                            comando = str(texto_cadastro[0]).lower()  # gera o texto do comando
-                            separador = ' '
-                            resposta = separador.join(map(str, texto_cadastro[1:]))
-                            cursor_sqlite.execute("""SELECT * FROM comandos; """)
-                            resultados = cursor_sqlite.fetchall()
-                            existe_cadastro = 0  # contador para verificar se o comando ja existe
-                            for res in resultados:  # loop em todos resultados da Database
-                                if res['comando'] == comando:
-                                    existe_cadastro = 1  # troca o valor de existe_cadastro para 1
-                            if existe_cadastro == 1:  # se o valor existe_cadastro esta como 1 ele avisa que ja existe cadastro
-                                await bot.sendMessage(chat_id, "Comando já cadastrado, tente outro",
-                                                reply_to_message_id=msg['message_id'])
-                            else:
-                                cursor_sqlite.execute(f"""INSERT INTO comandos (tipo,comando,resposta,usuario,grupo,data) VALUES ('texto','{comando}','{resposta}','{usuario}','{grupo}','{data}')""")
-                                conexao_sqlite.commit()
-                                await bot.sendMessage(chat_id,f"🤖 Dados inseridos com exito.\nComando: {comando}\nResposta: {resposta}",reply_to_message_id=msg['message_id'])
-                        else:
-                            await bot.sendMessage(chat_id,f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
-                except:
-                    pass
+
 
 
 #excessao final para tratar do codigo todo--->

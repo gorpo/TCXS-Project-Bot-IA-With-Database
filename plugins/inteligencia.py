@@ -360,7 +360,7 @@ async def inteligencia(msg):
         conexao_sqlite.close()
     # excessão final caso de pau em tudo e fechar o banco de dados--->
     except Exception as e:
-        print(f'Ocorreu um erro em alguma parte do codigo da inteligencia estou na linha final:{e}')
+        #print(f'Ocorreu um erro em alguma parte do codigo da inteligencia estou na linha final:{e}')
         pass
 
 

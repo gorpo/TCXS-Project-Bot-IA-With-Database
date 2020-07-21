@@ -75,9 +75,7 @@ async def trollagens(msg):
         elif msg['text'].split()[0] == 'pkg' or msg['text'].split()[0] == '/pkg':
             await bot.sendMessage(msg['chat']['id'], '`❤Tenho um site de jogos em PKG para PS3 totalmente gratis, confere meus posts la:` http://tcxsproject.com.br/category/nohan/','markdown',
                                                   reply_to_message_id=msg['message_id'])    
-        elif msg['text'].split()[0] == 'doadores' or msg['text'].split()[0] == '/doadores':
-            await bot.sendMessage(msg['chat']['id'], '`Aqui tem tudo que os doadores precisam saber:` http://tcxsproject.com.br/doadores-tcxs-store-regras/','markdown',
-                                                  reply_to_message_id=msg['message_id'])    
+
         elif msg['text'].split()[0] == 'biblioteca' or msg['text'].split()[0] == '/biblioteca':
             await bot.sendMessage(msg['chat']['id'], '`Eu tenho uma biblioteca hacker cheinha de livros hacker bem como alguns livros sobre ghoetia, satanismo e anarquia, confere la:` http://tcxsproject.com.br/dev','markdown',
                                                   reply_to_message_id=msg['message_id'])    

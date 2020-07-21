@@ -9,8 +9,6 @@
 #     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
 #     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
 #     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
-
-
 import html
 import re
 import random
@@ -32,8 +30,6 @@ import sqlite3
 from config import bot, sudoers, logs, bot_username,token_dropbox,administradores
 from datetime import datetime
 from plugins.admins import is_admin
-
-
 
 async def ia_cadastro_perguntas(msg):
     try:

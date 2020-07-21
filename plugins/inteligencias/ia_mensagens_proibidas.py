@@ -95,7 +95,7 @@ async def ia_mensagens_proibidas(msg):
                 cursor_sqlite.execute("""SELECT * FROM proibido; """)
                 mensagens_proibidas = cursor_sqlite.fetchall()
                 for mensagem in mensagens_proibidas:
-                    if mensagem['termo'] in texto:
+                    if mensagem['termo'] in texto and not 'permitir' in texto:
                         try:#em caso de erro inverter este try except pelo de baixo pois da erro entre message_id e reply_to_message
                             await bot.deleteMessage((msg['chat']['id'], msg['message_id']))
                             await bot.sendMessage(chat_id,f"@{msg['from']['username']} `você usou uma palavra proibida, não fale bosta aqui!`",'markdown')

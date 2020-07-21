@@ -94,6 +94,8 @@ async def users(msg):
             else:
                 await bot.sendMessage(msg['chat']['id'], f"@{msg['from']['username']} `este comando é permitido so para admin's`",'markdown')
 
+
+
 #SISTEMA DE BOTOES INICIO ---------------------------------------------------------------->
         strs = Strings(msg['chat']['id'])
         if  msg['text'].lower() == 'comando' or msg['text'] == '/comando'  or msg['text'] == '/comandos' or msg['text'] == 'comandos' or 'help' in msg['text'].lower() or 'ajuda' in msg['text'].lower():
@@ -101,11 +103,13 @@ async def users(msg):
                 [dict(text='📦 Store Free', callback_data='store_free')] +
                 [dict(text="📦 Store Doadores", callback_data='store_doadores')],
                 [dict(text='🦸 Usuários', callback_data='comandos_usuarios')] +
-                [dict(text="🧙‍ Admin's", callback_data='comandos_admins')],
+                [dict(text="🤖‍ Admin's", callback_data='comandos_admins')],
                 [dict(text='🧰 Ferramentas', callback_data='ferramentas_gerais')] +
                 [dict(text='📣 Info | Extras', callback_data='infos_extras')],])
             await bot.sendMessage(msg['chat']['id'],f"***{msg['from']['first_name']} {strs.get('pm_comandos_msg')}***" ,'markdown',  reply_markup=kb)
         #return True
+
+
 #PEGA OS DADOS DO keyboard.py ----------------------:
     elif msg.get('data') and msg.get('message'):
         strs = Strings(msg['message']['chat']['id'])
@@ -114,26 +118,50 @@ async def users(msg):
                 [dict(text='📦 Store Free', callback_data='store_free')] +
                 [dict(text="📦 Store Doadores", callback_data='store_doadores')],
                 [dict(text='🦸 Usuários', callback_data='comandos_usuarios')] +
-                [dict(text="🧙‍ Admin's", callback_data='comandos_admins')],
+                [dict(text="🤖‍ Admin's", callback_data='comandos_admins')],
                 [dict(text='🧰 Ferramentas', callback_data='ferramentas_gerais')] +
                 [dict(text='📣 Info | Extras', callback_data='infos_extras')], ])
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"***{msg['from']['first_name']} {strs.get('pm_comandos_msg')}***", 'markdown',reply_markup=kb)
             #return True
 
+
+
 #TCXS STORE FREE PKG    ------------------------------------------------------------------------------------------------------------------------->
         elif msg['data'] == 'store_free':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------  Espero que tenha um pendrive em mãos e saiba usar a\n loja, não daremos suporte para USUARIOS GRATUITOS, agora  copie os arquivos abaixo para a raiz de um pendrive e coloque na USB direita do seu console, caso use HAN instale o FIX, caso use HEN apenas instale a loja!```",'markdown', reply_markup=keyboard.store_free)
             #return True
+
         #entrega da loja free:
         elif msg['data'].split()[0] == 'download_store_free':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos a ultima atualização da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console, ative o Hen e instale ela pelo Package Manager.\nCaso seja usuário de HAN será necessário usar o Fix,baixe ele, depois basta inserir o FIx e a Loja em seu pendrive e através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.store_free)
-            await bot.sendDocument(msg['message']['chat']['id'], document='BQACAgEAAx0CTd0y0QABAfACXkmA716o7XaNW82C3Mr7O2c0bX8AApEAA0oQUUaFcnOHb037rhgE', caption='')
-            #return True
+            cursor_sqlite.execute("""SELECT * FROM loja_free""")
+            resultados = cursor_sqlite.fetchall()
+            if resultados == []:
+                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho lojas cadastradas, insira o banco de dados com dados ou cadastre um PKG enviando ela no meu privado com nome inicinando com TCXS, exexmplo:` ***TCXS_Store_3.9.pkg***",'markdown', reply_markup=keyboard.voltar_store_doadores)
+            else:
+                for resultado in resultados:
+                    id_pkg = resultado['pkg']
+                    nome_pkg = resultado['versao']
+                    data_att = resultado['data']
+                    uploader_id = resultado['uploader']
+                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos a ultima atualização da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console, ative o Hen e instale ela pelo Package Manager.\nCaso seja usuário de HAN será necessário usar o Fix,baixe ele, depois basta inserir o Fix e a Loja em seu pendrive e através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.voltar_store_free)
+                await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption=f'{nome_pkg} upada em {data_att} por @{uploader_id}')
+
         #entrega do fix
         elif msg['data'].split()[0] == 'download_fix':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.voltar_store_free)
-            await bot.sendDocument(msg['message']['chat']['id'], document='BQACAgEAAx0CUYaz7wACJ_lfC5DOrfOmVoy_LlQ6UQtse3bVgAACxQADxKN4RUyRO66RWR8DGgQ', caption='')
-            #return True
+            cursor_sqlite.execute("""SELECT * FROM fix_han""")
+            resultados = cursor_sqlite.fetchall()
+            if resultados == []:
+                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho o fix han, insira o banco de dados com dados ou cadastre um PKG enviando ele no meu privado com nome de:` ***FIX_HAN.pkg***",'markdown', reply_markup=keyboard.voltar_store_free)
+            else:
+                for resultado in resultados:
+                    nome_pkg = resultado['versao']
+                    data_att = resultado['data']
+                    id_pkg = resultado['pkg']
+                    uploader_id = resultado['uploader']
+                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.voltar_store_free)
+                    await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption='Fix para usuários HAN')
+
+
         elif msg['data'].split()[0] == 'tutorial_segundo_plano':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como fazer os Downloads em Segundo Plano em seu PlayStation3!```",'markdown', reply_markup=keyboard.voltar_store_free)
             await bot.sendMessage(msg['message']['chat']['id'], 'https://youtu.be/_21a5REKhBc')
@@ -147,6 +175,10 @@ async def users(msg):
             await bot.sendMessage(msg['message']['chat']['id'], 'https://youtu.be/l4o8ySk1Do4')
             #return True
 
+
+
+
+
 #TCXS STORE PKG DOADORES |  PAYD------------------->
         elif msg['data'] == 'store_doadores':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Leia atentamente como adquirir acesso a Loja para Doadores, caso discorde basta não doar. Caso queira doar agora ou renovar sua entrada no grupo de doadores clique em Doar Agora, você será redirecionado para o Mercado Pago da TCXS Project. Não prestamos reembolsos e após doar basta enviar um comprovante no privado dos administradores.```\n`Pra ver os administradores digite:` /admin",'markdown', reply_markup=keyboard.store_doadores)
@@ -154,15 +186,10 @@ async def users(msg):
         elif msg['data'] == 'como_participar':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Para participar você precisa fazer uma doação, pagamos mensalmente Dropbox de 5tb para armazenamento dos jogos e o valor é cobrado em dolar, a doação é mensal e doando você não esta comprando um produto, mas sim participando de uma vaquinha, todo dinheiro arrecadado fica retido na conta do Mercado Pago  para pagarmos o servidor, resumindo contribuindo você faz parte de uma vaquinha de doadores que mantem o servidor, nós da TCXS Project não temos lucro e nosso trabalho é voluntário, caso queira ajudar em algo e se juntar a equipe é bem vindo. Leia atentamente esta documentação e caso discorde de algo pedimos que não doe, não prestamos reembolsos.```\n`Pra ver os administradores digite:` /admin",'markdown', reply_markup=keyboard.voltar_store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'], 'http://tcxsproject.com.br/doadores-tcxs-store-regras/')
-            #return True
+
         elif msg['data'] == 'mercado_pago':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Vejo que tem interesse em ser doador, usamos o sistema do Mercado Pago somente, favor nao insistir com outras formas.\nO Mercado Pago aceita pagamentos online e com cartão de crédito e boletos, este sistema é o mais seguro para nos da equipe e para vocês doadores, lembre que a doação é mensal e doando você faz parte da vaquina que mantem os servidores de 5tb da Dropbox onde encontram-se nossos jogos. Pedimos que antes de doar leia atentamente as regras como mencionado antes e após fazer sua doação envie o comprovante no privado de um de nossos administradores.```\n`Pra ver os administradores digite:` /admin",'markdown', reply_markup=keyboard.voltar_store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'], 'https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=354396246-315fce8c-d8f9-4aa0-8583-95d678936375')
-            #return True
-
-
-
-
 ##  ATUALIZAÇÃO PARA DOADORES ATRAVÉS DO SISTEMA DE BOTÕES------------------------------------------------------------------------------>>
         #LOJA PAGA PARA DOADORES COM DATABASE E BOTOES------------>
         elif msg['data'].split()[0] == 'download_store_doadores':
@@ -276,6 +303,8 @@ async def users(msg):
 
 
 
+
+
 # COMANDOS_USUARIOS  ------------------------------------------------->
         elif msg['data'] == 'comandos_usuarios':#esta tabela pela a reply_markup da primeira e le os dados do keyboard.py e oque respondido volta pra ca ou nao, para usar local "palavra" para usar la
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"***Comandos para usuários:***",'markdown', reply_markup=keyboard.comandos_usuarios)
@@ -302,10 +331,10 @@ async def users(msg):
 /psp -cria xml para loja
 /ps3 -cria xml para loja
 /proxy -velocidade no PS3
-""",'markdown', reply_markup=keyboard.comandos_usuarios)
+""",'markdown', reply_markup=keyboard.voltar_comandos_usuarios)
             #return True
         elif msg['data'] == 'sites_users':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"/torrent -pkg torrent\n/pkg_games -pkg's\n/site -doadores\n/facebook -facebook cadastre-se\n/anime -anime gratis\n/onion -deepweb\n/dev -hacker ", reply_markup=keyboard.comandos_usuarios)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"/torrent -pkg torrent\n/pkg_games -pkg's\n/site -doadores\n/facebook -facebook cadastre-se\n/anime -anime gratis\n/onion -deepweb\n/dev -hacker ", reply_markup=keyboard.voltar_comandos_usuarios)
             #return True
         elif msg['data'] == 'cria_xml_users':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""***Temos um programa de computador que cria lojas diretamente no console PlayStation3***
@@ -391,7 +420,7 @@ async def users(msg):
      `god_of_war` ```- nome do jogo, se quiser tirar os _ usar caractere especial no lugar```
      `descrição_do_jogo` ```- descrição, se quiser tirar os _ usar caractere especial no lugar``` 
      `www.linkdropbox.com` ```- Link do Dropbox, preciso de 3 links separados por espaço```
-/ps3 -cria xml para loja""",'markdown', reply_markup=keyboard.comandos_usuarios)
+/ps3 -cria xml para loja""",'markdown', reply_markup=keyboard.voltar_comandos_usuarios)
             #return True
 
 
@@ -430,7 +459,7 @@ async def users(msg):
 /mark -repete o texto markdown
 /html -repete o texto HTML
 /request -requisição site
-/link - pega link de um arquivo use como resposta""", reply_markup=keyboard.comandos_admins)
+/link - pega link de um arquivo use como resposta""", reply_markup=keyboard.voltar_comandos_admins)
             #return True
         elif msg['data'] == 'cadastrar_comandos':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
@@ -441,7 +470,7 @@ async def users(msg):
 $comando resposta que o usuário vai receber
 🤖`Para deletar um comando`
 %comando 
-""",'markdown', reply_markup=keyboard.comandos_admins)
+""",'markdown', reply_markup=keyboard.voltar_comandos_admins)
 
             #return True
         elif msg['data'] == 'cadastrar_lojas':
@@ -460,7 +489,7 @@ $comando resposta que o usuário vai receber
 🤖***Cadastrar Fix CFW XML:*** `Cadastre o FIX CFW XML enviando ela no meu privado exatamente conforme exemplo:` ***category_network_tool2.xml***
 
 🤖***Cadastrar Fix HEN XML:*** `Cadastre o FIX HEN XML enviando ela no meu privado exatamente conforme exemplo:` ***category_network.xml***
-""",'markdown', reply_markup=keyboard.comandos_admins)
+""",'markdown', reply_markup=keyboard.voltar_comandos_admins)
 
         elif  msg['data'] == 'restringir_doadores':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']), """
@@ -479,7 +508,7 @@ limpar @Mst3Dz
 `Exemplo na prática:` restringir @MsT3Dz 628238139 300000
 
 🤖***Depois de Banido oque acontece:*** `Após o doador ser banido os administradores são notificados, o nome deste doador é limpo do banco de dados e da lista de restritos do grupo, caso ele faça uma nova doação basta adiciona-lo no grupo sem a necessidade de qualquer comando.`
-    """, 'markdown', reply_markup=keyboard.comandos_admins)
+    """, 'markdown', reply_markup=keyboard.voltar_comandos_admins)
 
         elif msg['data'] == 'perguntas_admins':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']), """
@@ -488,7 +517,7 @@ limpar @Mst3Dz
 🤖`Cadastrar pergunta exemplo:` Como faço para ser tao esperto como o robo?? 
 🤖`Ver perguntas cadastradas apenas digite:` perguntas  
 🤖`Limpar perguntas cadastradas ou já respondidas digite:` apagar perguntas
-    """, 'markdown', reply_markup=keyboard.comandos_admins)
+    """, 'markdown', reply_markup=keyboard.voltar_comandos_admins)
 
         elif msg['data'] == 'admin_frequencia':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
@@ -497,7 +526,7 @@ limpar @Mst3Dz
 🤖`frequencia 0 = mudo`
 🤖`frequencia 2 = fala pouco`
 🤖`frequencia 10 = fala muito`
-    """,'markdown', reply_markup=keyboard.comandos_admins)
+    """,'markdown', reply_markup=keyboard.voltar_comandos_admins)
 
         elif msg['data'] == 'admin_proibicoes':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
@@ -506,7 +535,7 @@ limpar @Mst3Dz
 🤖`proibir uma palavra:` proibir corno
 🤖`permitir uma palavra:` permtir corno
 🤖`ver palavras proibidas:` proibidas
-    """,'markdown', reply_markup=keyboard.comandos_admins)
+    """,'markdown', reply_markup=keyboard.voltar_comandos_admins)
 
         elif msg['data'] == 'admin_inteligencia':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
@@ -518,29 +547,34 @@ inteligencia local
 inteligencia global
 🤖`fale sobre = ele fala sobre determinado assunto, exemplo:`
 fale sobre playstation
-    """,'markdown', reply_markup=keyboard.comandos_admins)
+    """,'markdown', reply_markup=keyboard.voltar_comandos_admins)
 
 
         elif msg['data'] == 'area_dev':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
-apagar mensagens - apaga tudo IA e faz backup da Database.
-backup - Faz backup do bot.
-cmd - Executa um comando.
-chat - Obtem infos de um chat.
-del - Deleta a mensagem respondida.
-doc - Envia um documento do server.
-eval - Executa uma função Python.
-exec - Executa um código Python.
-leave - O bot sai do chat.
-plist - Lista os plugins ativos.
-promote - Promove alguém a admin.
-restart - Reinicia o bot.
-upgrade - Atualiza a base do bot.(deprecated)
-upload - Envia um arquivo para o servidor.
-baixar - baixa um documento para o server
-dropbox - faz upload para o Dropbox
-link - gera um link direto do Telegram
-| - Define desligamento do bot, EX: 12|30""",'markdown', reply_markup=keyboard.comandos_admins)
+[*] COMANDOS APENAS PARA DESENVOLVEDOR [*]
+
+Os comandos abaixo funcionam apenas para quem hospeda o bot, somente o desenvolvedor tem acesso a estes comandos!
+            
+!apagar mensagens - apaga tudo IA e faz backup da Database.
+!backup - Faz backup do bot e upload para o Dropbox.
+!update - Atualiza o bot de acordo com codigo postado no Github.
+!cmd - Executa um comando.
+!chat - Obtem infos de um chat.
+!del - Deleta a mensagem respondida.
+!doc - Envia um documento do server.
+!eval - Executa uma função Python.
+!exec - Executa um código Python.
+!leave - O bot sai do chat.
+!plist - Lista os plugins ativos.
+!promote - Promove alguém a admin.
+!restart - Reinicia o bot.
+!upgrade - Atualiza a base do bot.(deprecated)
+!upload - Envia um arquivo para o servidor.
+!baixar - baixa um documento para o server
+!dropbox - faz upload para o Dropbox
+!link - gera um link direto do Telegram
+  | - Define desligamento do bot, EX: 12|30""",'markdown', reply_markup=keyboard.voltar_comandos_admins)
             #return True
 
 
@@ -576,7 +610,7 @@ link - gera um link direto do Telegram
 /hastebin - envia seu material em texto para o hastebin
 /echo - Repete o texto informado.    
 /shorten - Encurta uma URL.
-/token - Exibe informaces de um token de bot.""", reply_markup=keyboard.ferramentas_gerais)
+/token - Exibe informaces de um token de bot.""", reply_markup=keyboard.voltar_ferramentas_gerais)
             #return True
 
 
@@ -587,7 +621,7 @@ link - gera um link direto do Telegram
 🤖`Cadastrar pergunta exemplo:` Como faço para ser tao esperto como o robo?? 
 🤖`Ver perguntas cadastradas apenas digite:` perguntas  
 🤖`Limpar perguntas cadastradas ou já respondidas digite:` apagar perguntas
-    """, 'markdown', reply_markup=keyboard.ferramentas_gerais)
+    """, 'markdown', reply_markup=keyboard.voltar_ferramentas_gerais)
 
         elif msg['data'] == 'ferramenta_frequencia':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
@@ -596,7 +630,7 @@ link - gera um link direto do Telegram
 🤖`frequencia 0 = mudo`
 🤖`frequencia 2 = fala pouco`
 🤖`frequencia 10 = fala muito`
-    """,'markdown', reply_markup=keyboard.ferramentas_gerais)
+    """,'markdown', reply_markup=keyboard.voltar_ferramentas_gerais)
 
         elif msg['data'] == 'ferramenta_proibicoes':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
@@ -605,7 +639,7 @@ link - gera um link direto do Telegram
 🤖`proibir uma palavra:` proibir corno
 🤖`permitir uma palavra:` permtir corno
 🤖`ver palavras proibidas:` proibidas
-    """,'markdown', reply_markup=keyboard.ferramentas_gerais)
+    """,'markdown', reply_markup=keyboard.voltar_ferramentas_gerais)
 
         elif msg['data'] == 'ferramenta_inteligencia':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),"""
@@ -617,21 +651,26 @@ inteligencia local
 inteligencia global
 🤖`fale sobre = ele fala sobre determinado assunto, exemplo:`
 fale sobre playstation
-    """,'markdown', reply_markup=keyboard.ferramentas_gerais)
+    """,'markdown', reply_markup=keyboard.voltar_ferramentas_gerais)
 
 
-        #INFORMAÇÕES E EXTRAS------------------->
+
+
+
+
+
+#INFORMAÇÕES E EXTRAS------------------->
         elif msg['data'] == 'infos_extras':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Confira ferramentas de Machine e Deep Learning em nossa IA (em breve mais comandos).```",'markdown', reply_markup=keyboard.info_extras)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Aconselhamos que leia atentamente as regras, é de suma importancia saber as regras antes de doar para depois não haver reclamações tanto pela parte dos usuários como por parte da administração, somente após ler e concordar com todos os termos abaixo realize sua doação, ja deixamos claro que não prestamos reembolsos.```",'markdown', reply_markup=keyboard.info_extras)
             #return True
         elif msg['data'] == 'info_adquirir':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ A TCXS Project fornece e desenvolve o aplicativo para PlayStation3 TCXS Store, para poder ter nosso aplicativo em seu console basta fazer uma doação nos botões deste site, logo após doar você deve ir em nosso grupo de telegram e procurar por @MsT3Dz ou @Odeiobot e mostrar seu comprovante de doação assim você estará dentro do grupo que contém as novidades, jogos e nossa TCXS Store PKG PlayStation3.```",'markdown', reply_markup=keyboard.info_extras)
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ A TCXS Project fornece e desenvolve o aplicativo para PlayStation3 TCXS Store, para poder ter nosso aplicativo em seu console basta fazer uma doação nos botões deste bot ou pelo site, antes de doar leia atentamente a todas as regras, já quero explicar como funciona a doação, todo montante arrecadado fica preso em uma conta do Mercado Pago a qual é usada para pagar o servidor do Dropbox e outros serviços, ao doar você esta participando de uma vaquinha onde a união de todos doadores mantém a vaquinha no mercado pago assim possibilitando pagar os serviços que usamos, nossa loja não é paga e em momento algum você é obrigado a pagar, fornecemos jogos para download direto aqui neste bot bem como temos uma loja free que tem todos jogos das demais lojas free, a loja ficou definida apenas para doadores a pedido deles, pois o download fica muito mais rápido e não temos mais perda de jogos, ressalto que o grupo de doadores esta limitado apenas a 200 pessoas e caso esteja lotado você terá que esperar alguem sair, continuando... Logo após doar você deve ir em nosso grupo de telegram e procurar por @MsT3Dz ou @Odeiobot e mostrar seu comprovante de doação assim você estará dentro do grupo que contém as novidades, jogos e nossa TCXS Store PKG PlayStation3.```",'markdown', reply_markup=keyboard.voltar_info_extras)
             #return True
         elif msg['data'] == 'info_doacao':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"""```------ As doações são feitas pelo mercado pago, onde aceitamos todos os cartões, pagamentos online e boletos.
 Não prestamos reembolsos pois se trata de doações e não uma venda direta para uso dos serviços!
 O material completo é apenas para doadores. Além do projeto para PlayStation3  a TCXS Project conta com inumeros projetos e Sites para seu entreterimento. Após fazer sua doação basta ir no grupo de TELEGRAM e procurar pelo nosso administrador @MsT3Dz  ou @Odeiobot , enviar um print de seu comprovante de pagamento que ele irá fornecer acesso a todo material, exigimos que seja feito o pedido no grupo! Outros administradores não irão te responder no privado, contamos com seu bom senso e cordialidade! NÃO PRESTAMOS REEMBOLSOS!
-Queremos deixar a todos cientes que as doações feitas são exclusivas para pagar os servidores da Dropbox e serviços como hospedagem de site, sendo assim nos adm’s declaramos não receber nenhum valor neste projeto sendo assim nosso trabalho voluntário e todo e qualquer que queira entrar na equipe para ajudar a contribuir de forma expontanêa é bem vindo. Nossa equipe desenvolve sem cobrar nada pela sua mão de obra os sites acima citados bem como o desenvolvimento da TCXS Store PKG e a conversão e upload de jogos dentro dos servidores da Dropbox para assim os fornecer em formato NO-HAN para os usuários, fornecemos dentro da Plataforma PlayStation3 jogos de PS2, PS2, PsP, Emuladores das mais diversas plataformas! Álem disto disponibilizamos aos usuários a experiencia de ter sites para download de jogos nas mais variadas paltaformas e em especial jogos de PS3 PKG tudo aberto gratuitamente a comunidade bem como este site e outros sites mencionados aqui e que encontram-se nos menus.```""",'markdown', reply_markup=keyboard.info_extras)
+Queremos deixar a todos cientes que as doações feitas são exclusivas para pagar os servidores da Dropbox e serviços como hospedagem de site, sendo assim nos adm’s declaramos não receber nenhum valor neste projeto sendo assim nosso trabalho voluntário e todo e qualquer que queira entrar na equipe para ajudar a contribuir de forma expontanêa é bem vindo. Nossa equipe desenvolve sem cobrar nada pela sua mão de obra os sites acima citados bem como o desenvolvimento da TCXS Store PKG e a conversão e upload de jogos dentro dos servidores da Dropbox para assim os fornecer em formato NO-HAN para os usuários, fornecemos dentro da Plataforma PlayStation3 jogos de PS2, PS2, PsP, Emuladores das mais diversas plataformas! Álem disto disponibilizamos aos usuários a experiencia de ter sites para download de jogos nas mais variadas paltaformas e em especial jogos de PS3 PKG tudo aberto gratuitamente a comunidade bem como este site e outros sites mencionados aqui e que encontram-se nos menus.```""",'markdown', reply_markup=keyboard.voltar_info_extras)
             #return True
         elif msg['data'] == 'info_requisitos':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"""```------ Para usar a TCXS Store PKG você precisa ter seu console exploitado ou desbloqueado, nossa loja funciona nos consoles CFW, OFW, nas versões HAN e HEN, porém precis atender alguns requisitos para usar a TCXS Store PKG:
@@ -642,7 +681,7 @@ Queremos deixar a todos cientes que as doações feitas são exclusivas para pag
 - Espaço para download de jogos em seu hd.
 - Conhecer previamente tudo sobre seu sistema de desbloqueio/exploit.
 - Saber solucionar seus erros.
-- Estar ciente que ao doar para a TCXS Store você não esta fazendo uma compra e sim ajudando a pagar os servidores da Dropbox onde upamos os jogos.CONSIDERE SE PARTICIPANDO DE UMA VAQUINHA COLETIVA ONDE TODOS USUARIOS DA TCXS AJUDAM NESTA VAQUINHA PARA MANTER O SERVIDOR```""",'markdown', reply_markup=keyboard.info_extras)
+- Estar ciente que ao doar para a TCXS Store você não esta fazendo uma compra e sim ajudando a pagar os servidores da Dropbox onde upamos os jogos.CONSIDERE SE PARTICIPANDO DE UMA VAQUINHA COLETIVA ONDE TODOS USUARIOS DA TCXS AJUDAM NESTA VAQUINHA PARA MANTER O SERVIDOR```""",'markdown', reply_markup=keyboard.voltar_info_extras)
             #return True
         elif msg['data'] == 'info_suporte':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"""```------ Prestamos suporte somente para nosso aplicativo e jogos, estejam cientes que:
@@ -652,7 +691,7 @@ Por se tratar de copias modificadas de jogos nossos jogos constantemente são re
 Por se tratar de copias modificadas ao cair dos links, os mesmos após conteúdo upado, são substitúidos na TCXS Store PKG.
 Tenha ciencia de que links podem vir a cair ( não temos frequencia disto).
 Saiba que a administração não presta suporte para seu desbloqueio e exploit, mas aconselhamos levar em um técnico competente caso não saiba realizar as operações básicas e avançadas de seu console.
-Caso queira se aventurar em aprender tudo sobre seu desbloqueio ou exploit aconselhamos o fórum da PSX Place que são os desenvolvedores do desbloqueio e exploit, não iremos dar suporte ao material de terceiros ou erros cometidos por usuarios ou consoles vindo de tecnicos que não fizeram um bom exploit ou um bom desbloqueio.```""",'markdown', reply_markup=keyboard.info_extras)
+Caso queira se aventurar em aprender tudo sobre seu desbloqueio ou exploit aconselhamos o fórum da PSX Place que são os desenvolvedores do desbloqueio e exploit, não iremos dar suporte ao material de terceiros ou erros cometidos por usuarios ou consoles vindo de tecnicos que não fizeram um bom exploit ou um bom desbloqueio.```""",'markdown', reply_markup=keyboard.voltar_info_extras)
             #return True
 
         #MODELO PARA NAO TER Q FICAR LIMPANDO CODIGO PARA CRIAR MAIS MENUS--------------->
