@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-print(r"""
+print(r'''
 ███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
 ████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
 ██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
@@ -11,7 +11,7 @@ print(r"""
      |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
      |        Github Gorpo Dev: https://github.com/gorpo         |
      [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
-""")
+''')
 
 import asyncio
 import json
