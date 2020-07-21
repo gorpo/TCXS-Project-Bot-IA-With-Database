@@ -225,7 +225,7 @@ baixar - baixa um documento para o server
                         #print(f'{separador.join(map(str, todas))}')
                         #print(todas)
                         os.remove('foo.txt')
-                    await bot.sendMessage(msg['chat']['id'], f"`{separador.join(map(str, todas))}`",'markdown',  reply_to_message_id=msg['message_id'])
+                    await bot.sendMessage(msg['chat']['id'],res or  f"`{separador.join(map(str, todas))}`",'markdown',  reply_to_message_id=msg['message_id'])
                 return True
 
 
