@@ -24,7 +24,7 @@ import keyboard
 from config import bot, version, bot_username, git_repo,logs,sudoers
 from db_handler import cursor
 from get_strings import strings, Strings
-from config import bot, version, bot_username, git_repo,logs,sudoers
+from config import bot, version, bot_username, git_repo,logs,sudoers,grupo_permanencia
 import sqlite3
 import os
 from plugins.admins import is_admin
@@ -43,7 +43,7 @@ async def permanencia(msg):
         id_usuario = msg['from']['id']
         adm = await is_admin(msg['chat']['id'], msg['from']['id'], id_usuario)  # and adm['user'] == True
         ## SISTEMA DE BANIMENTO----------------------------->
-        if msg['chat']['title'] ==  'manicomio testes':
+        if msg['chat']['title'] in grupo_permanencia:
             if msg['text'] == 'verificar': #adm['user'] == False:
                 try:
                     hoje = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
@@ -57,8 +57,8 @@ async def permanencia(msg):
                         dias = resutado['dias']
                         aviso = resutado['data_aviso']
                         #ALERTA DE AVISO PARA O DOADOR----:
-                        if hoje[0:6] == aviso[0:6]:
-                            await bot.sendMessage(chat_id,f"🤖 {doador} ***Falta uma semana para você grupo de doadores, caso ainda tenha interesse em continuar usando a loja faça uma doação, envie o comprovante aqui no grupo que um de nossos administradores irá colocar mas dias em sua permanencia.***\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Permanência:` {dias}",'markdown')
+                        if hoje[0:2] == aviso[0:2]:
+                            await bot.sendMessage(chat_id,f"🤖 {doador} ***Falta uma semana para você grupo de doadores, caso ainda tenha interesse em continuar usando a loja faça uma doação, envie o comprovante aqui no grupo que um de nossos administradores irá colocar mas dias em sua permanencia.***\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Data Aviso:` {aviso}\n`Permanência:` {dias}",'markdown')
                         #BANE O USUARIO CASO A DATA TENHA SIDO IGUAL A DO DIA HOJE
                         if hoje[0:6] <= data_ban[0:6]:
                             await bot.kickChatMember(msg['chat']['id'], id_doador)
@@ -87,7 +87,7 @@ async def permanencia(msg):
 
 
         #sistema cadastro de restriçao de doadores no grupo--------------------------------------------->
-        if 'restringir' in msg['text'].split()[0]  and msg['chat']['title'] ==  'manicomio testes':
+        if 'restringir' in msg['text'].split()[0]  and msg['chat']['title'] in grupo_permanencia:
             if adm['user'] == True:
                 try:
                     admin = msg['from']['username']
@@ -96,9 +96,9 @@ async def permanencia(msg):
                     dias = msg['text'].split()[3]
                     hoje = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
                     data_inicial = hoje
-                    dias_restantes = datetime.now() + relativedelta(minutes=int(dias))#--------------------------------
+                    dias_restantes = datetime.now() + relativedelta(days=int(dias))#--------------------------------
                     data_final = dias_restantes.strftime('%d/%m/%Y %H:%M:%S')
-                    data_avisar = dias_restantes - relativedelta(minutes=int(7))#-------------------------------------
+                    data_avisar = dias_restantes - relativedelta(days=int(7))#-------------------------------------
                     data_aviso = data_avisar.strftime('%d/%m/%Y %H:%M:%S')
                     #verifica se existe cadastro:
                     cursor_sqlite.execute("""SELECT * FROM permanencia; """)
@@ -120,7 +120,7 @@ async def permanencia(msg):
 
 
 #SISTEMA PARA LIMPAR OS DOADORES CADASTRADOS NA DATABASE DE PERMANENCIA NO GRUPO DE DOADORES---------------------->
-        if 'limpar' in msg['text'].split()[0] and msg['chat']['title'] == 'manicomio testes':
+        if 'limpar' in msg['text'].split()[0] and msg['chat']['title'] in grupo_permanencia:
             if adm['user'] == True:
                 try:
                     doador = msg['text'].split()[1]

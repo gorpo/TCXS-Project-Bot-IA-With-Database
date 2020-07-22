@@ -26,7 +26,7 @@ token_dropbox = 'qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwi
 logs = 522510051    #-1001215401730
 sudoers = [522510051,]
 administradores = [522510051,]
-
+grupo_permanencia = 'manicomio testes'
 
 
 
