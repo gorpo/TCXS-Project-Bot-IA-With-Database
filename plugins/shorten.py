@@ -29,8 +29,7 @@ async def shorten(msg):
         if msg['text'].startswith('/shorten'):
             text = msg['text'][9:]
             if not text:
-                await bot.sendMessage(msg['chat']['id'],
-                                      '*Uso:* `/shorten https://google.com` - _Encurta uma URL. ','Markdown',  reply_to_message_id=msg['message_id'])
+                await bot.sendMessage(msg['chat']['id'],'*Uso:* `/shorten https://google.com` - _Encurta uma URL. ','Markdown',  reply_to_message_id=msg['message_id'])
             else:
                 if not text.startswith('http://') or not text.startswith('https://'):
                     texto = 'https://' + text

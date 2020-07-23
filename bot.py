@@ -10,9 +10,10 @@ print(r'''
      |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
      |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
      |        Github Gorpo Dev: https://github.com/gorpo         |
-     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]''')
 
-''')
+
+
 
 import asyncio
 import json
@@ -27,13 +28,12 @@ import backups
 import db_handler as db
 from config import bot, na_bot, enabled_plugins, logs, version, backups_chat
 from utils import send_to_dogbin
-
 ep = []
 n_ep = {}
 
 for num, i in enumerate(enabled_plugins):
     try:
-        print(Fore.RESET + 'Carregando plugins para hackear os cornos... [{}/{}]'.format(num + 1, len(enabled_plugins)), end='\r')
+        print(Fore.RESET + 'Carregando plugins... [{}/{}]'.format(num + 1, len(enabled_plugins)), end='\r')
         exec('from plugins.{0} import {0}'.format(i))
         ep.append(i)
     except Exception as erro:
@@ -87,7 +87,6 @@ if __name__ == '__main__':
         db.del_restarted()
     else:
         #por aqui mensagem q vai para os grupos quando ligar o bot$$$$$$$$$$$$$
-        #na_bot.sendMessage(logs, '''Manicômio bot iniciado com sucesso, 28 plugins foram carregados, digite /comandos para saber os comandos do bot.'''.format(version, len(ep), len(n_ep),': ' + (', '.join(n_ep)) if n_ep else ''))
+        #na_bot.sendMessage(logs, '''Manicômio IA with Database Bot iniciado com sucesso, 28 plugins foram carregados, digite /comandos para saber os comandos do bot.'''.format(version, len(ep), len(n_ep),': ' + (', '.join(n_ep)) if n_ep else ''))
         pass
     loop.run_forever()
-

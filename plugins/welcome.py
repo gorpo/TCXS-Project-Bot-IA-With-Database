@@ -105,26 +105,28 @@ Se esse erro persistir entre em contato com @GorpoOrko.'''.format(e.description)
         if msg['new_chat_member']['id'] == bot_id:
             pass
         else:   #daqui para baixo e codigo novo meu-------------------------------------------------->>>>>>>>>>>>>>
-            ############SISTEMA DE CADASTRO DOS USUARIOS AUTOMATICAMENTE NO BANCO DE DADOS PARA BANIMENTO------
-
+############SISTEMA DE CADASTRO DOS USUARIOS AUTOMATICAMENTE NO BANCO DE DADOS PARA BANIMENTO------
+############SISTEMA DE CADASTRO DOS USUARIOS AUTOMATICAMENTE NO BANCO DE DADOS PARA BANIMENTO------
+############SISTEMA DE CADASTRO DOS USUARIOS AUTOMATICAMENTE NO BANCO DE DADOS PARA BANIMENTO------
             try:
                 doador = msg['new_chat_member']['username']
             except:
                 doador = f"{msg['new_chat_member']['id']} ({msg['new_chat_member']['first_name']})"
             try:
-                conexao_sqlite = sqlite3.connect('bot.db')
+
+                conexao_sqlite = sqlite3.connect('bot_database.db')
                 conexao_sqlite.row_factory = sqlite3.Row
                 cursor_sqlite = conexao_sqlite.cursor()
                 chat_id = msg['chat']['id']
                 print(f"Novo usuário: {doador} entrou no Grupo {msg['chat']['title']}")
                 id_doador = msg['new_chat_member']['id']
                 admin = 'cadastro automatico'
-                dias = 30 #QUANTIDADE DE DIAS SETADA MANUALMENTE, POR ISTO COMO COMANDO NA DATABASE
+                dias = 35 #QUANTIDADE DE DIAS SETADA MANUALMENTE, POR ISTO COMO COMANDO NA DATABASE
                 hoje = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
                 data_inicial = hoje
-                dias_restantes = datetime.now() + relativedelta(minutes=int(dias))#--------------------------------
+                dias_restantes = datetime.now() + relativedelta(days=int(dias))#--------------------------------
                 data_final = dias_restantes.strftime('%d/%m/%Y %H:%M:%S')
-                data_avisar = dias_restantes - relativedelta(minutes=int(7))#-------------------------------------
+                data_avisar = dias_restantes - relativedelta(days=int(7))#-------------------------------------
                 data_aviso = data_avisar.strftime('%d/%m/%Y %H:%M:%S')
                 #verifica se existe cadastro:
                 cursor_sqlite.execute("""SELECT * FROM permanencia; """)
@@ -138,10 +140,10 @@ Se esse erro persistir entre em contato com @GorpoOrko.'''.format(e.description)
                 else:
                     cursor_sqlite.execute(f"""INSERT INTO permanencia(int_id,grupo,id_grupo, admin, doador, id_doador, dias, data_inicial, data_final,data_aviso)VALUES(null,'{msg['chat']['title']}','{msg['chat']['id']}','{admin}','{doador}','{id_doador}','{dias}','{data_inicial}','{data_final}','{data_aviso}')""")
                     conexao_sqlite.commit()
-                    await bot.sendMessage(chat_id,f"🤖 ***Dados inseridos com exito no cadastro de permanência do grupo de doadores.***\n`Admin:` {admin}\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_final}\n`Aviso Vencimento:` {data_aviso}\n`Permanência:` {dias}",'markdown')
+                    await bot.sendMessage(chat_id,f"🤖 ***Dados inseridos com exito no cadastro de permanência do grupo.***\n`Admin:` {admin}\n`Usuário:` {doador}\n`Id_Usuário:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_final}\n`Aviso Vencimento:` {data_aviso}\n`Permanência:` {dias}",'markdown')
                     #print(admin, doador, id_doador, dias, data_inicial, data_final)
             except Exception as e:
-                await bot.sendMessage(chat_id,f"🤖 `Ocorreu um erro ao inserir os dados na Database.Envie novamente o comando manualmente conforme exemplo:` ```restringir @doador id_doador dias``` ***Exemplo:*** restringir @xbadcoffee 1367451130 30 ",'markdown')
+                await bot.sendMessage(chat_id,f"🤖 `Ocorreu um erro ao inserir os dados na Database.Envie novamente o comando manualmente conforme exemplo:` ```restringir @usuario id_usuario dias``` ***Exemplo:*** restringir @xbadcoffee 1367451130 30 ",'markdown')
             ###########FIM DO SISTEMA DE BANIMENTO---------------------------------------------------------------------------
             #ACIMA TUDO CODIGO MEU------------------------->
 

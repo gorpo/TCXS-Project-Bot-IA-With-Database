@@ -28,7 +28,7 @@ async def calculadora(msg):
                 n1 = int(msg['text'].split('+')[0])
                 n2 = int(msg['text'].split('+')[1])
                 calc = n1 + n2
-                await bot.sendMessage(msg['chat']['id'],'`Sua soma  {}+{}={} {} seu pau no cu!`'.format(n1,n2,calc,msg['from']['first_name']), 'markdown',
+                await bot.sendMessage(msg['chat']['id'],'`Sua soma  {} + {} = {} `'.format(n1,n2,calc), 'markdown',
                                           reply_to_message_id=msg['message_id'])
                 return True
 
@@ -36,7 +36,7 @@ async def calculadora(msg):
                 n1 = int(msg['text'].split('-')[0])
                 n2 = int(msg['text'].split('-')[1])
                 calc = n1 - n2
-                await bot.sendMessage(msg['chat']['id'],'`Sua subtração  {}-{}={} {}seu filho da puta!`'.format(n1,n2,calc,msg['from']['first_name']), 'markdown',
+                await bot.sendMessage(msg['chat']['id'],'`Sua subtração  {} - {} = {} `'.format(n1,n2,calc), 'markdown',
                                           reply_to_message_id=msg['message_id'])
                 return True
 
@@ -45,17 +45,19 @@ async def calculadora(msg):
                 n2 = int(msg['text'].split('*')[1])
                 calc = n1 * n2
 
-                await bot.sendMessage(msg['chat']['id'],'`Sua multiplicação {}*{}={} {} seu arrombado do caralho!`'.format(n1,n2,calc,msg['from']['first_name']), 'markdown',
+                await bot.sendMessage(msg['chat']['id'],'`Sua multiplicação {} * {} = {} `'.format(n1,n2,calc), 'markdown',
                                           reply_to_message_id=msg['message_id'])
                 return True
 
-            if 'div' in msg['text']:
-                n1 = int(msg['text'].split('/')[0])
-                n2 = int(msg['text'].split('/')[1])
-                calc = n1 / n2
-
-                await bot.sendMessage(msg['chat']['id'],'`Sua divisão {}/{}={} {} seu lixo`'.format(n1,n2,calc,msg['from']['first_name']), 'markdown',
-                                          reply_to_message_id=msg['message_id'])
+            if '/' in msg['text']:
+                try:
+                    n1 = int(msg['text'].split('/')[0])
+                    n2 = int(msg['text'].split('/')[1])
+                    calc = n1 / n2
+                    await bot.sendMessage(msg['chat']['id'],'`Sua divisão {} / {} = {} `'.format(n1,n2,calc), 'markdown',
+                                              reply_to_message_id=msg['message_id'])
+                except:
+                    pass
         except:
             pass
             return True              

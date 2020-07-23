@@ -24,19 +24,14 @@ from utils import send_to_dogbin, send_to_hastebin
 
 async def randomicas(msg):
     if msg.get('text'):
+
         # exemplo de animação--->
         if 'aham' in msg['text']:
             await bot.sendAnimation(msg['chat']['id'], animation='CgADBAADsgEAAmPDvFLYWdDUh36QARYE',   reply_to_message_id=msg['message_id'])
 
         # Exemplo de uma mensagem randomica do bot.....
-
-    
         if 'seu cu' in msg['text']:
             print('Usuario {} solicitou seu cu random'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou seu u random --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],
-                                                                                              msg['chat']['title'],
-                                                                                              time.ctime())
-
             cu1 = str('`Pau no seu cu filho da puta!`')
             cu2 = str('`Seu cu o caralho para de fala merda mano!`')
             cu3 = str('`É mais arregaçado que o da minha mãe quela vaca vadia galinha piranha!`')
@@ -58,8 +53,6 @@ async def randomicas(msg):
 
         if 'sherry' in msg['text']:
             print('Usuario {} solicitou seu sherry random'.format(msg['from']['first_name']))
-            log = '\nUsuario {} solicitou seu u random --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'], msg['chat']['title'], time.ctime())
-
             sherry1 = str('https://i.imgur.com/i8PURpP.jpg')
             sherry2 = str('https://i.imgur.com/lO5r9xj.jpg')
             sherry3 = str('https://i.imgur.com/eoSUKOq.jpg')

@@ -4,7 +4,7 @@ import sqlite3
 #dados anteriores---------------------->
 
 try:
-    conn = sqlite3.connect('bot.db')
+    conn = sqlite3.connect('bot_database.db')
     cursor = conn.cursor()
     try:
         # seta a frequencia com 1 para o bot sempre falar pouco quando iniciado
@@ -52,7 +52,7 @@ try:
     conn.close()
 except:
     pass
-conn = sqlite3.connect('bot.db')
+conn = sqlite3.connect('bot_database.db')
 cursor = conn.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS chats (chat_id INTEGER,

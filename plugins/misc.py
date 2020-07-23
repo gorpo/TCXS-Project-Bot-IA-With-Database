@@ -24,7 +24,7 @@ from utils import send_to_dogbin, send_to_hastebin
 
 async def misc(msg):
     if msg.get('text'):
-#aqui ele repete as coisas com echo kkjjj
+        #repete as coisas com echo
         if msg['text'].startswith('fala') or msg['text'].startswith('/echo')or msg['text'].startswith('echo') or msg['text'] == '/echo@' + bot_username:
             
             if msg.get('reply_to_message'):
