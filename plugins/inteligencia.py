@@ -125,9 +125,9 @@ async def inteligencia(msg):
                 ativa_cadastro_manual = await ia_cadastro_manual(msg)
                 ativa_mensagens_proibidas = await ia_mensagens_proibidas(msg)
                 ativa_wikipedia = await ia_wikipedia(msg)
-                #ativa_crawling = await crawling(msg)
+                ativa_crawling = await crawling(msg)
                 ativa_reconhecimento = await ia_reconhecimento(msg)
-                #ativa_deepnude = await ia_deepnude(msg)
+                ativa_deepnude = await ia_deepnude(msg)
 
 
 
