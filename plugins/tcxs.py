@@ -24,13 +24,12 @@ import keyboard
 from amanobot.namedtuple import InlineKeyboardMarkup
 from config import bot, version, bot_username, git_repo, logs,sudoers
 from db_handler import cursor
-from get_strings import strings, Strings
 import sqlite3
 from datetime import datetime
 
 async def tcxs(msg):
     #variaveis iniciais---------------------:
-    conexao_sqlite = sqlite3.connect('bot.db')
+    conexao_sqlite = sqlite3.connect('bot_database.db')
     conexao_sqlite.row_factory = sqlite3.Row
     cursor_sqlite = conexao_sqlite.cursor()
     data = datetime.now().strftime('%d/%m/%Y %H:%M')

@@ -16,7 +16,7 @@ from amanobot.exception import TelegramError, NotEnoughRightsError
 from amanobot.namedtuple import InlineKeyboardMarkup
 from config import bot, bot_id, sudoers
 from db_handler import conn, cursor
-from get_strings import strings, Strings
+
 
 async def is_admin(chat_id, user_id, reply_id=None):
     if int(chat_id) < 0:  # Groups and supergoups IDs.

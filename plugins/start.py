@@ -23,67 +23,54 @@ from amanobot.namedtuple import InlineKeyboardMarkup
 import keyboard
 from config import bot, version, bot_username, git_repo,logs,sudoers
 from db_handler import cursor
-from get_strings import strings, Strings
 
 async def start(msg):
     if msg.get('text'):
-        strs = Strings(msg['chat']['id'])
-        strs = Strings(msg['chat']['id'])
         if msg['text'] == 'lista jogos' or msg['text'] == 'lista de jogos' or msg['text'] == 'Lista jogos' or msg[
             'text'] == 'Lista jogos' or msg['text'] == 'Lista de jogos' or msg['text'] == 'PSN' or msg[
             'text'] == 'PSN Stuff' or msg['text'] == 'PSN stuff' or msg['text'] == 'psn' or msg['text'] == 'psn stuff':
             if msg['chat']['type'] == 'private':
                 kb = InlineKeyboardMarkup(inline_keyboard=[])
-                smsg = strs.get('pm_start_msg')
             else:
                 kb = InlineKeyboardMarkup(inline_keyboard=[
-                    [dict(text=strs.get('🎮 Jogos de A a B'), callback_data='AaB')] +
-                    [dict(text=strs.get('🎮 Jogos de B a D'), callback_data='BaD')] +
-                    [dict(text=strs.get('🎮 Jogos de E a G'), callback_data='EaG')],
-                    [dict(text=strs.get('🎮 Jogos de G a K'), callback_data='GaK')] +
-                    [dict(text=strs.get('🎮 Jogos de K a M'), callback_data='KaM')] +
-                    [dict(text=strs.get('🎮 Jogos de M a P'), callback_data='MaP')],
-                    [dict(text=strs.get('🎮 Jogos de R a S'), callback_data='RaS')] +
-                    [dict(text=strs.get('🎮 Jogos de S a T'), callback_data='SaT')] +
-                    [dict(text=strs.get('🎮 Jogos de T a Z'), callback_data='TaZ')] ])
-                smsg = strs.get('''🎮 Temos jogos para download com link direto 🎮
-        Basta clicar no botão que te trarei a lista com link direto para download, pedimos sua contribuição para que este projeto se mantenha vivo, Obrigado a todos da TCXS!''')
+                    [dict(text='🎮 Jogos de A a B', callback_data='AaB')] +
+                    [dict(text='🎮 Jogos de B a D', callback_data='BaD')] +
+                    [dict(text='🎮 Jogos de E a G', callback_data='EaG')],
+                    [dict(text='🎮 Jogos de G a K', callback_data='GaK')] +
+                    [dict(text='🎮 Jogos de K a M', callback_data='KaM')] +
+                    [dict(text='🎮 Jogos de M a P', callback_data='MaP')],
+                    [dict(text='🎮 Jogos de R a S', callback_data='RaS')] +
+                    [dict(text='🎮 Jogos de S a T', callback_data='SaT')] +
+                    [dict(text='🎮 Jogos de T a Z', callback_data='TaZ')] ])
+            smsg = '''🎮 Temos jogos para download com link direto 🎮
+Basta clicar no botão que te trarei a lista com link direto para download, pedimos sua contribuição para que este projeto se mantenha vivo, Obrigado a todos da TCXS!'''
             await bot.sendMessage(msg['chat']['id'], smsg, reply_to_message_id=msg['message_id'], reply_markup=kb)
 
 
 
-        if msg['text'] == '/start' or msg['text'] == '!start' or msg['text'].split()[0] == '@gorpo_bot' + bot_username or msg['text'] == 'start':
+        if msg['text'] == '/start' or msg['text'] == '!start' or msg['text'].split()[0] == '@' + bot_username or msg['text'] == 'start':
             if msg['chat']['type'] == 'private':
                 kb = InlineKeyboardMarkup(inline_keyboard=[
-                    [dict(text=strs.get('commands_button'), callback_data='all_cmds')] +
-                    [dict(text=strs.get('infos_button'), callback_data='infos')],
-                    [dict(text=strs.get('lang_button'), callback_data='change_lang')] +
-                    [dict(text=strs.get('add_button'), url='https://t.me/{}?startgroup=new'.format(bot_username))]
+                    [dict(text='📚 Comandos', callback_data='all_cmds')] +
+                    [dict(text='ℹ️ Informações', callback_data='infos')],
+                    [dict(text='➕ Add em um grupo', url='https://t.me/{}?startgroup=new'.format(bot_username))]
                 ])
-                smsg = strs.get('pm_start_msg')
-                print('Usuario {} solicitou /start -  isto nao foi gravado nos logs'.format(msg['from']['first_name']))
             else:
                 kb = InlineKeyboardMarkup(inline_keyboard=[
-                    [dict(text=strs.get('start_pm_button'), url='https://t.me/{}?start=start'.format(bot_username))]
+                    [dict(text='🤖 Iniciar uma conversa', url='https://t.me/{}?start=start'.format(bot_username))]
                 ])
-                smsg = strs.get('start_msg')
-
-            await bot.sendMessage(msg['chat']['id'], smsg,
+            await bot.sendMessage(msg['chat']['id'], 'Olá! Eu sou o Manicomio Bot, confira meus comandos e tudo sobre minha Inteligencia Artificial nos menus /help ou inicie uma conversa privada para ver demais configurações.',
                                   reply_to_message_id=msg['message_id'], reply_markup=kb)
             return True
 
 
     elif msg.get('data') and msg.get('message'):
-        strs = Strings(msg['message']['chat']['id'])
-
         cmds_back = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text=strs.get('back_button'), callback_data='all_cmds')]
+            [dict(text='« Voltar', callback_data='all_cmds')]
         ])
-
         start_back = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text=strs.get('back_button'), callback_data='start_back')]
+            [dict(text='« Voltar', callback_data='start_back')]
         ])
-
         if msg['data'] == 'tools_cmds':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
                                       text='''*Ferramentas:*
@@ -195,47 +182,18 @@ fale sobre -usa a IA do bot | digite: fale sobre tema''',
 
         elif msg['data'] == 'start_back':
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=strs.get('commands_button'), callback_data='all_cmds')] +
-                [dict(text=strs.get('infos_button'), callback_data='infos')],
-                [dict(text=strs.get('lang_button'), callback_data='change_lang')] +
-                [dict(text=strs.get('add_button'), url='https://t.me/{}?startgroup=new'.format(bot_username))]
+                [dict(text='📚 Comandos', callback_data='all_cmds')] +
+                [dict(text='ℹ️ Informações', callback_data='infos')],
+                [dict(text='➕ Add em um grupo', url='https://t.me/{}?startgroup=new'.format(bot_username))]
             ])
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
-                                      strs.get('pm_start_msg'),
+                                      'Olá! Eu sou o Manicomio Bot, confira meus comandos e tudo sobre minha Inteligencia Artificial nos menus /help ou inicie uma conversa privada para ver demais configurações.',
                                       reply_markup=kb)
             return True
 
-
-        elif msg['data'] == 'change_lang':
-            langs_kb = InlineKeyboardMarkup(inline_keyboard=
-                                            [[dict(text='{lang_flag} {lang_name}'.format(**strings[x]),
-                                                   callback_data='set_lang ' + x)] for x in strings] +
-                                            [[dict(text=strs.get('back_button'), callback_data='start_back')]]
-                                            )
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
-                                      "Selecione a linguagem:",
-                                      reply_markup=langs_kb)
-            return True
-
-
-        elif msg['data'].split()[0] == 'set_lang':
-            cursor.execute('UPDATE users SET chat_lang = ? WHERE user_id = ?',
-                           (msg['data'].split()[1], msg['message']['chat']['id']))
-            usr_lang = Strings(msg['message']['chat']['id'])
-            start_back = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text=usr_lang.get('back_button'), callback_data='start_back')]
-            ])
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
-                                      usr_lang.get('lang_changed'),
-                                      reply_markup=start_back)
-            return True
-
-
         elif msg['data'] == 'all_cmds':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),
-                                      'Selecione uma categoria de comando para visualizar.\n\nCaso precise de ajuda com o bot ou tem alguma sugestão entre no bot e digite /bug seguido de seu texto e tudo será reportado para o criador do bot.',
-                                      
-                                      reply_markup=keyboard.all_cmds)
+                                      'Selecione uma categoria de comando para visualizar.\n\nCaso precise de ajuda com o bot ou tem alguma sugestão entre no bot e digite /bug seguido de seu texto e tudo será reportado para o criador do bot.',reply_markup=keyboard.all_cmds)
             return True
 
 

@@ -4,7 +4,7 @@ import sqlite3
 #dados anteriores---------------------->
 
 try:
-    conn = sqlite3.connect('bot.db')
+    conn = sqlite3.connect('bot_database.db')
     cursor = conn.cursor()
     try:
         # seta a frequencia com 1 para o bot sempre falar pouco quando iniciado
@@ -32,8 +32,9 @@ try:
     #tabela das mensagens aleatorias da IA
     cursor.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement,grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),id_mensagem varchar(500), mensagem varchar(5000));  """)
     # tabela principal da IA com que seta oque ela faz ou nao
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS inteligencia  (grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),inteligencia varchar(500));  """)
-
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS inteligencia  (int_id integer not null primary key autoincrement, grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),inteligencia varchar(500));  """)
+    #tabela que define se usa ou nao o sistema de banimento automatico
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS banimento  (int_id integer not null primary key autoincrement, grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),admin varchar(500), id_admin varchar(500), data varchar(5000),valor varchar(500));  """)
     # tabela dos LOGS DOS USUARIOS | tudo que é enviado pelos usuarios ficam nestes logs
     cursor.execute("""  CREATE TABLE IF NOT EXISTS  logs_usuarios (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT,usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
     #tabela dos comandos que podem ser cadastrados com #      | deletar %  recadastrar $
@@ -52,7 +53,7 @@ try:
     conn.close()
 except:
     pass
-conn = sqlite3.connect('bot.db')
+conn = sqlite3.connect('bot_database.db')
 cursor = conn.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS chats (chat_id INTEGER,

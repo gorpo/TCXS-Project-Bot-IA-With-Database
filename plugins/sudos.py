@@ -38,10 +38,12 @@ import dropbox
 async def sudos(msg):
     if msg.get('text') and msg['chat']['type'] != 'channel':
         if msg['from']['id'] in sudoers:
+
+
             #apagar as mensagens e backup da db------------------------------->
             if msg['text'].lower() == 'apagar mensagens' or msg['text'].lower() == 'apagar db' or msg['text'].lower() == 'backup db':
                 try:
-                    conexao_sqlite = sqlite3.connect('bot.db') #conecta a nossa database atual
+                    conexao_sqlite = sqlite3.connect('bot_database.db') #conecta a nossa database atual
                     cursor_sqlite = conexao_sqlite.cursor()
                     t = time.localtime()
                     nome_bkp = f'images/bot_{t[2]}_{t[1]}_{t[0]}.db'
@@ -56,7 +58,7 @@ async def sudos(msg):
                     if (cursor_backup):
                         backup_db.close()
                         conexao_sqlite.close()
-                conexao_sqlite = sqlite3.connect('bot.db')  # conecta a nossa database atual
+                conexao_sqlite = sqlite3.connect('bot_database.db')  # conecta a nossa database atual
                 cursor_sqlite = conexao_sqlite.cursor()
                 cursor_sqlite.execute("""DROP TABLE  mensagens""")
                 cursor_sqlite.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT);  """)
@@ -64,6 +66,9 @@ async def sudos(msg):
                 await bot.sendMessage(msg['chat']['id'],'***Todas mensagens aleatórias foram apagadas da IA***','Markdown')
                 await bot.sendDocument(msg['chat']['id'], open(nome_bkp, 'rb'), caption="🤖 Aqui esta uma cópia da sua database" )
                 os.remove(nome_bkp)
+            else:
+                pass
+                #await bot.sendMessage(msg['chat']['id'], '***Somente administradores podem apagar as perguntas cadastradas***', 'Markdown')
 
 
             if msg['text'] == '!sudos' or msg['text'] == '/sudos' or msg['text'] == 'sudos':
@@ -201,6 +206,9 @@ baixar - baixa um documento para o server
                         proc = await asyncio.create_subprocess_shell(text, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
                         stdout, stderr = await proc.communicate()
                         res = (f"<b>Output:</b>\n<code>{stdout.decode()}</code>"  if stdout else '') + (f"\n\n<b>Errors:</b>\n<code>{stderr.decode()}</code>"  if stderr else '')
+                        await bot.sendMessage(msg['chat']['id'], res or 'Comando executado.',
+                                                              parse_mode="HTML",
+                                                              reply_to_message_id=msg['message_id'])
                     if platform == 'win32':
                         proc = subprocess.Popen(text, shell=True,  stdout=subprocess.PIPE, stderr=subprocess.PIPE)
                         stdout, stderr = proc.communicate()
@@ -218,9 +226,9 @@ baixar - baixa um documento para o server
                             else:
                                 todas.append(line1)
                         #print(f'{separador.join(map(str, todas))}')
-                        print(todas)
-                    os.remove('foo.txt')
-                    await bot.sendMessage(msg['chat']['id'], f"`{separador.join(map(str, todas))}`",'markdown',  reply_to_message_id=msg['message_id'])
+                        #print(todas)
+                        os.remove('foo.txt')
+                        await bot.sendMessage(msg['chat']['id'],f"`{separador.join(map(str, todas))}`",'markdown',  reply_to_message_id=msg['message_id'])
                 return True
 
 
@@ -274,7 +282,7 @@ baixar - baixa um documento para o server
                 return True
 
             #SISTEMA PARA UPGRADE DO BOT COM BASE NO GITHUB
-            elif msg['text'] == '':#aqui era !upgrade
+            elif msg['text'] == '!upgrade':#aqui era !upgrade
                 sent = await bot.sendMessage(msg['chat']['id'], 'Atualizando a base do bot...',
                                              reply_to_message_id=msg['message_id'])
                 proc = await asyncio.create_subprocess_shell(
@@ -387,8 +395,6 @@ baixar - baixa um documento para o server
                     nome_arquivo = f"{msg['text'].split()[1]}_"
                 except:
                     nome_arquivo = '_'
-                print(nome_arquivo)
-
                 cstrftime = datetime.now().strftime('%d/%m/%Y - %H:%M:%S')
                 fname = backup_sources(nome_arquivo)
                 if not os.path.getsize(fname) > 52428800:
