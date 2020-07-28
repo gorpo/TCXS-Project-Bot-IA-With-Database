@@ -25,7 +25,7 @@ n_ep = {}
 
 for num, i in enumerate(enabled_plugins):
     try:
-        print(Fore.RESET + '🤖  Carregando plugins ................................................................................ [{}/{}]'.format(num + 1, len(enabled_plugins)), end='\r')
+        print(Fore.RESET + 'Carregando plugins ............................................................................................................... [{}/{}]'.format(num + 1, len(enabled_plugins)), end='\r')
         exec('from plugins.{0} import {0}'.format(i))
         ep.append(i)
     except Exception as erro:
@@ -60,7 +60,7 @@ Erro completo: {exc_url}""")
 if __name__ == '__main__':
     answerer = amanobot.aio.helper.Answerer(bot)
     loop = asyncio.get_event_loop()
-    print('\n\n🤖 Bot Manicomio iniciado com sucesso, enviando dados para o Telegram! Versão: {}\n'.format(version))
+    print('\nBot Manicomio Artificial Inteligence With Database iniciado com sucesso, enviando dados para o Telegram! Versão: {}\n'.format(version))
 
     if backups_chat:
         backups.backup_service()
