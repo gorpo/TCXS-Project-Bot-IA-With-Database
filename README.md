@@ -5,7 +5,7 @@
 [![Build](https://img.shields.io/badge/Linux-Ubuntu%20Debian-orange.svg)]()
 [![Build](https://img.shields.io/badge/arquiterura-64bits-blue.svg)]()
 <h2 align="center">TCXS Project | Luppy Telegram  Bot</h2>
-<img src="https://raw.githubusercontent.com/gorpo/Bases-python/master/images/banner_mani_telegram.jpg" width="100%"></img><br>
+<img src="https://raw.githubusercontent.com/gorpo/Bases-python/master/images/luppytelegramimg.jpg" width="100%"></img><br>
 Bot desenvolvido para monitorar e auxiliar na TCXS Project recebendo doadores e os cadastrando automaticamente em um banco de dados, no qual após determinada data os usuários são banidos, a data de permanencia padrão é de 35 dias. 
 Confira os Plugins e Comandos da Inteligencia Artificial para compreender tudo que este bot pode fazer.
 ATENÇÃO: Alguns comandos listados sem os caracteres / ! @ # $ % devem ser escritos em minusculo e sem acentos conforme explicação de cada comando logo abaixo.
