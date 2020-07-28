@@ -4,7 +4,7 @@ import sqlite3
 #dados anteriores---------------------->
 
 try:
-    conn = sqlite3.connect('bot.db')
+    conn = sqlite3.connect('bot_database.db')
     cursor = conn.cursor()
     try:
         # seta a frequencia com 1 para o bot sempre falar pouco quando iniciado
@@ -25,18 +25,15 @@ try:
     cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_cfw_xml (int_id integer not null primary key autoincrement,  uploader varchar(5000),versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix XML EXCLUSIVO HEN
     cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen_xml (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
-
-
-
-
+    # tabela do armazenamento dos sites telegraph
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS telegraph_sites  (int_id integer not null primary key autoincrement,grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),data varchar(5000), titulo varchar(5000),texto varchar(5000), imagem varchar(500), link varchar(5000));  """)
     #tabela das mensagens aleatorias da IA
     cursor.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement,grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),id_mensagem varchar(500), mensagem varchar(5000));  """)
     # tabela principal da IA com que seta oque ela faz ou nao
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS inteligencia  (grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),inteligencia varchar(500));  """)
-
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS inteligencia  (int_id integer not null primary key autoincrement, grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),inteligencia varchar(500));  """)
+    #tabela que define se usa ou nao o sistema de banimento automatico
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS banimento  (int_id integer not null primary key autoincrement, grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),admin varchar(500), id_admin varchar(500), data varchar(5000),valor varchar(500));  """)
     # tabela dos LOGS DOS USUARIOS | tudo que é enviado pelos usuarios ficam nestes logs
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS  logs_usuarios (int_id integer not null primary key autoincrement, 'tipo' TEXT, mensagem TEXT,usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
-    #tabela dos comandos que podem ser cadastrados com #      | deletar %  recadastrar $
     cursor.execute("""  CREATE TABLE IF NOT EXISTS comandos   (int_id integer not null primary key autoincrement, tipo varchar(5000), comando varchar(5000), resposta varchar(5000),usuario varchar(500), grupo varchar (500),  data varchar(5000));  """)
     #insere um comando na tabela para questao de testes do bot
     cursor.execute(f"""INSERT INTO comandos(int_id,tipo,comando,resposta)VALUES(1,'texto','oi','Olá Brow, como você vai?')""")
@@ -52,7 +49,26 @@ try:
     conn.close()
 except:
     pass
-conn = sqlite3.connect('bot.db')
+
+
+#CRIAÇÃO DAS DATABASES DE LOGS---------------------------------------------------------------------------------------------------------------------->
+
+conn_logs = sqlite3.connect('bot_database_logs.db')
+cursor_logs = conn_logs.cursor()
+# tabela dos LOGS DOS USUARIOS | tudo que é enviado pelos usuarios ficam nestes logs
+cursor_logs.execute("""  CREATE TABLE IF NOT EXISTS mensagens (int_id integer not null primary key autoincrement,grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),id_mensagem varchar(500), mensagem varchar(5000));  """)
+conn_logs.commit()
+conn_logs.close()
+
+
+
+
+
+
+
+
+#tabelas essenciais para gerenciamento de grupos ---------------------------------------->
+conn = sqlite3.connect('bot_database.db')
 cursor = conn.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS chats (chat_id INTEGER,

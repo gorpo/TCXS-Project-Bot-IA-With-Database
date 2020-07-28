@@ -18,10 +18,16 @@ import os
 
 
 #LOCAL CONFIG rodar em local host use as linhas abaixo--->
-token = "1186597860:AAGVtPY-1nHFdufqXDe06lI66UG9ttlwbVM"
+token =  "1096480409:AAE6sg6eJZtH5Z_TEIzgq10SQtCvGf4KYSc" #"1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"#1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"
 token_dropbox = 'qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwig'
-logs = 522510051 #-1001215401730
-sudoers = [522510051]
+
+
+#permissoes
+logs = 522510051    #-1001215401730
+sudoers = [522510051,]
+administradores = [522510051,]
+
+
 
 #HEROKU CONFIG - rodar no heroku use as linhas abaixo------->
 #token = os.environ['TELEGRAM_TOKEN']
@@ -44,7 +50,7 @@ keys = dict(
 
 
 backups_chat = 522510051  # Put a 0, False or None to disable ou seu id privado ou id privado de um canal ou grupo
-backup_hours = ['16:23']
+backup_hours = ['15:56']
 
 git_repo = ('https://github.com/gorpoorko/Manicomio-Bot-IA', 'master') #repositorio para upgrade do bot
 max_time = 60
@@ -55,7 +61,6 @@ enabled_plugins = [
     'start',
     'rules',
     'shorten',
-    'sed',
     'kibe',
     'translate',
     'rextester',
@@ -86,6 +91,12 @@ enabled_plugins = [
     'users',
     'inteligencia',
     'permanencia',
+    'dropbox_upload',
+    'link_direto',
+    'antiflood',
+    'avatar',
+    'notepad_telegraph',
+    'cria_site_telegraph',
+    'qrcode',
 
 ]
-#'antiflood',

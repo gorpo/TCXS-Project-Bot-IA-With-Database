@@ -18,6 +18,7 @@ import time
 import zipfile
 from aiohttp.client_exceptions import ContentTypeError
 from datetime import datetime
+from sys import platform
 
 async def send_to_dogbin(text):
     if not isinstance(text, bytes):
@@ -66,6 +67,8 @@ def escape_markdown(text):
 
     return text
 
+
+
 def backup_sources(nome,output_file=None):
     ctime = int(time.time())
     cstrftime = datetime.now().strftime('%d-%m-%Y_%H-%M')
@@ -76,7 +79,14 @@ def backup_sources(nome,output_file=None):
     with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as backup:
         for folder, _, files in os.walk('.'):
             for file in files:
-                if file != fname and not file.endswith('.pyc') and '.heroku' not in folder.split('/') and 'dls' not in folder.split('/'):
-                    backup.write(os.path.join(folder, file))
+                if platform == 'linux' or platform == 'linux2':#foi adicionado para nao incluir as pastas no linux
+                    if file != fname and not file.endswith('.pyc') and '.heroku' not in folder.split('/'):  #and 'dls' not in folder.split('/')
+                            backup.write(os.path.join(folder, file))
+                if platform == 'win32':#adicionado para nao pegar a pasta .git no backup
+                    if file != fname and not file.endswith('.pyc') and '.heroku' not in folder.split('/'): #and 'dls' not in folder.split('/')
+                        if '.\.git' in folder:#deletar isto em caso de uso linux
+                            pass
+                        else:
+                            backup.write(os.path.join(folder, file))
 
     return fname
