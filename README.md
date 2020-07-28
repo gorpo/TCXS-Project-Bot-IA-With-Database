@@ -8,8 +8,7 @@
 <h2>Instruções:</h2><br>
 1. Edite no arquivo config se quer rodar o bot local ou no heroku, comente e descomente as linhas.<br>
 2. Edite requeriments.txt caso tenha adicionado novas libs.<br>
-3. Especifique a versão do python no arquivo runtime, também é necessário criar um arquivo "Procfile" na raiz do seu projeto
- -  confira as versões de python disponiveis no heroku https://devcenter.heroku.com/articles/python-runtimes<br>
+3. Especifique a versão do python no arquivo runtime, também é necessário criar um arquivo "Procfile" e outro "Aptfile" na raiz do seu projeto, eles receberão um o comando dobot e outro comandos apt para instalar pacotes linux -  confira as versões de python disponiveis no heroku https://devcenter.heroku.com/articles/python-runtimes<br>
 4. Crie um bot no Botfather e pegue o token do bot.<br>
 5. insira este bot em um canal e pegue o id do canal, ele servirá para os logs.<br>
 6. pegue sua id ela servirá para você ser adm master.<br>
@@ -25,6 +24,7 @@
 <code>call git commit -m "Primeiro commit!"</code><br>
 <code>call heroku git:remote -a manicomio</code><br>
 <code>call git push heroku master</code><br> 
+<code>call heroku buildpacks:add --index 1 heroku-community/apt</code>br
 <code>call heroku ps:scale bot=1 </code><br>
 <code>call heroku logs --tail</code><br>
 <p>----------------------------------------------------------------------------------</p><br>
@@ -41,6 +41,7 @@
 <code>heroku config:set LOGS=-1001215401730</code> seta a id do canal de logs que o bot ja deve estar e ter admin<br>
 <code>heroku config:set SUDOERS=522510051</code> seta o sudo ou seja adm master do bot<br>
 <code>heroku ps:scale bot=1</code> start bot dyno - inicia seu bot<br>
+<code>call heroku buildpacks:add --index 1 heroku-community/apt</code> instala pacotes apt no linux do heroku
 <code>heroku logs --tail</code> tiva os logs no terminal ou cmd<br>
 <code>heroku ps:stop bot</code> para o bot dyno  - para seu bot
 <code>heroku apps:destroy -a manicomio</code> - deleta a aplicação no heroku
@@ -81,8 +82,6 @@
 <b>Buscar as alterações, mas não aplica-las no branch atual</b><br>
 	<code>git fetch</code><br>
 <p>----------------------------------------------------------------------------------</p><br>
-<b>Clonando um branch</b><br>
-	<code>git clone -b nome_do_branch link_repositorio</code><br>	
 <b>Criando um novo branch</b><br>
 	<code>git branch bug-123</code><br>
 	<code>git branch gh-pages    - para sites</code><br>

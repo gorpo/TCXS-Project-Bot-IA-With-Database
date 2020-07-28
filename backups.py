@@ -47,7 +47,7 @@ def backup_func():
 
     #sistema de verificaçao automatica para banimento no grupo
     try:
-        conexao_sqlite = sqlite3.connect('bot.db')
+        conexao_sqlite = sqlite3.connect('bot_database.db')
         conexao_sqlite.row_factory = sqlite3.Row
         cursor_sqlite = conexao_sqlite.cursor()
         hoje = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
@@ -62,15 +62,18 @@ def backup_func():
             aviso = resutado['data_aviso']
             id_grupo = resutado['id_grupo']
             #ALERTA DE AVISO PARA O DOADOR----:
-            if hoje[0:6] == aviso[0:6]:
-                na_bot.sendMessage(id_grupo,f"🤖 {doador} ***Falta uma semana para você grupo de doadores, caso ainda tenha interesse em continuar usando a loja faça uma doação, envie o comprovante aqui no grupo que um de nossos administradores irá colocar mas dias em sua permanencia.***\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Permanência:` {dias}",'markdown')
-            #BANE O USUARIO CASO A DATA TENHA SIDO IGUAL A DO DIA HOJE
-            if hoje[0:6] <= data_ban[0:6]:
-                na_bot.kickChatMember(str(id_grupo), id_doador)
-                cursor_sqlite.execute(f"""DELETE FROM permanencia WHERE doador='{doador}'""")
-                conexao_sqlite.commit()
-                na_bot.sendMessage(str(id_grupo),f"🤖 ***Removido do grupo pois deu a sua permanência do grupo de doadores.***\n`Doador:` {doador}\n`Id_Doador:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Permanência:` {dias}",'markdown')
-                na_bot.unbanChatMember(str(id_grupo), id_doador)
+            try:
+                if hoje[0:2] == aviso[0:2]:
+                    na_bot.sendMessage(id_grupo,f"🤖 {doador} ***Falta uma semana para você grupo, caso ainda tenha interesse em continuar usando a loja faça uma doação, envie o comprovante aqui no grupo que um de nossos administradores irá colocar mas dias em sua permanencia.***\n`Usuário:` {doador}\n`Id_Usuário:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Permanência:` {dias}",'markdown')
+                #BANE O USUARIO CASO A DATA TENHA SIDO IGUAL A DO DIA HOJE
+                if hoje[3:5] == data_ban[3:5]:
+                    na_bot.kickChatMember(str(id_grupo), id_doador)
+                    cursor_sqlite.execute(f"""DELETE FROM permanencia WHERE doador='{doador}'""")
+                    conexao_sqlite.commit()
+                    na_bot.sendMessage(str(id_grupo),f"🤖 ***Removido do grupo pois deu a sua permanência do grupo.***\n`Usuário:` {doador}\n`Id_Usuário:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_ban}\n`Permanência:` {dias}",'markdown')
+                    na_bot.unbanChatMember(str(id_grupo), id_doador)
+            except:
+                pass
     except Exception as e:
         print(e)
 
