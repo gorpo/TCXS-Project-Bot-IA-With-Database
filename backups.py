@@ -31,7 +31,7 @@ import sqlite3
 def backup_func():
     cstrftime = datetime.now().strftime('%d/%m/%Y - %H:%M:%S')
     file = backup_sources('Backup_automatico_bot')
-    targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{file}"
+    targetfile = f"/TCXS-Project-Bot-IA-With-Database/{file}"
     d = dropbox.Dropbox(token_dropbox)
     with open(file, "rb") as f:
         meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))

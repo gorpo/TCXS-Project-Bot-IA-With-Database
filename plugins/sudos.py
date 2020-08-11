@@ -395,7 +395,7 @@ baixar - baixa um documento para o server
                 fname = backup_sources(nome_arquivo)
                 if not os.path.getsize(fname) > 52428800:
                     await bot.sendDocument(msg['chat']['id'], open(fname, 'rb'), caption="📅 " + cstrftime)
-                    targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}"
+                    targetfile = f"/TCXS-Project-Bot-IA-With-Database/{fname}"
                     d = dropbox.Dropbox(token_dropbox)
                     with open(fname, "rb") as f:
                         meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))

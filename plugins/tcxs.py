@@ -162,6 +162,7 @@ async def tcxs(msg):
             await bot.sendMessage(msg['chat']['id'],'Salve, venho trazer a você nossa nova att GRATUITA, espero que goste!      ----    ----     ----   Caso tenha dificuldades com o download em segundo plano confira este tutorial exclusivo feito para você doador amado que contribui para este projeto se manter em pe: https://youtu.be/_21a5REKhBc',reply_to_message_id=msg['message_id'])
             await bot.sendMessage(msg['chat']['id'],'Espero que tenha um pendrive em mãos e saiba usar a loja, não daremos suporte para USUARIOS GRATUITOS, agora  copie os arquivos abaixo para a raiz de um pendrive e coloque na USB direita do seu console, caso use HAN ative o debug ou se usa HEN ative o hen. ESTA ATT NAO USA NENHUM TIPO DE PATCH OU FIX!',reply_to_message_id=msg['message_id'])
             await bot.sendDocument(msg['chat']['id'],document='BQACAgEAAx0CTd0y0QABAfACXkmA716o7XaNW82C3Mr7O2c0bX8AApEAA0oQUUaFcnOHb037rhgE',reply_to_message_id=msg['message_id'])
+            await bot.sendDocument(msg['chat']['id'], document='BQACAgEAAx0CWJNTSQACC7FeXTrapHT8zx-Yz6Rm85I7s6BU2gACxQADxKN4RV4960o0M9ruGAQ', reply_to_message_id=msg['message_id'])
         # DEMAIS INSTRUÇOES PARA USUARIOS
         if msg['text'].split()[0] == 'doadores' or msg['text'].split()[0] == '/doadores' or msg['text'].split()[0] == f"/doadores@{bot_username}":
             await bot.sendMessage(msg['chat']['id'],'`Aqui tem tudo que os doadores precisam saber:` http://tcxsproject.com.br/doadores-tcxs-store-regras/','markdown', reply_to_message_id=msg['message_id'])

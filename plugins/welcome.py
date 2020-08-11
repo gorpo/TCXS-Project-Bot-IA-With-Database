@@ -122,7 +122,7 @@ Se esse erro persistir entre em contato com @GorpoOrko.'''.format(e.description)
                         print(f"Novo usuário: {doador} entrou no Grupo {msg['chat']['title']}")
                         id_doador = msg['new_chat_member']['id']
                         admin = 'cadastro automatico'
-                        dias = 35 #QUANTIDADE DE DIAS SETADA MANUALMENTE, POR ISTO COMO COMANDO NA DATABASE
+                        dias = 365 #QUANTIDADE DE DIAS SETADA MANUALMENTE, POR ISTO COMO COMANDO NA DATABASE
                         hoje = datetime.now().strftime('%d/%m/%Y %H:%M:%S')
                         data_inicial = hoje
                         dias_restantes = datetime.now() + relativedelta(days=int(dias))#--------------------------------
@@ -141,14 +141,25 @@ Se esse erro persistir entre em contato com @GorpoOrko.'''.format(e.description)
                         else:
                             cursor_sqlite.execute(f"""INSERT INTO permanencia(int_id,grupo,id_grupo, admin, doador, id_doador, dias, data_inicial, data_final,data_aviso)VALUES(null,'{msg['chat']['title']}','{msg['chat']['id']}','{admin}','{doador}','{id_doador}','{dias}','{data_inicial}','{data_final}','{data_aviso}')""")
                             conexao_sqlite.commit()
-                            await bot.sendMessage(chat_id,f"🤖 ***Dados inseridos com exito no cadastro de permanência do grupo.***\n`Admin:` {admin}\n`Usuário:` {doador}\n`Id_Usuário:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_final}\n`Aviso Vencimento:` {data_aviso}\n`Permanência:` {dias}",'markdown')
-                            #print(admin, doador, id_doador, dias, data_inicial, data_final)
-                            try:#PEGA A FOTO DO USUARIO E ENVIA NO Grupo
-                                a = await bot.getUserProfilePhotos(msg['new_chat_member']['id'])
-                                b = a['photos'][0][0]['file_id']
-                                await bot.sendPhoto(chat_id,b)
-                            except Exception as e:
-                                pass
+                            conexao_sqlite.close()
+                            #await bot.sendMessage(chat_id,f"🤖 ***Dados inseridos com exito no cadastro de permanência do grupo.***\n`Admin:` {admin}\n`Usuário:` {doador}\n`Id_Usuário:` {id_doador}\n`Início:` {data_inicial}\n`Termino:` {data_final}\n`Aviso Vencimento:` {data_aviso}\n`Permanência:` {dias}",'markdown')
+                            await bot.sendMessage(chat_id, f"""🤖 Dados inseridos com exito no cadastro de permanência do grupo.
+👮Admin: {admin}
+🧑Usuário: {doador}
+⚠️Id_Usuário: {id_doador}
+🕐Início: {data_inicial}
+🕐Termino: {data_final}
+🚨Aviso Vencimento: {data_aviso}
+📅Permanência: {dias}""")
+
+
+                        print(admin, doador, id_doador, dias, data_inicial, data_final)
+                        try:#PEGA A FOTO DO USUARIO E ENVIA NO Grupo
+                            a = await bot.getUserProfilePhotos(msg['new_chat_member']['id'])
+                            b = a['photos'][0][0]['file_id']
+                            await bot.sendPhoto(chat_id,b)
+                        except Exception as e:
+                            pass
             except Exception as e:
                 await bot.sendMessage(chat_id,f"🤖 `Ocorreu um erro ao inserir os dados na Database.Envie novamente o comando manualmente conforme exemplo:` ```restringir @usuario id_usuario dias``` ***Exemplo:*** restringir @xbadcoffee 1367451130 30 ",'markdown')
             ###########FIM DO SISTEMA DE BANIMENTO---------------------------------------------------------------------------
