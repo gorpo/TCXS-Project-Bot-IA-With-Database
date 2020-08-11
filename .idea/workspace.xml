@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="aba04180-5a57-44f8-8c5a-b6e7b70af025" name="Default Changelist" comment="Bot finalizado para TCXS Project" />
+    <list default="true" id="aba04180-5a57-44f8-8c5a-b6e7b70af025" name="Default Changelist" comment="Bot finalizado para TCXS Project">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backups.py" beforeDir="false" afterPath="$PROJECT_DIR$/backups.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot_database.db" beforeDir="false" afterPath="$PROJECT_DIR$/bot_database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot_database_logs.db" beforeDir="false" afterPath="$PROJECT_DIR$/bot_database_logs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/dropbox_upload.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/dropbox_upload.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/inteligencia.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/inteligencia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/permanencia.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/permanencia.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/sudos.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/sudos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/tcxs.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/tcxs.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/welcome.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/welcome.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -57,6 +88,7 @@
       </list>
     </recent_temporary>
   </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="SvnConfiguration">
     <configuration />
   </component>
@@ -85,6 +117,17 @@
     <option name="localTasksCounter" value="3" />
     <servers />
   </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Bot finalizado para TCXS Project" />
@@ -99,26 +142,30 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="885" y="92" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1595948645673" />
-    <state width="936" height="293" key="GridCell.Tab.0.bottom" timestamp="1595948742564">
+    <state width="1373" height="158" key="GridCell.Tab.0.bottom" timestamp="1597159698403">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="936" height="293" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1595948742564" />
-    <state width="936" height="293" key="GridCell.Tab.0.center" timestamp="1595948742564">
+    <state width="1373" height="158" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1597159698403" />
+    <state width="1373" height="158" key="GridCell.Tab.0.center" timestamp="1597159698403">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="936" height="293" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1595948742564" />
-    <state width="936" height="293" key="GridCell.Tab.0.left" timestamp="1595948742564">
+    <state width="1373" height="158" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1597159698403" />
+    <state width="1373" height="158" key="GridCell.Tab.0.left" timestamp="1597159698402">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="936" height="293" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1595948742564" />
-    <state width="936" height="293" key="GridCell.Tab.0.right" timestamp="1595948742564">
+    <state width="1373" height="158" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1597159698402" />
+    <state width="1373" height="158" key="GridCell.Tab.0.right" timestamp="1597159698403">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state width="936" height="293" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1595948742564" />
+    <state width="1373" height="158" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1597159698403" />
     <state x="850" y="258" key="Vcs.Push.Dialog.v2" timestamp="1595948650811">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="850" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1595948650811" />
+    <state x="821" y="205" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1597157439496">
+      <screen x="0" y="0" width="1920" height="1050" />
+    </state>
+    <state x="821" y="205" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser/0.0.1920.1050@0.0.1920.1050" timestamp="1597157439496" />
     <state x="1249" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595948567808">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

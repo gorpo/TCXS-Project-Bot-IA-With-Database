@@ -33,7 +33,7 @@ async def dropbox_upload(msg):
                     if tamanho < 10000000:
                         await bot.download_file(id_arquivo, f'arquivos/{nome_arquivo}')
                         await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei de baixar seu arquivo, vou upar ele para o Dropbox`",'markdown', reply_to_message_id=msg['message_id'])
-                        targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}"
+                        targetfile = f"/TCXS-Project-Bot-IA-With-Database/{nome_arquivo}"
                         d = dropbox.Dropbox(token_dropbox)
                         with open(f'arquivos/{nome_arquivo}', "rb") as f:
                             meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
@@ -58,7 +58,7 @@ async def dropbox_upload(msg):
                     if tamanho < 10000000:
                         await bot.download_file(id_arquivo, f'arquivos/{nome_arquivo}')
                         await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei de baixar seu arquivo, vou upar ele para o Dropbox`",'markdown', reply_to_message_id=msg['message_id'])
-                        targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}"
+                        targetfile = f"/TCXS-Project-Bot-IA-With-Database/{nome_arquivo}"
                         d = dropbox.Dropbox(token_dropbox)
                         with open(f'arquivos/{nome_arquivo}', "rb") as f:
                             meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))
@@ -77,7 +77,7 @@ async def dropbox_upload(msg):
                     nome_arquivo = f'imagem_{data}.jpg'
                     await bot.download_file(id_arquivo, f"arquivos/{nome_arquivo}")
                     await bot.sendMessage(chat_id,f"🤖 `{msg['from']['first_name']} acabei de baixar seu arquivo, vou upar ele para o Dropbox`",'markdown', reply_to_message_id=msg['message_id'])
-                    targetfile = f"/GDRIVE_TCXSPROJECT/MARCINHO_BOT/{nome_arquivo}"
+                    targetfile = f"/TCXS-Project-Bot-IA-With-Database/{nome_arquivo}"
                     d = dropbox.Dropbox(token_dropbox)
                     with open(f'arquivos/{nome_arquivo}', "rb") as f:
                         meta = d.files_upload(f.read(), targetfile, mode=dropbox.files.WriteMode("overwrite"))

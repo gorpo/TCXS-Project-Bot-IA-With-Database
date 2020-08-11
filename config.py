@@ -18,12 +18,13 @@ import os
 
 
 #LOCAL CONFIG rodar em local host use as linhas abaixo--->
-token =  "1096480409:AAE6sg6eJZtH5Z_TEIzgq10SQtCvGf4KYSc" #"1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"#1186597860:AAHNqYa3lBlSasF1XdmuzIURmukStvbvAoc"
-token_dropbox = 'qkZ0vNG8-yAAAAAAAAAb6Fezog5XaQPwjRmoFEc-Wv37XTch4Whd8BjedzbJLwig'
+token = "893192395:AAGUm_2rdfwz9Uxc_O7H8WneEzup3XSfNYU"
+
+token_dropbox = 's4rxVFP2mcAAAAAAAAC2eXinDL33K0tSIhnR1chqOmrtBPy-Dl6Ll0znnRP3Phm5'
 
 
 #permissoes
-logs = 522510051    #-1001215401730
+logs = -1001215401730    #-1001215401730
 sudoers = [522510051,]
 administradores = [522510051,]
 
@@ -50,7 +51,7 @@ keys = dict(
 
 
 backups_chat = 522510051  # Put a 0, False or None to disable ou seu id privado ou id privado de um canal ou grupo
-backup_hours = ['15:56']
+backup_hours = ['12:45']
 
 git_repo = ('https://github.com/gorpoorko/Manicomio-Bot-IA', 'master') #repositorio para upgrade do bot
 max_time = 60
