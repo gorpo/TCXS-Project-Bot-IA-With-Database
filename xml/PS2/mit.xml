@@ -1,0 +1,17 @@
+
+<XMBML version="1.0">
+<View id="ps2_items_link">
+<Attributes>
+    <Table key="ps2_item_link">
+    <Pair key="icon"><String>/dev_hdd0/game/TCXSPROJECT/USRDIR/IMAGES/PS2/download.jpg</String></Pair>
+    <Pair key="title"><String>TCXS - mitsuky </String></Pair>
+    <Pair key="info"><String>TCXS - gay </String></Pair>
+    <Pair key="module_name"><String>webrender_plugin</String></Pair>
+    <Pair key="module_action"><String>xvideos.com</String></Pair>
+</Table>
+</Attributes>
+<Items>
+    <Query class="type:x-xmb/module-action" key="ps2_item_link" attr="ps2_item_link"/>
+</Items>
+</View>
+</XMBML>

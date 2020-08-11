@@ -1,15 +1,3 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
-
 import html
 import re
 import random
@@ -22,14 +10,19 @@ from utils import send_to_dogbin, send_to_hastebin
 
 async def trollagens(msg):
     if msg.get('text'):
+
+
+  
         if msg['text'] == 'chartubate':
             await bot.sendMessage(msg['chat']['id'], 'ai noob ja conferiu o chartubate da nossa musa Sherry -->> https://m.chaturbate.com/sherryshen/'.format(msg['from']['first_name']),reply_to_message_id=msg['message_id'])
+                  
+
         if msg['text'] == 'vanessinha':
             await bot.sendMessage(msg['chat']['id'], '`vanessinha tira o gutto do serio {} `'.format(msg['from']['first_name']),'markdown',reply_to_message_id=msg['message_id'])
             await bot.sendPhoto(msg['chat']['id'], photo='AgADAQADQ6gxG-BOyER2xRrlf-rZJIfSbgYABAEAAwIAA3gAA8puAAIWBA', reply_to_message_id=msg['message_id'])
             await bot.sendDocument(msg['chat']['id'], document='CQADAQAD_wADqlsJRUl_c63JowABaxYE', reply_to_message_id=msg['message_id']) 
             await bot.sendPhoto(msg['chat']['id'], photo='AgACAgEAAx0CViT8vwABAzm7XjJOmX6bpde3AAFeFwlmMaoRX0RJAAJXqDEbRcuARW6HPRy_x1LI4eprBgAEAQADAgADeAADgkoCAAEYBA', reply_to_message_id=msg['message_id'])
-      
+            await bot.sendMessage(msg['chat']['id'], '{} `Esse cara é um lunático, as intenções dele não são nada Boas. Tem que ser muito retardado pra achar essa armadilha uma coisa boa. Tu queres virar um robô é, doido?`  - ***Vanessinha***'.format(msg['from']['first_name']),'markdown',reply_to_message_id=msg['message_id'])
         
         if msg['text'] == 'birl' or msg['text'] == 'birll' or msg['text'] == 'bril' or msg['text'] == 'birlll' or msg['text'] == 'birllll' or msg['text'] == 'brill' or msg['text'] == 'bam' or msg['text'] == 'comi pra caralho':
         	await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0CViT8vwABAznMXjJQMaQ5gn0oshTJ-aR4hsOxqpQAAmQAA4GqMEULivNNxE7fYhgE', reply_to_message_id=msg['message_id']) 
@@ -51,7 +44,7 @@ async def trollagens(msg):
          #tcxs pyject store creator
         if msg['text'] == 'tcxs pyject' or msg['text'] == 'pyject' or msg['text'] == 'Tcxs pyject' or msg['text'] == 'TCXS Pyject' or msg['text'] == 'Pyject' or msg['text'] == 'Criador de loja' or msg['text'] == 'criador de loja' or msg['text'] == 'programa que cria loja' or msg['text'] == 'cria loja':
             await bot.sendMessage(msg['chat']['id'], 'Salve {}  O @GorpoOrko criou um programa que cria lojas em PKG e tambem cria a loja diretamente no PlayStation3, o programa é super facil de usar!  Caso tenha alguma duvida o @GorpoOrko irá atender a pedidos,perguntas e respostas somente via comentarios no github, siga o @GorpoOrko no Github e fique por dentro dos maiores hacks e programas mais atuais para seu console!  Você pode baixar a souce neste link: https://github.com/gorpo/TCXS_Pyject_PlayStation3_Store_Creator e o tutorial de uso do programa neste link: https://www.youtube.com/watch?v=EQbymbu5htA'.format(msg['from']['first_name']),reply_to_message_id=msg['message_id'])
-
+            
 
 
 
@@ -60,7 +53,7 @@ async def trollagens(msg):
         elif msg['text'].split()[0] == 'corpo':
             await bot.sendMessage(msg['chat']['id'], '`gorpo = corpo`','markdown',
                                                   reply_to_message_id=msg['message_id'])    
-        elif msg['text'].split()[0] == 'site tcxs' or msg['text'].split()[0] == '/site':
+        elif msg['text'].split()[0] == 'site' or msg['text'].split()[0] == '/site':
             await bot.sendMessage(msg['chat']['id'], '`{} Passa la e da um confere nos posts e nos hacks!` http://tcxsproject.com.br'.format(msg['from']['first_name']),'markdown',
                                                   reply_to_message_id=msg['message_id'])    
         elif msg['text'].split()[0] == 'facebook' or msg['text'].split()[0] == 'face' or msg['text'].split()[0] == '/facebook' :
@@ -75,12 +68,14 @@ async def trollagens(msg):
         elif msg['text'].split()[0] == 'pkg' or msg['text'].split()[0] == '/pkg':
             await bot.sendMessage(msg['chat']['id'], '`❤Tenho um site de jogos em PKG para PS3 totalmente gratis, confere meus posts la:` http://tcxsproject.com.br/category/nohan/','markdown',
                                                   reply_to_message_id=msg['message_id'])    
-
+        elif msg['text'].split()[0] == 'doadores' or msg['text'].split()[0] == '/doadores':
+            await bot.sendMessage(msg['chat']['id'], '`Aqui tem tudo que os doadores precisam saber:` http://tcxsproject.com.br/doadores-tcxs-store-regras/','markdown',
+                                                  reply_to_message_id=msg['message_id'])    
         elif msg['text'].split()[0] == 'biblioteca' or msg['text'].split()[0] == '/biblioteca':
             await bot.sendMessage(msg['chat']['id'], '`Eu tenho uma biblioteca hacker cheinha de livros hacker bem como alguns livros sobre ghoetia, satanismo e anarquia, confere la:` http://tcxsproject.com.br/dev','markdown',
                                                   reply_to_message_id=msg['message_id'])    
-        elif msg['text'].split()[0] == '.':
-            await bot.sendMessage(msg['chat']['id'], '@{}`Relaxa que eu to aqui `'.format(msg['from']['first_name']),'markdown',
+        elif msg['text'].split()[0] == 'oi':
+            await bot.sendMessage(msg['chat']['id'], '`oi {}`'.format(msg['from']['first_name']),'markdown',
                                                   reply_to_message_id=msg['message_id'])    
         elif msg['text'].split()[0] == 'brick':
             await bot.sendMessage(msg['chat']['id'], 'https://www.youtube.com/watch?v=AaQJ23Hosc8','markdown',

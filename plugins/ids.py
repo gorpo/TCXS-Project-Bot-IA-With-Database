@@ -1,23 +1,22 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
-
-
-from config import bot, bot_username
+import html
+import re
+import random
+import amanobot
+import aiohttp
+from amanobot.exception import TelegramError
+import time
+from config import bot, sudoers, logs, bot_username, keys
+from utils import send_to_dogbin, send_to_hastebin
 
 
 async def ids(msg):
     if msg.get('text'):
         if msg['text'] == '/id' or msg['text'] == '!id' or msg['text'] == '/id@' + bot_username or msg['text'] == 'id':
-
+            print('Usuario {} solicitou /id'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /id  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             if msg['chat']['type'] == 'private':
                 if 'last_name' in msg['from']:
                     last_name = msg['from']['last_name']

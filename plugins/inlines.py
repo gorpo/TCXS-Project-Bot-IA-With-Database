@@ -1,29 +1,38 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
-
+# Copyright (C) 2018-2019 Amano Team <contact@amanoteam.ml>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import html
 import re
 from uuid import uuid4
+
 import duckpy.aio
 import aiohttp
 from amanobot.exception import TelegramError
 from amanobot.namedtuple import InlineQueryResultArticle, InlineQueryResultPhoto, InputTextMessageContent
+
 from config import bot, bot_username
 from .youtube import search_yt
 
 
 geo_ip = 'http://ip-api.com/json/'
 googl_img_api = 'https://apikuu.herokuapp.com/api/v0/sakty/imej'
+
 ddg_client = duckpy.aio.Client()
 
 
@@ -225,7 +234,7 @@ async def inlines(msg):
                     id='c', title='faces (f)', thumb_url='https://piics.ml/amn/eduu/faces.png',
                     description='Mostra uma lista de carinhas ¯\\_(ツ)_/¯',
                     input_message_content=dict(
-                        message_text='<b>Uso:</b> <code>@{} faces</code> - exibe uma lista de carinhas.'.format(
+                        message_text='<b>Uso:</b> <code>@{} faces</code> - exibe uma lista de carinhas :D'.format(
                             bot_username), parse_mode='HTML'
                     )
                 ),
@@ -269,14 +278,14 @@ async def inlines(msg):
                             bot_username), parse_mode='HTML'
                     )
                 ),
-                #InlineQueryResultArticle(
-                #    id='j', title='yt', thumb_url='https://piics.ml/amn/eduu/yt.png',
-                #    description='Pesquise vídeos no YouTube via inline.',
-                #    input_message_content=dict(
-                #        message_text='<b>Uso:</b> <code>@{} yt</code> - Pesquise vídeos no YouTube via inline.'.format(
-            #            bot_username), parse_mode='HTML'
-                    #)
-                #)
+                InlineQueryResultArticle(
+                    id='j', title='yt', thumb_url='https://piics.ml/amn/eduu/yt.png',
+                    description='Pesquise vídeos no YouTube via inline.',
+                    input_message_content=dict(
+                        message_text='<b>Uso:</b> <code>@{} yt</code> - Pesquise vídeos no YouTube via inline.'.format(
+                            bot_username), parse_mode='HTML'
+                    )
+                )
             ]
 
             await bot.answerInlineQuery(msg['id'], results=articles, cache_time=60, is_personal=True)
