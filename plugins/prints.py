@@ -1,80 +1,57 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
-
+# Copyright (C) 2018-2019 Amano Team <contact@amanoteam.ml>
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import os
+import re
+import time
 
-from PIL import Image, ImageDraw, ImageFont
+import aiohttp
+
 from config import bot
 
 
 async def prints(msg):
     if msg.get('text'):
-
-        if msg['text'].lower() == 'print' and msg.get('reply_to_message'):
-            texto_repetido = msg['reply_to_message']['text']
-            text = msg['reply_to_message']['text']
-            try:
-                await bot.sendMessage(msg['chat']['id'], '`Tirando print...`','markdown', reply_to_message_id=msg['message_id'])
-                img = Image.new('RGBA', (1000, 1000), (255, 255, 255))  #ele cria esta imagem para nada mas é necessario ela sera substituida, queremos pegar o tamanho do texto
-                draw = ImageDraw.Draw(img)
-                text_size = draw.textsize(text, ImageFont.truetype("arial.ttf", 30))
-                # print(text_size)
-                img2 = Image.new('RGBA', text_size, (255, 255, 255))
-                draw2 = ImageDraw.Draw(img2)
-                draw2.text((1, 1), text[0:45], (0, 0, 0), ImageFont.truetype("arial.ttf", 30))
-                img2.save('arquivos/pil_text.png')
-                await bot.sendPhoto(msg['chat']['id'],photo=open('arquivos/pil_text.png','rb'), reply_to_message_id=msg['message_id'])
-                os.remove('arquivos/pil_text.png')
-            except Exception as e:
-                await bot.sendMessage(msg['chat']['id'], '`diminua seu texto, tente novamente`', 'markdown',
-                                      reply_to_message_id=msg['message_id'])
-                pass
-
         if msg['text'].startswith('/print') or msg['text'].startswith('!print'):
-            text = msg['text'][6:]
             try:
-                await bot.sendMessage(msg['chat']['id'], '`Tirando print...`','markdown', reply_to_message_id=msg['message_id'])
-                img = Image.new('RGBA', (1000, 1000), (255, 255, 255))  #ele cria esta imagem para nada mas é necessario ela sera substituida, queremos pegar o tamanho do texto
-                draw = ImageDraw.Draw(img)
-                text_size = draw.textsize(text, ImageFont.truetype("arial.ttf", 30))
-                # print(text_size)
-                img2 = Image.new('RGBA', text_size, (255, 255, 255))
-                draw2 = ImageDraw.Draw(img2)
-                draw2.text((1, 1), text[0:45], (0, 0, 0), ImageFont.truetype("arial.ttf", 30))
-                img2.save('arquivos/pil_text.png')
-                await bot.sendPhoto(msg['chat']['id'],photo=open('arquivos/pil_text.png','rb'), reply_to_message_id=msg['message_id'])
-                os.remove('arquivos/pil_text.png')
+                sent = await bot.sendMessage(msg['chat']['id'], 'Tirando print...',
+                                             reply_to_message_id=msg['message_id'])
+                ctime = time.time()
+                if re.match(r'^[a-z]+://', msg['text'][7:]):
+                    url = msg['text'][7:]
+                else:
+                    url = 'http://' + msg['text'][7:]
+                async with aiohttp.ClientSession() as session:
+                    r = await session.post("https://api.olixao.ml/print", data=dict(q=url))
+                    file = await r.read()
+                    with open(f'{ctime}.png', 'wb') as f:
+                        f.write(file)
+
+                await bot.sendPhoto(msg['chat']['id'], open(f'{ctime}.png', 'rb'),
+                                    reply_to_message_id=msg['message_id'])
+                await bot.deleteMessage((msg['chat']['id'], sent['message_id']))
             except Exception as e:
-                await bot.sendMessage(msg['chat']['id'], '`diminua seu texto, tente novamente`', 'markdown',
-                                      reply_to_message_id=msg['message_id'])
-                pass
-
-
-        if msg['text'].startswith('print') and not msg.get('reply_to_message'):
-            text = msg['text'][5:]
-            try:
-                await bot.sendMessage(msg['chat']['id'], '`Tirando print...`','markdown', reply_to_message_id=msg['message_id'])
-                img = Image.new('RGBA', (1000, 1000), (255, 255, 255))  #ele cria esta imagem para nada mas é necessario ela sera substituida, queremos pegar o tamanho do texto
-                draw = ImageDraw.Draw(img)
-                text_size = draw.textsize(text, ImageFont.truetype("arial.ttf", 30))
-                # print(text_size)
-                img2 = Image.new('RGBA', text_size, (255, 255, 255))
-                draw2 = ImageDraw.Draw(img2)
-                draw2.text((2, 1), text[0:45], (0, 0, 0), ImageFont.truetype("arial.ttf", 25))
-                img2.save('arquivos/pil_text.png')
-                await bot.sendPhoto(msg['chat']['id'],photo=open('arquivos/pil_text.png','rb'), reply_to_message_id=msg['message_id'])
-                os.remove('arquivos/pil_text.png')
-            except Exception as e:
-                await bot.sendMessage(msg['chat']['id'], '`diminua seu texto, tente novamente`', 'markdown', reply_to_message_id=msg['message_id'])
-                pass
-
+                await bot.editMessageText((msg['chat']['id'], sent['message_id']),
+                                          f'Ocorreu um erro ao enviar a print, favor tente mais tarde.\nErro: {e}')
+            finally:
+                try:
+                    os.remove(f'{ctime}.png')
+                except FileNotFoundError:
+                    pass
+            return True

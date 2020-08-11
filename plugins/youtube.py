@@ -1,14 +1,3 @@
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
 import html
 import re
@@ -21,11 +10,11 @@ from config import bot, sudoers, logs, bot_username
 import os
 import youtube_dl
 from bs4 import BeautifulSoup
-from utils import pretty_size
-from youtubesearchpython import SearchVideos
-#pip install youtube-search-python
 
-ydl = youtube_dl.YoutubeDL({'outtmpl': 'arquivos/%(title)s.%(ext)s', 'format': '140', 'noplaylist': True})
+
+from utils import pretty_size
+
+ydl = youtube_dl.YoutubeDL({'outtmpl': 'dls/%(title)s.%(ext)s', 'format': '140', 'noplaylist': True})
 
 
 async def search_yt(query):
@@ -42,7 +31,6 @@ async def search_yt(query):
         title = link.get('title')
         if url.startswith("/watch") and (id_url != url) and (title is not None):
             id_url = url
-
             dic = {'title': title, 'url': url_yt + url}
             list_videos.append(dic)
         else:
@@ -54,51 +42,56 @@ async def youtube(msg):
     if msg.get('text'):
 
         if msg['text'].startswith('/yt '):
-            pesquisar = msg['text'][4:]
-            search = SearchVideos(pesquisar, offset=1, mode="dict", max_results=10)
-            resultado = search.result()
-            #titulo = []
-            #link = []
-            dic_youtube = []
-            for resultado in resultado['search_result']:
-                titulo_captado = resultado['title']
-                link_captado = resultado['link']
-                #titulo.append(titulo_captado)
-                #link.append(link_captado)
-                dic = {'titulo': titulo_captado, 'url': link_captado}
-                dic_youtube.append(dic)
-            vids = ['[{}] {} {}'.format(num + 1, i['titulo'], i['url']) for num, i in enumerate(dic_youtube)]
+            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
+            res = await search_yt(msg['text'][4:])
+
+
+            vids = ['{}: <a href="{}">{}</a>'.format(num + 1, i['url'], i['title']) for num, i in enumerate(res)]
             await bot.sendMessage(msg['chat']['id'], '\n'.join(vids) if vids else "Nenhum resultado foi encontrado", 'HTML',
                                       reply_to_message_id=msg['message_id'],
                                       disable_web_page_preview=True)
-            #return True
-
+            return True
 
         if msg['text'].startswith('youtube '):
-            pesquisar = msg['text'][8:]
-            search = SearchVideos(pesquisar, offset=1, mode="dict", max_results=10)
-            resultado = search.result()
-            # titulo = []
-            # link = []
-            dic_youtube = []
-            for resultado in resultado['search_result']:
-                titulo_captado = resultado['title']
-                link_captado = resultado['link']
-                # titulo.append(titulo_captado)
-                # link.append(link_captado)
-                dic = {'titulo': titulo_captado, 'url': link_captado}
-                dic_youtube.append(dic)
-            vids = ['[{}] {} {}'.format(num + 1, i['titulo'], i['url']) for num, i in enumerate(dic_youtube)]
-            await bot.sendMessage(msg['chat']['id'], '\n'.join(vids) if vids else "Nenhum resultado foi encontrado",
-                                  'HTML',
-                                  reply_to_message_id=msg['message_id'],
-                                  disable_web_page_preview=True)
+            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
+            res = await search_yt(msg['text'][8:])
 
+            vids = ['{}: <a href="{}">{}</a>'.format(num + 1, i['url'], i['title']) for num, i in enumerate(res)]
+            await bot.sendMessage(msg['chat']['id'], '\n'.join(vids) if vids else "Nenhum resultado foi encontrado", 'HTML',
+                                      reply_to_message_id=msg['message_id'],
+                                      disable_web_page_preview=True)
+            return True    
+
+        if msg['text'].startswith('/yt@gorpo_bot '):
+            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
+            res = await search_yt(msg['text'][14:])
+
+            vids = ['{}: <a href="{}">{}</a>'.format(num + 1, i['url'], i['title']) for num, i in enumerate(res)]
+            await bot.sendMessage(msg['chat']['id'], '\n'.join(vids) if vids else "Nenhum resultado foi encontrado", 'HTML',
+                                      reply_to_message_id=msg['message_id'],
+                                      disable_web_page_preview=True)
+            return True
 
 #----------------------------------------------------------------------------------------------------------------------------------------------
 
-        elif msg['text'].split()[0] == '/ytdl':   #aqui era /ytdl tirei pra nao pesar o server
-            
+        elif msg['text'].split()[0] == 'downloadyoutube':   #aqui era /ytdl tirei pra nao pesar o server
+            print('Usuario {} solicitou /yt'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /yt  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             text = msg['text'][6:]
 
             if text:

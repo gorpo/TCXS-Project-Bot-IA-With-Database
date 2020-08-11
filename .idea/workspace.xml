@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="aba04180-5a57-44f8-8c5a-b6e7b70af025" name="Default Changelist" comment="Bot finalizado para TCXS Project" />
+    <list default="true" id="aba04180-5a57-44f8-8c5a-b6e7b70af025" name="Default Changelist" comment="Bot finalizado para TCXS Project v2" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -83,13 +101,32 @@
       <option name="project" value="LOCAL" />
       <updated>1595946523150</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Bot finalizado para TCXS Project v2">
+      <created>1597161004782</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1597161004782</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Bot finalizado para TCXS Project" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bot finalizado para TCXS Project" />
+    <MESSAGE value="Bot finalizado para TCXS Project v2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bot finalizado para TCXS Project v2" />
   </component>
   <component name="WindowStateProjectService">
     <state x="988" y="272" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595939835333">
@@ -116,10 +153,10 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state width="936" height="293" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1595948742564" />
-    <state x="850" y="258" key="Vcs.Push.Dialog.v2" timestamp="1595948650811">
+    <state x="850" y="258" key="Vcs.Push.Dialog.v2" timestamp="1597161010627">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
-    <state x="850" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1595948650811" />
+    <state x="850" y="258" key="Vcs.Push.Dialog.v2/0.0.1920.1050@0.0.1920.1050" timestamp="1597161010627" />
     <state x="1249" y="442" key="com.intellij.openapi.vcs.update.UpdateOrStatusOptionsDialogupdate-v2" timestamp="1595948567808">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>

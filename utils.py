@@ -1,15 +1,21 @@
 # Copyright (C) 2018-2019 Amano Team <contact@amanoteam.ml>
-# -*- coding: utf-8 -*-
-#███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-#████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-#██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-#██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-#██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-#╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy of
+# this software and associated documentation files (the "Software"), to deal in
+# the Software without restriction, including without limitation the rights to
+# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
+# the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import os
 import html
@@ -17,8 +23,7 @@ import aiohttp
 import time
 import zipfile
 from aiohttp.client_exceptions import ContentTypeError
-from datetime import datetime
-from sys import platform
+
 
 async def send_to_dogbin(text):
     if not isinstance(text, bytes):
@@ -31,6 +36,11 @@ async def send_to_dogbin(text):
         except ContentTypeError:
             text = await post.text()
             return html.escape(text)
+
+
+
+
+
 
 async def send_to_hastebin(text):
     if not isinstance(text, bytes):
@@ -67,26 +77,18 @@ def escape_markdown(text):
 
     return text
 
-
-
-def backup_sources(nome,output_file=None):
+def backup_sources(output_file=None):
     ctime = int(time.time())
-    cstrftime = datetime.now().strftime('%d-%m-%Y_%H-%M')
+
     if isinstance(output_file, str) and not output_file.lower().endswith('.zip'):
         output_file += '.zip'
-    t = time.localtime()
-    fname = output_file or f'{nome}{cstrftime}.zip'
+
+    fname = output_file or 'backup-{}.zip'.format(ctime)
+
     with zipfile.ZipFile(fname, 'w', zipfile.ZIP_DEFLATED) as backup:
         for folder, _, files in os.walk('.'):
             for file in files:
-                if platform == 'linux' or platform == 'linux2':#foi adicionado para nao incluir as pastas no linux
-                    if file != fname and not file.endswith('.pyc') and  not file.endswith('.lib') and '.heroku' not in folder.split('/') and '.git' not in folder.split('/') and '.idea' not in folder.split('/'):
-                            backup.write(os.path.join(folder, file))
-                if platform == 'win32':#adicionado para nao pegar a pasta .git no backup
-                    if file != fname and not file.endswith('.pyc') and  not file.endswith('.lib') and '.heroku' not in folder.split('/') and '.git' not in folder.split('/') and '.idea' not in folder.split('/'):
-                        if '.\.git' in folder:#deletar isto em caso de uso linux
-                            pass
-                        else:
-                            backup.write(os.path.join(folder, file))
+                if file != fname and not file.endswith('.pyc') and '.heroku' not in folder.split('/') and 'dls' not in folder.split('/'):
+                    backup.write(os.path.join(folder, file))
 
     return fname

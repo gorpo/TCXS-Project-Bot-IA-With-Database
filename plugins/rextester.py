@@ -1,20 +1,18 @@
-# -*- coding: utf-8 -*-
-# ███╗   ███╗ █████╗ ███╗   ██╗██╗ ██████╗ ██████╗ ███╗   ███╗██╗ ██████╗
-# ████╗ ████║██╔══██╗████╗  ██║██║██╔════╝██╔═══██╗████╗ ████║██║██╔═══██╗
-# ██╔████╔██║███████║██╔██╗ ██║██║██║     ██║   ██║██╔████╔██║██║██║   ██║
-# ██║╚██╔╝██║██╔══██║██║╚██╗██║██║██║     ██║   ██║██║╚██╔╝██║██║██║   ██║
-# ██║ ╚═╝ ██║██║  ██║██║ ╚████║██║╚██████╗╚██████╔╝██║ ╚═╝ ██║██║╚██████╔╝
-# ╚═╝     ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝ ╚═════╝ ╚═════╝ ╚═╝     ╚═╝╚═╝ ╚═════╝
-#     [+] @GorpoOrko 2020 - Telegram Bot and Personal Assistant [+]
-#     |   TCXS Project Hacker Team - https://tcxsproject.com.br   |
-#     |   Telegram: @GorpoOrko Mail:gorpoorko@protonmail.com      |
-#     [+]        Github Gorpo Dev: https://github.com/gorpo     [+]
 
-
-import aiohttp
-from config import bot
+import html
 import re
+import random
+import amanobot
+import aiohttp
+from amanobot.exception import TelegramError
+import time
+from config import bot, sudoers, logs, bot_username
+from utils import send_to_dogbin, send_to_hastebin
+import re
+
+
 from amanobot.namedtuple import InlineQueryResultArticle, InputTextMessageContent, InlineKeyboardMarkup, InlineKeyboardButton
+
 
 
 languages = {"ada": "39",
@@ -82,6 +80,11 @@ compiler_args = {
 async def rextester(msg):
     if msg.get('text'):
         if msg['text'].startswith('/rextester'):
+            print('Usuario {} solicitou /rextester'.format(msg['from']['first_name']))
+            log = '\nUsuario {} solicitou /rextester  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+            arquivo = open('logs/grupos.txt','a')
+            arquivo.write(log)
+            arquivo.close()
             text = msg['text'][10:]
             rex = re.split('[ |\n]+', text, 2)
             code = rex[2:]
@@ -121,17 +124,23 @@ async def rextester(msg):
                     await bot.sendMessage(msg['chat']['id'], resp, reply_to_message_id=reply_id, parse_mode='markdown')
             return True
 
-        if msg['text'].startswith('/codding'):
-                text = msg['text'][8:]
+        if msg['text'].startswith('/rextester@gorpo_bot'):
+                print('Usuario {} solicitou /rextester@gorpo_bot'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou /rextester@gorpo_bot  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
+                text = msg['text'][20:]
                 rex = re.split('[ |\n]+', text, 2)
                 code = rex[2:]
                 reply_id = msg['message_id']
                 if not text:
-                    await bot.sendMessage(msg['chat']['id'], """Bem vindo ao meu interpretador de codigos, digite meu comando seguido de uma linguagem de programação seguido de seu codigo, ex: /codding python seu_codigo.
- 💻Linguagens Suportadas: -ada -bash -brainfuck -c_clang -c_gcc -c_vc -c# -c++_clang -c++_gcc -c++_vc++ -d -elixir -erlang -f#  -fortran -go -haskell -java -javascript -kotlin -lisp -lua -mysql -nasm -node.js -objective-c -ocaml -octave -oracle -pascal -perl -php -postgresql -prolog -python -python2 -python3 -py3 -py2 -r -ruby  -scala -scheme -sql server -swift -tcl -vbnet """,
+                    await bot.sendMessage(msg['chat']['id'], """💻Bem vindo ao meu interpretador de codigos, digite meu comando seguido de uma linguagem de programação seguido de seu codigo, ex: /rextester python seu_codigo!
+                        
+     💻Linguagens Suportadas: -ada -bash -brainfuck -c_clang -c_gcc -c_vc -c# -c++_clang -c++_gcc -c++_vc++ -d -elixir -erlang -f#  -fortran -go -haskell -java -javascript -kotlin -lisp -lua -mysql -nasm -node.js -objective-c -ocaml -octave -oracle -pascal -perl -php -postgresql -prolog -python -python2 -python3 -py3 -py2 -r -ruby  -scala -scheme -sql server -swift -tcl -vb.net """,
                                       reply_to_message_id=reply_id)
                 elif len(code) == 0:
-                    await bot.sendMessage(msg['chat']['id'], '💻me de uma linguagem ex /codding python seu_codigo',
+                    await bot.sendMessage(msg['chat']['id'], '💻me de uma linguagem ex /rextester python seu_codigo',
                                       reply_to_message_id=reply_id)
                 elif msg['text'].split()[1] not in languages:
                     await bot.sendMessage(msg['chat']['id'], '💻linguagem errada.',
@@ -161,10 +170,14 @@ async def rextester(msg):
                 return True
 
 
-        if msg['text'].startswith('python'):
+        if msg['text'].startswith('codding'):
+                print('Usuario {} solicitou codding'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou codding(rextester)  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
                 text = msg['text'][7:]
-                #rex = re.split('[ |\n]+', text, 2)
-                rex = ['','python',f'{text}']
+                rex = re.split('[ |\n]+', text, 2)
                 code = rex[2:]
                 reply_id = msg['message_id']
                 if not text:
@@ -175,7 +188,7 @@ async def rextester(msg):
                 elif len(code) == 0:
                     await bot.sendMessage(msg['chat']['id'], '💻me de uma linguagem ex /rextester python seu_codigo',
                                       reply_to_message_id=reply_id)
-                elif rex[1] not in languages:
+                elif msg['text'].split()[1] not in languages:
                     await bot.sendMessage(msg['chat']['id'], '💻linguagem errada.',
                                       reply_to_message_id=reply_id)
                 else:
@@ -203,7 +216,11 @@ async def rextester(msg):
                 return True       
 
         if msg['text'].startswith('-'):
-                
+                print('Usuario {} solicitou rextester com (-)'.format(msg['from']['first_name']))
+                log = '\nUsuario {} solicitou rextester com (-)  --> Grupo: {} --> Data/hora:{}'.format(msg['from']['first_name'],msg['chat']['title'],time.ctime())
+                arquivo = open('logs/grupos.txt','a')
+                arquivo.write(log)
+                arquivo.close()
                 text = msg['text'][1:]
                 rex = re.split('[ |\n]+', text, 2)
                 code = rex[2:]
@@ -281,10 +298,10 @@ async def rextester(msg):
                 else:
                     resp = f"*Language:*\n`{langs}`\n\n*Source:*\n`{program}`\n\n*Results:*\n`{result}`"
                     desc = result or 'NULL'
-                #print(shorten_stats(stats))
-                #print(len(shorten_stats(stats)))
-                #print(stats)
-                #print(len(stats))
+                print(shorten_stats(stats))
+                print(len(shorten_stats(stats)))
+                print(stats)
+                print(len(stats))
                 keyboard = InlineKeyboardMarkup(inline_keyboard=[
                    [InlineKeyboardButton(text='Stats', callback_data='rstats '+shorten_stats(stats))],
                ])

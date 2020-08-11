@@ -1,0 +1,32 @@
+<XMBML version="1.0">
+<View id="ps3_items_link">
+<Attributes>
+     <Table key="ps3_item_0">
+        <Pair key="icon"><String>/dev_hdd0/game/TCXSPROJECT/USRDIR/IMAGES/DLCS/download.png</String></Pair>
+        <Pair key="title"><String>TCXS Parte1 GAME- Joint-Strike</String></Pair>
+        <Pair key="info"><String>TCXS - PSN-Stuff</String></Pair>
+        <Pair key="module_name"><String>webrender_plugin</String></Pair>
+        <Pair key="module_action"><String>http://zeus.dl.playstation.net/cdn/UP0102/NPUB30024_00/M5owiRSUtMTCwCy7BgpFRQFkb9VBJKjytrBfEfuvylNCSIqvdXBQyDIrO893SlB3Ndnbm9MaQ12u2grVWTs5dxxOGO9BTOHJmsK8x.pkg</String></Pair>
+    </Table>
+    <Table key="ps3_item_1">
+        <Pair key="icon"><String>/dev_hdd0/game/TCXSPROJECT/USRDIR/IMAGES/DLCS/download.png</String></Pair>
+        <Pair key="title"><String>TCXS Parte GAME+LIC- Joint-Strike</String></Pair>
+        <Pair key="info"><String>TCXS - PSN-Stuff</String></Pair>
+        <Pair key="module_name"><String>webrender_plugin</String></Pair>
+        <Pair key="module_action"><String>http://zeus.dl.playstation.net/cdn/UP0102/NPUB30024_00/M5owiRSUtMTCwCy7BgpFRQFkb9VBJKjytrBfEfuvylNCSIqvdXBQyDIrO893SlB3Ndnbm9MaQ12u2grVWTs5dxxOGO9BTOHJmsK8x.pkg</String></Pair>
+    </Table>
+    <Table key="ps3_item_2">
+        <Pair key="icon"><String>/dev_hdd0/game/TCXSPROJECT/USRDIR/IMAGES/DLCS/download.png</String></Pair>
+        <Pair key="title"><String>TCXS Parte GAME+LIC- Joint-Strike</String></Pair>
+        <Pair key="info"><String>TCXS - PSN-Stuff</String></Pair>
+        <Pair key="module_name"><String>webrender_plugin</String></Pair>
+        <Pair key="module_action"><String>http://zeus.dl.playstation.net/cdn/UP0102/NPUB30024_00/M5owiRSUtMTCwCy7BgpFRQFkb9VBJKjytrBfEfuvylNCSIqvdXBQyDIrO893SlB3Ndnbm9MaQ12u2grVWTs5dxxOGO9BTOHJmsK8x.pkg</String></Pair>
+    </Table>
+</Attributes>
+<Items>
+    <Query class="type:x-xmb/module-action" key="ps3_item_0" attr="ps3_item_0"/>
+    <Query class="type:x-xmb/module-action" key="ps3_item_1" attr="ps3_item_1"/>
+    <Query class="type:x-xmb/module-action" key="ps3_item_2" attr="ps3_item_2"/>
+</Items>
+</View>
+</XMBML>
