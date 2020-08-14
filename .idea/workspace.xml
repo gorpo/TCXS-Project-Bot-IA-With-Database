@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="aba04180-5a57-44f8-8c5a-b6e7b70af025" name="Default Changelist" comment="Bot finalizado para TCXS Project" />
+    <list default="true" id="aba04180-5a57-44f8-8c5a-b6e7b70af025" name="Default Changelist" comment="Bot finalizado para TCXS Project">
+      <change afterPath="$PROJECT_DIR$/plugins/ia_privado_bot.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/tcxs_bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot_database.db" beforeDir="false" afterPath="$PROJECT_DIR$/bot_database.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bot_database_logs.db" beforeDir="false" afterPath="$PROJECT_DIR$/bot_database_logs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/inteligencias/ia_privado_bot.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/inteligencias/ia_privado_bot.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/plugins/tcxs.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/tcxs.py" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

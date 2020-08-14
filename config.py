@@ -99,5 +99,6 @@ enabled_plugins = [
     'notepad_telegraph',
     'cria_site_telegraph',
     'qrcode',
+    'ia_privado_bot'
 
 ]
