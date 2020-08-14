@@ -12,20 +12,16 @@ try:
     except:
         pass
     # admin usuario id_usuario dias data_inicial data_final grupo
+
+
     cursor.execute("""  CREATE TABLE IF NOT EXISTS permanencia  (int_id integer not null primary key autoincrement, grupo varchar(5000), id_grupo varchar(5000), admin varchar(5000),doador varchar(500), id_doador varchar(500), dias varchar(500), data_inicial varchar(500),  data_final varchar(5000),data_aviso varchar(5000));  """)
     # tabela da loja_doadores TCXS STORE PKG para doadores
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_doadores (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_HAN (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela da loja_doadores TCXS STORE PKG para doadores
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_free (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
-    # tabela do fix HAN
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_han (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
-    # tabela do fix HEN
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen (int_id integer not null primary key autoincrement,  uploader varchar(5000),versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
+    cursor.execute("""  CREATE TABLE IF NOT EXISTS loja_HEN (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
     # tabela do fix XML EXCLUSIVO CFW
     cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_cfw_xml (int_id integer not null primary key autoincrement,  uploader varchar(5000),versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
-    # tabela do fix XML EXCLUSIVO HEN
-    cursor.execute("""  CREATE TABLE IF NOT EXISTS fix_hen_xml (int_id integer not null primary key autoincrement, uploader varchar(5000), versao varchar(5000), pkg varchar(5000),data varchar(5000));  """)
-    # tabela do armazenamento dos sites telegraph
+   # tabela do armazenamento dos sites telegraph
     cursor.execute("""  CREATE TABLE IF NOT EXISTS telegraph_sites  (int_id integer not null primary key autoincrement,grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),data varchar(5000), titulo varchar(5000),texto varchar(5000), imagem varchar(500), link varchar(5000));  """)
     #tabela das mensagens aleatorias da IA
     cursor.execute("""  CREATE TABLE IF NOT EXISTS mensagens  (int_id integer not null primary key autoincrement,grupo varchar(5000),tipo_grupo varchar(5000), id_grupo varchar(5000),usuario varchar(500), id_usuario varchar(500),linguagem varchar(5000), tipo varchar(5000),data varchar(5000),id_mensagem varchar(500), mensagem varchar(5000));  """)

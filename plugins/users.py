@@ -110,8 +110,7 @@ async def users(msg):
 #SISTEMA DE BOTOES INICIO ---------------------------------------------------------------->
         if  msg['text'].lower() == 'comando' or msg['text'] == '/help'  or msg['text'] == '/comandos' or msg['text'] == 'comandos' or 'help' in msg['text'].lower() or 'ajuda' in msg['text'].lower():
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text='📦 Store Free', callback_data='store_free')] +
-                [dict(text="📦 Store Doadores", callback_data='store_doadores')],
+                [dict(text="📦 TCXS Project Store PKG", callback_data='store_doadores')],
                 [dict(text='🦸 Usuários', callback_data='comandos_usuarios')] +
                 [dict(text="🤖‍ Admin's", callback_data='comandos_admins')],
                 [dict(text='🧰 Ferramentas', callback_data='ferramentas_gerais')] +
@@ -125,64 +124,12 @@ async def users(msg):
 
         if msg['data'] == 'inicio_menu':# precisa de dois menus para voltar para o inicio criando um loop entre os dois----->
             kb = InlineKeyboardMarkup(inline_keyboard=[
-                [dict(text='📦 Store Free', callback_data='store_free')] +
-                [dict(text="📦 Store Doadores", callback_data='store_doadores')],
+                [dict(text="📦 TCXS Project Store PKG", callback_data='store_doadores')],
                 [dict(text='🦸 Usuários', callback_data='comandos_usuarios')] +
                 [dict(text="🤖‍ Admin's", callback_data='comandos_admins')],
                 [dict(text='🧰 Ferramentas', callback_data='ferramentas_gerais')] +
                 [dict(text='📣 Info | Extras', callback_data='infos_extras')], ])
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"***{msg['from']['first_name']} Aqui está uma lista com todos meus comandos e informações que você precisa saber.***", 'markdown',reply_markup=kb)
-
-#TCXS STORE FREE PKG    ------------------------------------------------------------------------------------------------------------------------->
-        elif msg['data'] == 'store_free':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------  Espero que tenha um pendrive em mãos e saiba usar a\n loja, não daremos suporte para USUARIOS GRATUITOS, agora  copie os arquivos abaixo para a raiz de um pendrive e coloque na USB direita do seu console, caso use HAN instale o FIX, caso use HEN apenas instale a loja!```",'markdown', reply_markup=keyboard.store_free)
-
-        #entrega da loja free:
-        elif msg['data'].split()[0] == 'download_store_free':
-            cursor_sqlite.execute("""SELECT * FROM loja_free""")
-            resultados = cursor_sqlite.fetchall()
-            if resultados == []:
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho lojas cadastradas, insira o banco de dados com dados ou cadastre um PKG enviando ela no meu privado com nome inicinando com TCXS, exexmplo:` ***TCXS_Store_3.9.pkg***",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            else:
-                for resultado in resultados:
-                    id_pkg = resultado['pkg']
-                    nome_pkg = resultado['versao']
-                    data_att = resultado['data']
-                    uploader_id = resultado['uploader']
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos a ultima atualização da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console, ative o Hen e instale ela pelo Package Manager.\nCaso seja usuário de HAN será necessário usar o Fix,baixe ele, depois basta inserir o Fix e a Loja em seu pendrive e através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.voltar_store_free)
-                await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption=f'{nome_pkg} upada em {data_att} por @{uploader_id}')
-
-        #entrega do fix
-        elif msg['data'].split()[0] == 'download_fix':
-            cursor_sqlite.execute("""SELECT * FROM fix_han""")
-            resultados = cursor_sqlite.fetchall()
-            if resultados == []:
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho o fix han, insira o banco de dados com dados ou cadastre um PKG enviando ele no meu privado com nome de:` ***FIX_HAN.pkg***",'markdown', reply_markup=keyboard.voltar_store_free)
-            else:
-                for resultado in resultados:
-                    nome_pkg = resultado['versao']
-                    data_att = resultado['data']
-                    id_pkg = resultado['pkg']
-                    uploader_id = resultado['uploader']
-                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, através do seu Han instalar ambos arquivos, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.voltar_store_free)
-                    await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption='Fix para usuários HAN')
-
-
-        elif msg['data'].split()[0] == 'tutorial_segundo_plano':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como fazer os Downloads em Segundo Plano em seu PlayStation3!```",'markdown', reply_markup=keyboard.voltar_store_free)
-            await bot.sendMessage(msg['message']['chat']['id'], 'https://youtu.be/_21a5REKhBc')
-            #return True
-        elif msg['data'].split()[0] == 'fone_bluetooth':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Sabia que você pode usar seu fone bluetooth para jogos em seu PlayStation3?```",'markdown', reply_markup=keyboard.voltar_store_free)
-            await bot.sendMessage(msg['message']['chat']['id'], 'https://www.youtube.com/watch?v=_wYG7iMa5uY')
-            #return True
-        elif msg['data'].split()[0] == 'proxy_usuarios':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Siga nosso tutorial de proxy para melhorar sua conexão e evitar banimento do seu PlayStation3!```",'markdown', reply_markup=keyboard.voltar_store_free)
-            await bot.sendMessage(msg['message']['chat']['id'], 'https://youtu.be/l4o8ySk1Do4')
-            #return True
-
-
-
 
 
 #TCXS STORE PKG DOADORES |  PAYD------------------->
@@ -196,95 +143,56 @@ async def users(msg):
         elif msg['data'] == 'mercado_pago':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"```------ Vejo que tem interesse em ser doador, usamos o sistema do Mercado Pago somente, favor nao insistir com outras formas.\nO Mercado Pago aceita pagamentos online e com cartão de crédito e boletos, este sistema é o mais seguro para nos da equipe e para vocês doadores, lembre que a doação é mensal e doando você faz parte da vaquina que mantem os servidores de 5tb da Dropbox onde encontram-se nossos jogos. Pedimos que antes de doar leia atentamente as regras como mencionado antes e após fazer sua doação envie o comprovante no privado de um de nossos administradores.```\n`Pra ver os administradores digite:` /admin",'markdown', reply_markup=keyboard.voltar_store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'], 'https://www.mercadopago.com.br/checkout/v1/redirect?pref_id=354396246-315fce8c-d8f9-4aa0-8583-95d678936375')
+
+
 ##  ATUALIZAÇÃO PARA DOADORES ATRAVÉS DO SISTEMA DE BOTÕES------------------------------------------------------------------------------>>
-        #LOJA PAGA PARA DOADORES COM DATABASE E BOTOES------------>
-        elif msg['data'].split()[0] == 'download_store_doadores':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO 3.6 e caso use o fix de acordo com seu Exploit/Desbloqueio, se voce tem han ou CFW use o FIX HAN, caso contrário e seja o Exploit HEN em seu console use o FIX HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale o FIX, após o FIX instalado instale a TCXS Store PKG, recomendamos reiniciar o console após este processo!!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            if msg['message']['chat']['title'] == 'Doadores TCXS 2020':
-                cursor_sqlite.execute("""SELECT * FROM loja_doadores""")
-                resultados = cursor_sqlite.fetchall()
-                if resultados == []:
-                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho lojas cadastradas, insira o banco de dados com dados ou cadastre um PKG enviando ela no meu privado com nome inicinando com TCXS, exexmplo:` ***TCXS_Store_3.9.pkg***",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                else:
-                    for resultado in resultados:
-                        id_pkg = resultado['pkg']
-                        nome_pkg = resultado['versao']
-                        data_att = resultado['data']
-                        uploader_id = resultado['uploader']
-                    await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption=f'{nome_pkg} upada em {data_att} por @{uploader_id}')
-            else:
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Este comando só funciona no grupo de doadores.```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            #return True
 
-        #FIX HAN PARA DOADORES COM DATABASE E BOTOES------------>
-        elif msg['data'].split()[0] == 'download_fix_han_doadores':
-            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Abaixo temos o Fix da TCXS Store para PlayStation3, baixe  e insira no pendrive, plugue o pendrive em seu console com o Fix e a Loja, ambos processos concluidos reinicie seu console!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            if msg['message']['chat']['title'] == 'Doadores TCXS 2020':
-                cursor_sqlite.execute("""SELECT * FROM fix_han""")
-                resultados = cursor_sqlite.fetchall()
-                if resultados == []:
-                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho o fix han, insira o banco de dados com dados ou cadastre um PKG enviando ele no meu privado com nome de:` ***FIX_HAN.pkg***",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                else:
-                    for resultado in resultados:
-                        nome_pkg = resultado['versao']
-                        data_att = resultado['data']
-                        id_pkg = resultado['pkg']
-                        uploader_id = resultado['uploader']
-                        await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Veja o tutorial INSTALAÇÃO EXPLOIT HAN E HEN! no menu abaixo ```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                        await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption='Fix para usuários HAN')
+        #LOJA HAN------------>
+        elif msg['data'].split()[0] == 'download_store_HAN':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO  de acordo com seu Exploit/Desbloqueio, se voce tem HAN ou CFW use a loja HAN, caso contrário e seja o Exploit HEN em seu console use a loja HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale a loja , recomendamos reiniciar o console após este processo!!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
+            cursor_sqlite.execute("""SELECT * FROM loja_HAN""")
+            resultados = cursor_sqlite.fetchall()
+            if resultados == []:
+                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho lojas cadastradas, insira o banco de dados com dados ou cadastre um PKG enviando ela no meu privado com o nome:` ***TCXS_STORE_HAN.pkg***",'markdown', reply_markup=keyboard.voltar_store_doadores)
             else:
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Este comando só funciona no grupo de doadores.```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            #return True
+                for resultado in resultados:
+                    id_pkg = resultado['pkg']
+                    nome_pkg = resultado['versao']
+                    data_att = resultado['data']
+                    uploader_id = resultado['uploader']
+                await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption=f'{nome_pkg} upada em {data_att} por @{uploader_id}')
 
-        # FIX HEN PARA DOADORES COM DATABASE E BOTOES------------>
-        elif msg['data'].split()[0] == 'download_fix_hen_doadores':
-            if msg['message']['chat']['title'] == 'Doadores TCXS 2020':
-                cursor_sqlite.execute("""SELECT * FROM fix_hen""")
-                resultados = cursor_sqlite.fetchall()
-                if resultados == []:
-                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho o fix hen, insira o banco de dados com dados ou cadastre um PKG enviando ele no meu privado com nome de:` ***FIX_HEN.pkg***",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                else:
-                    for resultado in resultados:
-                        id_pkg = resultado['pkg']
-                        await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Veja o tutorial INSTALAÇÃO EXPLOIT HAN E HEN! no menu abaixo ```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                        await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption='Fix para usuários HEN')
+       #LOJA HEN------------>
+        elif msg['data'].split()[0] == 'download_store_HEN':
+            await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `INSTRUÇÕES:` ```------ Bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO  de acordo com seu Exploit/Desbloqueio, se voce tem HAN ou CFW use a loja HAN, caso contrário e seja o Exploit HEN em seu console use a loja HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale a loja, recomendamos reiniciar o console após este processo!!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
+            cursor_sqlite.execute("""SELECT * FROM loja_HEN""")
+            resultados = cursor_sqlite.fetchall()
+            if resultados == []:
+                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho lojas cadastradas, insira o banco de dados com dados ou cadastre um PKG enviando ela no meu privado com o nome:` ***TCXS_STORE_HEN.pkg***",'markdown', reply_markup=keyboard.voltar_store_doadores)
             else:
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Este comando só funciona no grupo de doadores.```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            #return True
+                for resultado in resultados:
+                    id_pkg = resultado['pkg']
+                    nome_pkg = resultado['versao']
+                    data_att = resultado['data']
+                    uploader_id = resultado['uploader']
+                await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption=f'{nome_pkg} upada em {data_att} por @{uploader_id}')
+
 
         # FIX CFW XML DOADORES COM DATABASE E BOTOES------------>
         elif msg['data'].split()[0] == 'download_fix_cfw_doadores':
-            if msg['message']['chat']['title'] == 'Doadores TCXS 2020':
-                cursor_sqlite.execute("""SELECT * FROM fix_cfw_xml""")
-                resultados = cursor_sqlite.fetchall()
-                if resultados == []:
-                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho o fix cfw xml, insira o banco de dados com dados ou cadastre um PKG enviando ele no meu privado com nome de:` ***category_network_tool2.xml***",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                else:
-                    for resultado in resultados:
-                        id_pkg = resultado['pkg']
-                        await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Veja o tutorial INSTALAÇÃO EM CONSOLES CFW no menu abaixo ```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                        await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption='Fix para usuários CFW')
+            cursor_sqlite.execute("""SELECT * FROM fix_cfw_xml""")
+            resultados = cursor_sqlite.fetchall()
+            if resultados == []:
+                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho o fix cfw xml, insira o banco de dados com dados ou cadastre um PKG enviando ele no meu privado com nome de:` ***category_network_tool2.xml***",'markdown', reply_markup=keyboard.voltar_store_doadores)
             else:
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Este comando só funciona no grupo de doadores.```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            #return True
+                for resultado in resultados:
+                    id_pkg = resultado['pkg']
+                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Veja o tutorial INSTALAÇÃO EM CONSOLES CFW no menu abaixo ```",'markdown', reply_markup=keyboard.voltar_store_doadores)
+                    await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg,caption='Fix para usuários CFW')
 
-        # FIX HEN XML PARA DOADORES COM DATABASE E BOTOES------------>
-        elif msg['data'].split()[0] == 'download_fix_hen_xml_doadores':
-            if msg['message']['chat']['title'] == 'Doadores TCXS 2020':
-                cursor_sqlite.execute("""SELECT * FROM fix_hen_xml""")
-                resultados = cursor_sqlite.fetchall()
-                if resultados == []:
-                    await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🤖 ***Bot diz:*** `não tenho o fix hen xml, insira o banco de dados com dados ou cadastre um PKG enviando ele no meu privado com nome de:` ***category_network.xml***",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                else:
-                    for resultado in resultados:
-                        id_pkg = resultado['pkg']
-                        await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Veja o tutorial INSTALAÇÃO EM CONSOLES CFW no menu abaixo ```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-                        await bot.sendDocument(msg['message']['chat']['id'], document=id_pkg, caption='Fix XML para usuários HEN avançados')
-            else:
-                await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"🚨 `ATENÇÃO`🚨  ```------ Este comando só funciona no grupo de doadores.```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            #return True
 
-        #ACIMA DISTO PARTE DA ATT QUE PRECISA DE DB | SEGUE CODIGOS DOS DOADORES E DA ATT PAGA--------------------->
+
+        #OUTROS BOTOES IMPORTANTES DA ATT--------------------->
         elif msg['data'].split()[0] == 'tutorial_loja':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store instalar a loja em seu PlayStation3!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'],'https://cos.tv/videos/play/1586413688272059934')

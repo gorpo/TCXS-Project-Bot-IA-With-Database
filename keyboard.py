@@ -13,32 +13,23 @@
 from amanobot.namedtuple import InlineKeyboardMarkup
 from config import bot,bot_username
 
-voltar_store_free = InlineKeyboardMarkup(inline_keyboard=[[dict(text='« Voltar', callback_data='store_free')]])
-store_free = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='📦 TCXS Store PKG', callback_data='download_store_free')] +
-            [dict(text="🗳️ FIX HAN TCXS  ", callback_data='download_fix')],
-            [dict(text='📺 Tutorial Segundo Plano', callback_data='tutorial_segundo_plano')] +
-            [dict(text="🎧 Fone Bluetooth ", callback_data='fone_bluetooth')],
-            [dict(text='📲 Uso de Proxy', callback_data='proxy_usuarios')] +
-            [dict(text='« Voltar', callback_data='inicio_menu')],])
+
 
 
 
 
 voltar_store_doadores = InlineKeyboardMarkup(inline_keyboard=[[dict(text='« Voltar', callback_data='store_doadores')]])
 store_doadores = InlineKeyboardMarkup(inline_keyboard=[
-            [dict(text='⚠️ Como Participar,leia é importante ⚠️', callback_data='como_participar')] ,
-            [dict(text="🤑 Doar Agora", callback_data='mercado_pago')]+
-            [dict(text='📦 TCXS Store PKG', callback_data='download_store_doadores')],
-            [dict(text="🗳️ FIX HAN PKG ", callback_data='download_fix_han_doadores')]+
-            [dict(text="🗳️ FIX HEN PKG ", callback_data='download_fix_hen_doadores')],
+            [dict(text='⚠️ Como Participar', callback_data='como_participar')] +
+            [dict(text="🤑 Doar Agora", callback_data='mercado_pago')],
+            [dict(text='📦 TCXS Store HAN', callback_data='download_store_HAN')]+
+            [dict(text="📦 TCXS Store HEN", callback_data='download_store_HEN')],
             [dict(text="🗳️ FIX CFW XML ", callback_data='download_fix_cfw_doadores')]+
-            [dict(text="🗳️ FIX HEN XML ", callback_data='download_fix_hen_xml_doadores')],
             [dict(text="📺 INSTALAÇÃO HAN/HEN!! ", callback_data='tutorial_loja')],
-            [dict(text="📺 TUTORIAL INSTALAÇÃO CFW ", callback_data='tutorial_cfw')],
-            [dict(text='📺 TUTORIAL SEGUNDO PLANO', callback_data='tutorial_segundo_plano_doadores')]+
-            [dict(text="🎧 FONE BLUETOOTH", callback_data='fone_bluetooth_doadores')],
-            [dict(text='📲 PROXY NO PS3', callback_data='proxy_usuarios_doadores')] +
+            [dict(text="📺 TUTORIAL INSTALAÇÃO CFW ", callback_data='tutorial_cfw')]+
+            [dict(text='📺 TUTORIAL SEGUNDO PLANO', callback_data='tutorial_segundo_plano_doadores')],
+            [dict(text="🎧 FONE BLUETOOTH", callback_data='fone_bluetooth_doadores')]+
+            [dict(text='📲 PROXY NO PS3', callback_data='proxy_usuarios_doadores')] ,
             [dict(text='« Voltar', callback_data='inicio_menu')]])
 
 
