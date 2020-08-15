@@ -105,15 +105,12 @@ ID: {bot_id}''',
   obs.: Mal uso há possibilidade de ID\_ban''', 'markdown',
                                       reply_to_message_id=msg['message_id'])
             else:
-                await bot.sendMessage(logs, f"""<a href="tg://user?id={msg['from']['id']}">{msg['from'][
+                await bot.sendMessage(758600965, f"""<a href="tg://user?id={msg['from']['id']}">{msg['from'][
                     'first_name']}</a> reportou um bug:
 
                      ID: <code>{msg['from']['id']}</code>
                      Mensagem: {text}""", 'HTML')
-                await bot.sendMessage(logs, f"""<a href="tg://user?id={msg['from']['id']}">{msg['from'][
-                    'first_name']}</a> reportou um bug:
-                                     ID: <code>{msg['from']['id']}</code>
-                                     Mensagem: {text}""", 'HTML')
+                
                 await bot.sendMessage(msg['chat']['id'], 'O bug foi reportado com sucesso para a minha equipe!',
                                       reply_to_message_id=msg['message_id'])
             return True
