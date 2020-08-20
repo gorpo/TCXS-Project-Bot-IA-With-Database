@@ -67,10 +67,7 @@ async def tcxs(msg):
             # ----ATT PARA DOADORES TCXS PROJECT---------------------------------------->
             if   msg['text'].lower() == 'att':
                 await bot.sendMessage(msg['chat']['id'],f"🤖 ***Olá*** @{msg['from']['username']}\n```-------->> Bem vindo a TCXS Project ,agora você faz parte dela, entenda que as doações sao mensais e nossa equipe nao ganha nada por este projeto, todo dinheiro arrecadado neste grupo é para pagar os servidores dos quais dispomos jogos. Logo a PSN STUFF IRÁ ACABAR POIS OS SERVIDORES SERÃO DESLIGADOS e assim nao terá mais os jogos gratuitos por ai, restando apenas este acervo que é mantido por voces doadores!     Vamos a Instalação!!!  --> Espero que tenha um pendrive em mãos!  --> copie os arquivos da VERSÃO 3.6 e caso use o fix de acordo com seu Exploit/Desbloqueio, se voce tem han ou CFW use o FIX HAN, caso contrário e seja o Exploit HEN em seu console use o FIX HEN, é necessaria a instalacao deste arquivo para que a loja apareca em seu console! Ative seu HAN/HEN e instale o FIX, após o FIX instalado instale a TCXS Store PKG, recomendamos reiniciar o console após este processo!!```",'markdown')
-                await bot.sendMessage(msg['chat']['id'],'🤖`TUTORIAL DE COMO INSTALAR A LOJA EXPLOIT HAN E HEN!!`  https://cos.tv/videos/play/1586413688272059934','markdown')
-                await bot.sendMessage(msg['chat']['id'],'🤖`COMO USAR A XML CATEGORY_NETWORK!` https://cos.tv/videos/play/1586411677524278797','markdown')
-                await bot.sendMessage(msg['chat']['id'],'🤖`Tutorial Download em Segundo Plano` https://cos.tv/videos/play/1586815808334907474','markdown')
-                await bot.sendMessage(msg['chat']['id'],'🤖`COMO USAR A XML CATEGORY_NETWORK! CONSOLES CFW ` https://cos.tv/videos/play/1586411677524278797','markdown')
+                await bot.sendMessage(msg['chat']['id'],'🤖`TUTORIAL DE COMO USAR A LOJA!!` https://youtu.be/9jyZhBklf9k','markdown')
                 await bot.sendMessage(msg['chat']['id'],'🤖`PORQUE DEVE USAR PROXY NO PS3!!` https://cos.tv/videos/play/1586410545470952204','markdown')
                 #LOJA PARA HAN LIGADA A Database-------------------------------------------------------------------------------------------------->
                 cursor_sqlite.execute("""SELECT * FROM loja_HAN""")
@@ -100,15 +97,6 @@ async def tcxs(msg):
 
 
 
-                #XML EXCLUSIVO PARA CFW-------------------------------------------------------------------------------------------------->
-                cursor_sqlite.execute("""SELECT * FROM fix_cfw_xml""")
-                resultados = cursor_sqlite.fetchall()
-                if resultados == []:
-                    await bot.sendMessage(msg['chat']['id'],f"🤖 {msg['from']['first_name']} `não tenho o fix xml para cfw, insira o banco de dados com dados ou cadastre um XML enviando ele no meu privado com nome de:` ***category_network_tool2.xml***",'markdown')
-                else:
-                    for resultado in resultados:
-                        id_pkg = resultado['pkg']
-                    await bot.sendDocument(msg['chat']['id'],document=id_pkg,caption='XML exclusivo para quem usa CFW')
         except Exception as e:
             pass
 

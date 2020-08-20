@@ -20,14 +20,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aba04180-5a57-44f8-8c5a-b6e7b70af025" name="Default Changelist" comment="Bot finalizado para TCXS Project">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot_database.db" beforeDir="false" afterPath="$PROJECT_DIR$/bot_database.db" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/bot_database_logs.db" beforeDir="false" afterPath="$PROJECT_DIR$/bot_database_logs.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.py" beforeDir="false" afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/keyboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/keyboard.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/plugins/tcxs.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/tcxs.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/users.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/users.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/plugins/welcome.py" beforeDir="false" afterPath="$PROJECT_DIR$/plugins/welcome.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +54,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="ignore_missing_gitignore" value="true" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Python.bot">
     <configuration name="bot" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -140,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1597366817620</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Bot finalizado para TCXS Project">
+      <created>1597893086688</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1597893086688</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -157,9 +163,9 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
-    <MESSAGE value="Bot finalizado para TCXS Project" />
     <MESSAGE value="Bot atualizado com que estava na vps" />
-    <option name="LAST_COMMIT_MESSAGE" value="Bot atualizado com que estava na vps" />
+    <MESSAGE value="Bot finalizado para TCXS Project" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bot finalizado para TCXS Project" />
   </component>
   <component name="WindowStateProjectService">
     <state x="988" y="272" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1595939835333">
@@ -170,26 +176,30 @@
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
     <state x="885" y="92" key="CommitChangelistDialog2/0.0.1920.1050@0.0.1920.1050" timestamp="1595948645673" />
-    <state width="1345" height="198" key="GridCell.Tab.0.bottom" timestamp="1597892720069">
+    <state width="1345" height="70" key="GridCell.Tab.0.bottom" timestamp="1597895577769">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="198" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1597892720069" />
+    <state width="1345" height="70" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1597895577769" />
     <state width="1877" height="158" key="GridCell.Tab.0.bottom/0.0.1920.1050@0.0.1920.1050" timestamp="1597370328683" />
-    <state width="1345" height="198" key="GridCell.Tab.0.center" timestamp="1597892720069">
+    <state width="1345" height="70" key="GridCell.Tab.0.center" timestamp="1597895577764">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="198" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1597892720069" />
+    <state width="1345" height="70" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1597895577764" />
     <state width="1877" height="158" key="GridCell.Tab.0.center/0.0.1920.1050@0.0.1920.1050" timestamp="1597370328683" />
-    <state width="1345" height="198" key="GridCell.Tab.0.left" timestamp="1597892720069">
+    <state width="1345" height="70" key="GridCell.Tab.0.left" timestamp="1597895577764">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="198" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1597892720069" />
+    <state width="1345" height="70" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1597895577764" />
     <state width="1877" height="158" key="GridCell.Tab.0.left/0.0.1920.1050@0.0.1920.1050" timestamp="1597370328683" />
-    <state width="1345" height="198" key="GridCell.Tab.0.right" timestamp="1597892720069">
+    <state width="1345" height="70" key="GridCell.Tab.0.right" timestamp="1597895577764">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1345" height="198" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1597892720069" />
+    <state width="1345" height="70" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1597895577764" />
     <state width="1877" height="158" key="GridCell.Tab.0.right/0.0.1920.1050@0.0.1920.1050" timestamp="1597370328683" />
+    <state x="184" y="14" key="SettingsEditor" timestamp="1597893969965">
+      <screen x="0" y="0" width="1366" height="738" />
+    </state>
+    <state x="184" y="14" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1597893969965" />
     <state x="850" y="258" key="Vcs.Push.Dialog.v2" timestamp="1597366839654">
       <screen x="0" y="0" width="1920" height="1050" />
     </state>
