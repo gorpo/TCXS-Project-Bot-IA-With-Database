@@ -27,7 +27,7 @@ store_doadores = InlineKeyboardMarkup(inline_keyboard=[
             [dict(text="🗳️ FIX CFW XML ", callback_data='download_fix_cfw_doadores')]+
             [dict(text="📺 INSTALAÇÃO HAN/HEN!! ", callback_data='tutorial_loja')],
             [dict(text="📺 TUTORIAL INSTALAÇÃO CFW ", callback_data='tutorial_cfw')]+
-            [dict(text='📺 TUTORIAL SEGUNDO PLANO', callback_data='tutorial_segundo_plano_doadores')],
+            [dict(text='📺 TUTORIAL USO WEB', callback_data='tutorial_uso_web')],
             [dict(text="🎧 FONE BLUETOOTH", callback_data='fone_bluetooth_doadores')]+
             [dict(text='📲 PROXY NO PS3', callback_data='proxy_usuarios_doadores')] ,
             [dict(text='« Voltar', callback_data='inicio_menu')]])

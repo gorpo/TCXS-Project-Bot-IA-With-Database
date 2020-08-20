@@ -121,17 +121,17 @@ async def tcxs(msg):
             await bot.sendMessage(msg['chat']['id'], 'https://www.youtube.com/watch?v=_wYG7iMa5uY',reply_to_message_id=msg['message_id'])
         # videos dos jogos
         if msg['text'] == 'ps1':
-            await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbVe_lDehK8EitSnLO-jP2SIqZ00PAACsgADGepZRCV_bEET9yWbGgQ', reply_to_message_id=msg['message_id'])
+            await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0CUYaz7wACaGNfPeg0UykryR3rr6XipJBAClzb8gACswADj8LQRfqVPrkng_6LGwQ', reply_to_message_id=msg['message_id'])
         if msg['text'] == 'ps2':
-            await bot.sendVideo(msg['chat']['id'],video='BAACAgEAAx0EUYaz7wACEbde_lDfbzhCcTg7M1iPa0_G_rF6UQACsgADGepZRCV_bEET9yWbGgQ',reply_to_message_id=msg['message_id'])
+            await bot.sendVideo(msg['chat']['id'],video='BAACAgEAAx0CUYaz7wACaGhfPehv9YdetA3Sa9WMycElSOMMywACtAADj8LQRT1_hMS7vCKBGwQ',reply_to_message_id=msg['message_id'])
         if msg['text'] == 'ps3':
-            await bot.sendVideo(msg['chat']['id'],video='AAMCAQADHQRRhrPvAAIS0V7_9mwf8l1awkJia_vSIK-7I4a7AAKzAAMZ6llEdIdHMW_ukXk1cHhIFwADAQAHbQADKkcAAhoE',reply_to_message_id=msg['message_id'])
+            await bot.sendVideo(msg['chat']['id'],video='BAACAgEAAx0CUYaz7wACaF1fPef3hDCc0hTI7QEr0ofb3Uy2kgACtQADj8LQRTSIVypLRTs2GwQ',reply_to_message_id=msg['message_id'])
         if msg['text'] == 'exclusivos':
             await bot.sendVideo(msg['chat']['id'], video='BAACAgEAAx0EUYaz7wACEbhe_lDfqKXeXTKts9b5692tHUMg7gACsAADGepZRO4jb6TTGEoWGgQ',reply_to_message_id=msg['message_id'])
         if msg['text'] == 'emuladores':
             await bot.sendVideo(msg['chat']['id'],video='BAACAgEAAx0CUYaz7wACEbJe_lDe2zzPbEQaW7cmwysAAbjSkPYAAgYBAAKPeSlGO3j50bdxrn8aBA',reply_to_message_id=msg['message_id'])
         if msg['text'] == 'psp':
-            await bot.sendVideo(msg['chat']['id'],video='BAACAgEAAx0CUYaz7wACEbBe_lDeo13PNB4kKRDH4sAFdn8g2AACBwEAAo95KUbzplnZj4OTAAEaBA', reply_to_message_id=msg['message_id'])
+            await bot.sendVideo(msg['chat']['id'],video='BAACAgEAAx0CUYaz7wACaFVfPedFyAy0jHJ77VJQtG34x5K63wACtgADj8LQRRS4s8ajv6i4GwQ', reply_to_message_id=msg['message_id'])
         if msg['text'] == 'tcxs' or msg['text'] == "/tcxs" or msg['text'] == f"/tcxs@{bot_username}" or msg['text'] == 'tcxs project' or msg['text'] == 'TCXS' or msg['text'] == 'TCXS Project':
             await bot.sendMessage(msg['chat']['id'], '`{} O nome TCXS foi criado com base nos botoes do PlayStation3, TRIANGLE - CIRCLE - X - SQUARE, ou seja, triangulo, bolinha, x e quadrado, kkk. Como nosso dev era publicitario e odiava a cena vendo alguns imbecis AUTO PROMOVER seu nome criando lojas e projetos, ele decidiu entrar na cena com uma nomenclatura que lembrasse a cena hacker, ou seja, siglas! Siglas esyão no cotidiano de todo mundo e é facil sua absorção bem como dentro da parte web e publicitaria a sigla tem um forte papel facilitando a digitacao e pesquisa, entao com este intuito nos denominados de TCXS Project, a palavra Project veio da vontade de que nunca morra, sendo assim um projeto qualquer um que tiver habilidade e capacidade pode entrar na equipe e ajudar a coordenar bem como tocar o projeto, ja vimos na cena varios adms passarem pela TCXS, ela e um projeto feito a varias maos e cada um doa de forma gratuita seu tempo e conhecimento para disponibilizar tudo que temos em nossas redes e arquivos. Ficamos gratos a todos que passaram por esta equipe seja dos adms aos users e seria impossivel enumerar todos, voces que sao a TCXS Project e formam este projeto que ja esta indo para seu terceiro ano!  OBRIGADO COMUNIDADE GAMER, HACKER, EXPLOITER, DEVS, USUARIOS E SIMPATIZANTES, SEM VOCES NAO EXISTIRIAMOS!`'.format(msg['from']['first_name']),'markdown',reply_to_message_id=msg['message_id'])
         if msg['text'] == 'proxy' or msg['text'] == f"/proxy@{bot_username}" or msg['text'] == "/proxy" or msg['text'] == 'Proxy' :

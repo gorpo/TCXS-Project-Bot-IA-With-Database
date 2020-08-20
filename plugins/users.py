@@ -195,15 +195,15 @@ async def users(msg):
         #OUTROS BOTOES IMPORTANTES DA ATT--------------------->
         elif msg['data'].split()[0] == 'tutorial_loja':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store instalar a loja em seu PlayStation3!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            await bot.sendMessage(msg['message']['chat']['id'],'https://cos.tv/videos/play/1586413688272059934')
+            await bot.sendMessage(msg['message']['chat']['id'],'https://youtu.be/9jyZhBklf9k')
             #return True
         elif msg['data'].split()[0] == 'tutorial_cfw':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como usar em consoles CFW PlayStation3!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
             await bot.sendMessage(msg['message']['chat']['id'],'https://cos.tv/videos/play/1586411677524278797')
             #return True
-        elif msg['data'].split()[0] == 'tutorial_segundo_plano_doadores':
+        elif msg['data'].split()[0] == 'tutorial__uso_web':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Abaixo temos o Tutorial TCXS Store ensinando como fazer os Downloads em Segundo Plano em seu PlayStation3!```",'markdown', reply_markup=keyboard.voltar_store_doadores)
-            await bot.sendMessage(msg['message']['chat']['id'],'https://youtu.be/_21a5REKhBc')
+            await bot.sendMessage(msg['message']['chat']['id'],'https://youtu.be/9jyZhBklf9k')
             #return True
         elif msg['data'].split()[0] == 'fone_bluetooth_doadores':
             await bot.editMessageText((msg['message']['chat']['id'], msg['message']['message_id']),f"📦 `TUTORIAL:` ```------ Sabia que você pode usar seu fone bluetooth para jogos em seu PlayStation3?```",'markdown', reply_markup=keyboard.voltar_store_doadores)
